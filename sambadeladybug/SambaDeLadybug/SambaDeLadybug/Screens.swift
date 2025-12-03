@@ -28,58 +28,62 @@ struct HomeScreen: View {
     ]
 
     var body: some View {
-        ZStack {
-            Image("HomeView")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-            VStack(spacing: 24) {
-                GeometryReader { geo in
-                    let buttonHeight: CGFloat = 150
-                    let spacing: CGFloat = 16
-                    let columns: CGFloat = 3
-                    let itemWidth = (geo.size.width - spacing * (columns - 1)) / columns
-                    let specimenCenterY = geo.size.height * 0.25
-                    let menuCenterY = geo.size.height * 0.4
+        GeometryReader { proxy in
+            let layout = HomeLayoutMetrics(size: proxy.size, isPad: UIDevice.current.userInterfaceIdiom == .pad)
+            ZStack {
+                homeBackground(in: proxy.size, isPad: layout.isPad)
+                VStack(spacing: layout.mainSpacing) {
+                    GeometryReader { geo in
+                        let buttonHeight: CGFloat = 150
+                        let spacing: CGFloat = 16
+                        let columns: CGFloat = 3
+                        let itemWidth = (geo.size.width - spacing * (columns - 1)) / columns
+                        let specimenCenterY = geo.size.height * 0.25
+                        let menuCenterY = geo.size.height * 0.4
 
-                    ZStack(alignment: .top) {
-                        HStack(spacing: spacing) {
-                            ForEach(Array(menuButtons.dropFirst().enumerated()), id: \.offset) { item in
-                                let isAchievement = item.element.title == "達成"
-                                HomeMenuButton(
-                                    title: item.element.title,
-                                    imageName: item.element.image,
-                                    scale: 1.1,
-                                    isDisabled: isAchievement && !viewModel.hasClaimableAchievement,
-                                    animatePulse: isAchievement && viewModel.hasClaimableAchievement,
-                                    action: actionForMenu(title: item.element.title)
-                                )
+                        ZStack(alignment: .top) {
+                            HStack(spacing: spacing) {
+                                ForEach(Array(menuButtons.dropFirst().enumerated()), id: \.offset) { item in
+                                    let isAchievement = item.element.title == "達成"
+                                    HomeMenuButton(
+                                        title: item.element.title,
+                                        imageName: item.element.image,
+                                        scale: 1.1,
+                                        isDisabled: isAchievement && !viewModel.hasClaimableAchievement,
+                                        animatePulse: isAchievement && viewModel.hasClaimableAchievement,
+                                        action: actionForMenu(title: item.element.title)
+                                    )
+                                        .frame(width: itemWidth, height: buttonHeight)
+                                }
+                            }
+                            .frame(width: geo.size.width, height: buttonHeight)
+                            .position(x: geo.size.width / 2, y: menuCenterY)
+                            if let specimen = menuButtons.first {
+                                HomeMenuButton(title: specimen.title, imageName: specimen.image, scale: 1.1, action: actionForMenu(title: specimen.title))
                                     .frame(width: itemWidth, height: buttonHeight)
+                                    .frame(width: geo.size.width, height: buttonHeight, alignment: .center)
+                                    .position(x: geo.size.width / 2, y: specimenCenterY)
                             }
                         }
-                        .frame(width: geo.size.width, height: buttonHeight)
-                        .position(x: geo.size.width / 2, y: menuCenterY)
-                        if let specimen = menuButtons.first {
-                            HomeMenuButton(title: specimen.title, imageName: specimen.image, scale: 1.1, action: actionForMenu(title: specimen.title))
-                                .frame(width: itemWidth, height: buttonHeight)
-                                .frame(width: geo.size.width, height: buttonHeight, alignment: .center)
-                                .position(x: geo.size.width / 2, y: specimenCenterY)
-                        }
                     }
+                    HomeMenuButton(title: "スタート", imageName: "Start", scale: 1.8, height: 300, action: {
+                        viewModel.startGame()
+                    })
+                    Spacer()
                 }
-                HomeMenuButton(title: "スタート", imageName: "Start", scale: 1.8, height: 300, action: {
-                    viewModel.startGame()
-                })
-                Spacer()
+                .frame(maxWidth: layout.contentWidth ?? .infinity)
+                .padding(.horizontal, layout.horizontalPadding)
+                .padding(.top, layout.verticalPadding)
+                .padding(.bottom, layout.verticalPadding)
             }
-            .padding(24)
+            .frame(width: proxy.size.width, height: proxy.size.height)
+            .overlay(
+                statusCard(maxWidth: layout.statusCardWidth)
+                    .padding(.horizontal, layout.horizontalPadding)
+                    .allowsHitTesting(false),
+                alignment: .center
+            )
         }
-        .overlay(
-            statusCard
-                .padding(.horizontal, 24)
-                .allowsHitTesting(false),
-            alignment: .center
-        )
         .overlay(settingsOverlay)
         .sheet(isPresented: $showingCollection) {
             IllustratedCollectionView()
@@ -162,7 +166,7 @@ private struct HomeMenuButton: View {
 }
 
 private extension HomeScreen {
-    var statusCard: some View {
+    func statusCard(maxWidth: CGFloat? = nil) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("総クリア数: \(viewModel.completedRuns)")
                 .font(.title3.bold())
@@ -172,10 +176,28 @@ private extension HomeScreen {
                 .foregroundColor(.black)
         }
         .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: maxWidth ?? .infinity, alignment: .leading)
         .background(Color.white.opacity(0.9))
         .cornerRadius(12)
         .shadow(radius: 4)
+    }
+
+    @ViewBuilder
+    func homeBackground(in size: CGSize, isPad: Bool) -> some View {
+        if isPad {
+            Color.black.opacity(0.95)
+                .ignoresSafeArea()
+            Image("HomeView")
+                .resizable()
+                .scaledToFit()
+                .frame(width: min(size.width * 0.78, 820))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            Image("HomeView")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+        }
     }
     
     var runsUntilNextMilestone: Int {
@@ -226,6 +248,40 @@ private extension HomeScreen {
                 }
             }
         }
+    }
+}
+
+private struct HomeLayoutMetrics {
+    let size: CGSize
+    let isPad: Bool
+
+    var contentWidth: CGFloat? {
+        guard isPad else { return nil }
+        return min(size.width * 0.7, 780)
+    }
+
+    var horizontalPadding: CGFloat {
+        if let contentWidth {
+            return max((size.width - contentWidth) / 2, 40)
+        } else {
+            return 24
+        }
+    }
+
+    var verticalPadding: CGFloat {
+        isPad ? max(size.height * 0.08, 32) : 24
+    }
+
+    var mainSpacing: CGFloat {
+        isPad ? 36 : 24
+    }
+
+    var statusCardWidth: CGFloat? {
+        guard isPad else { return nil }
+        if let contentWidth {
+            return min(contentWidth, 520)
+        }
+        return min(size.width * 0.7, 520)
     }
 }
 
@@ -419,16 +475,27 @@ private struct SettingsPanel: View {
 private struct AchievementRewardView: View {
     let imageName: String
     let dismiss: () -> Void
+    private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
 
     var body: some View {
         GeometryReader { proxy in
             ZStack(alignment: .bottom) {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-                    .clipped()
-                    .ignoresSafeArea()
+                if isPad {
+                    Color.black
+                        .ignoresSafeArea()
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: proxy.size.width * 0.9)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                } else {
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                        .clipped()
+                        .ignoresSafeArea()
+                }
 
                 Button(action: dismiss) {
                     Image("Close")
@@ -438,7 +505,7 @@ private struct AchievementRewardView: View {
                         .frame(width: proxy.size.width * 0.4)
                         .padding(.vertical, 4)
                 }
-                .padding(.bottom, max(proxy.safeAreaInsets.bottom + 36, 36))
+                .padding(.bottom, isPad ? max(proxy.safeAreaInsets.bottom + 60, 60) : max(proxy.safeAreaInsets.bottom + 36, 36))
             }
         }
     }
@@ -603,34 +670,17 @@ struct StageChangeScreen: View {
 
     var body: some View {
         GeometryReader { proxy in
+            let isPad = UIDevice.current.userInterfaceIdiom == .pad
             ZStack {
                 Color.black
                     .ignoresSafeArea()
-                if let imageName = backgroundName(for: viewModel.currentStage) {
-                    Image(imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .ignoresSafeArea()
-                } else {
-                    Color.clear
-                        .frame(width: proxy.size.width, height: proxy.size.height)
-                }
-                VStack(spacing: 12) {
-                    remainingStagesView
-                    Button(action: { viewModel.proceedToNextStage() }) {
-                        Image("Next")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: min(proxy.size.width * 0.5, 240))
-                            .accessibilityLabel("次へ")
-                    }
-                }
-                .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+                stageBackground(in: proxy.size, isPad: isPad)
+                stageOverlay(in: proxy, isPad: isPad)
             }
         }
         .ignoresSafeArea(edges: .bottom)
     }
-    
+
     private var remainingStagesView: some View {
         let remaining = max(viewModel.totalStages - viewModel.currentStage, 0)
         return Text("残りのステージ: \(remaining)")
@@ -640,6 +690,84 @@ struct StageChangeScreen: View {
             .padding(.vertical, 12)
             .background(Color.black.opacity(0.5))
             .cornerRadius(12)
+    }
+
+    @ViewBuilder
+    private func stageBackground(in size: CGSize, isPad: Bool) -> some View {
+        if let imageName = backgroundName(for: viewModel.currentStage) {
+            let image = Image(imageName)
+                .resizable()
+
+            if isPad {
+                image
+                    .scaledToFit()
+                    .frame(width: min(size.width * 0.85, 900))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                image
+                    .scaledToFit()
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+                    .ignoresSafeArea()
+            }
+        } else {
+            Color.clear
+                .frame(width: size.width, height: size.height)
+        }
+    }
+
+    @ViewBuilder
+    private func stageOverlay(in proxy: GeometryProxy, isPad: Bool) -> some View {
+        if isPad {
+            VStack(spacing: 0) {
+                VStack {
+                    if remainingStages > 0 {
+                        Text("残り\(remainingStages)ステージ")
+                            .font(.system(size: 28, weight: .semibold))
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 32)
+                            .padding(.vertical, 14)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, proxy.safeAreaInsets.top + 60)
+                .padding(.bottom, 32)
+
+                Button(action: { viewModel.proceedToNextStage() }) {
+                    Image("Next")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: min(proxy.size.width * 0.45, 360))
+                        .accessibilityLabel("次へ")
+                }
+
+                Spacer()
+
+                Color.clear
+                    .frame(width: proxy.size.width * 0.92, height: proxy.size.height * 0.4)
+                    .padding(.bottom, max(proxy.safeAreaInsets.bottom + 120, 48))
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height)
+            .ignoresSafeArea()
+        } else {
+            VStack(spacing: 12) {
+                remainingStagesView
+                Button(action: { viewModel.proceedToNextStage() }) {
+                    Image("Next")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: min(proxy.size.width * 0.5, 240))
+                        .accessibilityLabel("次へ")
+                }
+            }
+            .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+        }
+    }
+
+    private var remainingStages: Int {
+        max(viewModel.totalStages - viewModel.currentStage, 0)
     }
 }
 
