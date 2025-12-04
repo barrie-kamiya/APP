@@ -6,6 +6,7 @@ struct MorinoShinbaruOngakkaiApp: App {
 
     init() {
         AdjustManager.shared.configureAdjust()
+        TrackingAuthorizationManager.requestTrackingAuthorizationIfNeeded()
         RakutenRewardManager.shared.configureIfNeeded()
     }
 

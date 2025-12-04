@@ -20,6 +20,7 @@
 		C3F1E4052C8EFB4C00000051 /* RakutenRewardSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C3F1E4042C8EFB4C00000051 /* RakutenRewardSDK */; };
 		C3F1E4072C8F0C4E00000060 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F1E4062C8F0C4E00000060 /* AdjustManager.swift */; };
 		C3F1E4092C8F0CF200000061 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = C3F1E4082C8F0CF200000061 /* Adjust */; };
+		C3F1E40C2C8F159B00000062 /* TrackingAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F1E40B2C8F159B00000062 /* TrackingAuthorizationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		C3A4A2E229F8A2B10000002F /* 森のシンバル音楽会.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "森のシンバル音楽会.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3F1E4002C8EFA0100000050 /* RakutenRewardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RakutenRewardManager.swift; sourceTree = "<group>"; };
 		C3F1E4062C8F0C4E00000060 /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
+		C3F1E40B2C8F159B00000062 /* TrackingAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAuthorizationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			children = (
 				C3A4A2E229F8A2B100000010 /* ForestCymbalMusicAppApp.swift */,
 				C3F1E4062C8F0C4E00000060 /* AdjustManager.swift */,
+				C3F1E40B2C8F159B00000062 /* TrackingAuthorizationManager.swift */,
 				C3F1E4002C8EFA0100000050 /* RakutenRewardManager.swift */,
 				C3A4A2E229F8A2B10000000E /* Views */,
 				C3A4A2E229F8A2B100000017 /* Assets.xcassets */,
@@ -184,6 +187,7 @@
 				C3A4A2E229F8A2B100000023 /* HomeView.swift in Sources */,
 				C3A4A2E229F8A2B100000020 /* ForestCymbalMusicAppApp.swift in Sources */,
 				C3F1E4072C8F0C4E00000060 /* AdjustManager.swift in Sources */,
+				C3F1E40C2C8F159B00000062 /* TrackingAuthorizationManager.swift in Sources */,
 				C3F1E4012C8EFA0100000050 /* RakutenRewardManager.swift in Sources */,
 				C3A4A2E229F8A2B100000024 /* GameView.swift in Sources */,
 				C3A4A2E229F8A2B100000021 /* FlowCoordinatorView.swift in Sources */,
@@ -315,7 +319,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = forestscymbal.app;
 				PRODUCT_NAME = "森のシンバル音楽会";
 				REGISTER_APP_GROUPS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -348,7 +352,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = forestscymbal.app;
 				PRODUCT_NAME = "森のシンバル音楽会";
 				REGISTER_APP_GROUPS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
