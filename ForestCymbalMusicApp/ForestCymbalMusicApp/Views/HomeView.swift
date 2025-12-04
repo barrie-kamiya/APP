@@ -76,10 +76,10 @@ struct HomeView: View {
     private var statusBanner: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("クリア回数: \(completedRuns) 周")
-                .font(.title3.bold())
+                .font(.system(size: 24, weight: .bold))
                 .foregroundColor(.black)
             Text(statusDetailText)
-                .font(.footnote)
+                .font(.system(size: 16, weight: .medium))
                 .foregroundColor(.black.opacity(0.8))
         }
         .padding(.horizontal, 16)
@@ -99,13 +99,16 @@ struct HomeView: View {
 
     private func menuStack(size: CGSize, layout: HomeLayoutMetrics) -> some View {
         let contentWidth = layout.contentWidth ?? (size.width - layout.horizontalPadding * 2)
-        let rowButtonWidth = max((contentWidth - layout.menuSpacing * 2) / 3, 10)
+        let adjustedSpacing = layout.isPad ? layout.menuSpacing * 0.5 : layout.menuSpacing
+        let rowButtonWidth = max((contentWidth - adjustedSpacing * 2) / 3, 10)
+
+        let scaleMultiplier: CGFloat = layout.isPad ? 1.0 : 1.0
 
         return ZStack {
             if let specimen = menuButtons.first {
                 HomeMenuButton(title: specimen.title,
                                imageName: specimen.image,
-                               scale: 1.1,
+                               scale: 1.1 * scaleMultiplier,
                                height: layout.menuButtonHeight,
                                action: actionFor(title: specimen.title))
                     .frame(width: rowButtonWidth, height: layout.menuButtonHeight)
@@ -113,12 +116,12 @@ struct HomeView: View {
                               y: size.height * layout.specimenVerticalRatio)
             }
 
-            HStack(spacing: layout.menuSpacing) {
+            HStack(spacing: adjustedSpacing) {
                 ForEach(Array(menuButtons.dropFirst()), id: \.title) { item in
                     let isAchievement = item.title == "達成"
                     HomeMenuButton(title: item.title,
                                    imageName: item.image,
-                                   scale: 1.1,
+                                   scale: 1.1 * scaleMultiplier,
                                    height: layout.menuButtonHeight,
                                    isDisabled: isAchievement && !isAchievementAvailable,
                                    animatePulse: isAchievement && isAchievementAvailable,
@@ -126,7 +129,7 @@ struct HomeView: View {
                         .frame(width: rowButtonWidth, height: layout.menuButtonHeight)
                 }
             }
-            .frame(width: rowButtonWidth * 3 + layout.menuSpacing * 2)
+            .frame(width: rowButtonWidth * 3 + adjustedSpacing * 2)
             .position(x: size.width / 2,
                       y: size.height * layout.menuRowVerticalRatio)
         }
