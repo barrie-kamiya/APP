@@ -25,7 +25,7 @@ struct FlowCoordinatorView: View {
         return flags
     }()
 
-    private let useTestingAchievementRewards = false
+    private let useTestingAchievementRewards = true
     private let totalStages = 6
     private var targetTapCount: Int { useTestingAchievementRewards ? 5 : 50 }
     private var clearImageWeights: [(name: String, weight: Double)] {
@@ -90,37 +90,50 @@ struct FlowCoordinatorView: View {
     ]
 
     var body: some View {
-        Group {
-            switch screen {
-            case .splash:
-                SplashView {
-                    transition(to: .home)
+        ZStack(alignment: .top) {
+            Group {
+                switch screen {
+                case .splash:
+                    SplashView {
+                        transition(to: .home)
+                    }
+                case .home:
+                    HomeView(onStart: startGame,
+                             vibrationEnabled: $vibrationEnabled,
+                             unlockedIllustrations: unlockedIllustrationNames,
+                             isAchievementAvailable: hasAchievementToClaim(),
+                             claimAchievementReward: claimAchievementReward,
+                             completedRuns: completedRuns,
+                             nextMilestoneRemaining: runsUntilNextMilestone)
+                case .game:
+                    GameView(stage: currentStage,
+                             tapCount: tapCount,
+                             targetTapCount: targetTapCount,
+                             vibrationEnabled: vibrationEnabled,
+                             characterName: currentCharacter) {
+                        handleTap()
+                    }
+                case .stageChange:
+                    StageChangeView(stage: completedStage,
+                                    totalStages: totalStages) {
+                        advanceFromStageChange()
+                    }
+                case .clear:
+                    GameClearView(imageName: clearImageName) {
+                        transition(to: .home)
+                    }
                 }
-            case .home:
-                HomeView(onStart: startGame,
-                         vibrationEnabled: $vibrationEnabled,
-                         unlockedIllustrations: unlockedIllustrationNames,
-                         isAchievementAvailable: hasAchievementToClaim(),
-                         claimAchievementReward: claimAchievementReward,
-                         completedRuns: completedRuns,
-                         nextMilestoneRemaining: runsUntilNextMilestone)
-            case .game:
-                GameView(stage: currentStage,
-                         tapCount: tapCount,
-                         targetTapCount: targetTapCount,
-                         vibrationEnabled: vibrationEnabled,
-                         characterName: currentCharacter) {
-                    handleTap()
-                }
-            case .stageChange:
-                StageChangeView(stage: completedStage,
-                                totalStages: totalStages) {
-                    advanceFromStageChange()
-                }
-            case .clear:
-                GameClearView(imageName: clearImageName) {
-                    transition(to: .home)
-                }
+            }
+
+            if useTestingAchievementRewards {
+                Text("デバッグモード")
+                    .font(.caption.bold())
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Color.black.opacity(0.5))
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+                    .padding(.top, 12)
             }
         }
         .animation(.easeInOut, value: screen)

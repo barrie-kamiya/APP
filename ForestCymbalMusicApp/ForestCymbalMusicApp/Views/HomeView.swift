@@ -16,7 +16,6 @@ struct HomeView: View {
     @State private var isIllustratedVisible = false
     @State private var selectedIllustration: String?
     @State private var achievementImageName: String?
-    private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
     @State private var showNoAchievementAlert = false
 
     private let menuButtons: [(title: String, image: String)] = [
@@ -29,7 +28,9 @@ struct HomeView: View {
     var body: some View {
         GeometryReader { proxy in
             let layout = HomeLayoutMetrics(size: proxy.size,
-                                           profile: UIDevice.current.userInterfaceIdiom == .pad ? .pad : .phone)
+                                           profile: isPadDevice ? .pad : .phone)
+            let baseStartWidth = layout.contentWidth ?? proxy.size.width * 0.8
+            let startButtonWidth = layout.isPad ? baseStartWidth * 0.5 : baseStartWidth
             ZStack {
                 homeBackground(for: proxy.size, isPad: layout.isPad)
                 menuStack(size: proxy.size, layout: layout)
@@ -38,7 +39,7 @@ struct HomeView: View {
                                scale: layout.startButtonScale,
                                height: layout.startButtonHeight,
                                action: onStart)
-                    .frame(width: layout.contentWidth ?? proxy.size.width * 0.8,
+                    .frame(width: startButtonWidth,
                            height: layout.startButtonHeight)
                     .position(x: proxy.size.width / 2,
                               y: proxy.size.height * layout.startButtonVerticalRatio)
@@ -499,9 +500,9 @@ private struct HomeLayoutProfile {
         startButtonScale: 1.7,
         contentWidthMultiplier: 0.74,
         contentWidthMaximum: 780,
-        specimenVerticalRatio: 0.7,
-        menuRowVerticalRatio: 0.85,
-        startButtonVerticalRatio: 0.95
+        specimenVerticalRatio: 0.42,
+        menuRowVerticalRatio: 0.52,
+        startButtonVerticalRatio: 0.8
     )
 }
 
@@ -527,7 +528,7 @@ private struct SettingToggleButton: View {
 private struct AchievementRewardSheet: View {
     let imageName: String
     let dismiss: () -> Void
-    private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
+    private var isPad: Bool { isPadDevice }
 
     var body: some View {
         GeometryReader { proxy in
@@ -561,3 +562,13 @@ private struct AchievementRewardSheet: View {
         }
     }
 }
+
+#if canImport(UIKit)
+private var isPadDevice: Bool {
+    let idiomIsPad = UIDevice.current.userInterfaceIdiom == .pad
+    let modelIndicatesPad = UIDevice.current.model.lowercased().contains("ipad")
+    return idiomIsPad || modelIndicatesPad
+}
+#else
+private let isPadDevice = false
+#endif

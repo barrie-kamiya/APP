@@ -39,7 +39,7 @@ struct StageChangeView: View {
     private func backgroundLayer(size: CGSize) -> some View {
         if let name = backgroundImageName {
 #if canImport(UIKit)
-            if UIDevice.current.userInterfaceIdiom == .pad {
+            if isPadDevice {
                 Color.black
                     .ignoresSafeArea()
                 Image(name)
@@ -81,3 +81,13 @@ struct StageChangeView: View {
         return remaining > 0 ? "残り \(remaining) ステージ" : "最終ステージ"
     }
 }
+
+#if canImport(UIKit)
+private var isPadDevice: Bool {
+    let idiomIsPad = UIDevice.current.userInterfaceIdiom == .pad
+    let modelIndicatesPad = UIDevice.current.model.lowercased().contains("ipad")
+    return idiomIsPad || modelIndicatesPad
+}
+#else
+private let isPadDevice = false
+#endif

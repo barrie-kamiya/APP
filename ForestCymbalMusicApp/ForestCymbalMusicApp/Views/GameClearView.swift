@@ -9,17 +9,15 @@ struct GameClearView: View {
             ZStack {
                 backgroundLayer(size: proxy.size)
 
-                VStack {
-                    Spacer()
-                    Button(action: onFinish) {
-                        Image("OK")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                            .accessibilityLabel("完了")
-                    }
-                    .padding(.bottom, 80)
+                Button(action: onFinish) {
+                    Image("OK")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: okButtonWidth(for: proxy.size))
+                        .accessibilityLabel("完了")
                 }
+                .position(x: proxy.size.width / 2,
+                          y: proxy.size.height * okButtonVerticalRatio)
             }
         }
     }
@@ -27,7 +25,7 @@ struct GameClearView: View {
     @ViewBuilder
     private func backgroundLayer(size: CGSize) -> some View {
 #if canImport(UIKit)
-        if UIDevice.current.userInterfaceIdiom == .pad {
+        if isPadDevice {
             Color.black
                 .ignoresSafeArea()
             Image(imageName)
@@ -48,4 +46,23 @@ struct GameClearView: View {
             .ignoresSafeArea()
 #endif
     }
+
+    private func okButtonWidth(for size: CGSize) -> CGFloat {
+        let baseWidth = size.width * 0.6
+        return isPadDevice ? baseWidth * 0.8 : baseWidth
+    }
+
+    private var okButtonVerticalRatio: CGFloat {
+        isPadDevice ? 0.9 : 0.93
+    }
 }
+
+#if canImport(UIKit)
+private var isPadDevice: Bool {
+    let idiomIsPad = UIDevice.current.userInterfaceIdiom == .pad
+    let modelIndicatesPad = UIDevice.current.model.lowercased().contains("ipad")
+    return idiomIsPad || modelIndicatesPad
+}
+#else
+private let isPadDevice = false
+#endif

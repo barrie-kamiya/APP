@@ -49,7 +49,7 @@ struct GameView: View {
 
                 remainingTapIndicator
                     .padding(.top, 16)
-                    .padding(.leading, 16)
+                    .padding(.leading, isPadDevice ? 10 : 16)
             }
         }
     }
@@ -96,27 +96,15 @@ struct GameView: View {
     }
 
     private var tapButtonWidthRatio: CGFloat {
-        #if canImport(UIKit)
-        return UIDevice.current.userInterfaceIdiom == .pad ? 0.5 : 0.75
-        #else
-        return 0.75
-        #endif
+        return isPadDevice ? 0.6 : 0.75
     }
 
     private var characterPositionRatio: CGFloat {
-        #if canImport(UIKit)
-        return UIDevice.current.userInterfaceIdiom == .pad ? 0.14 : 0.16
-        #else
-        return 0.15
-        #endif
+        return isPadDevice ? 0.17 : 0.16
     }
 
     private var tapButtonPositionRatio: CGFloat {
-        #if canImport(UIKit)
-        return UIDevice.current.userInterfaceIdiom == .pad ? 0.77 : 0.79
-        #else
-        return 0.78
-        #endif
+        return isPadDevice ? 0.77 : 0.79
     }
 
     private var backgroundImage: Image {
@@ -135,7 +123,7 @@ struct GameView: View {
     @ViewBuilder
     private func backgroundLayer(for size: CGSize) -> some View {
 #if canImport(UIKit)
-        if UIDevice.current.userInterfaceIdiom == .pad {
+        if isPadDevice {
             Color.black
                 .ignoresSafeArea()
             backgroundImage
@@ -157,3 +145,13 @@ struct GameView: View {
 #endif
     }
 }
+
+#if canImport(UIKit)
+private var isPadDevice: Bool {
+    let idiomIsPad = UIDevice.current.userInterfaceIdiom == .pad
+    let modelIndicatesPad = UIDevice.current.model.lowercased().contains("ipad")
+    return idiomIsPad || modelIndicatesPad
+}
+#else
+private let isPadDevice = false
+#endif
