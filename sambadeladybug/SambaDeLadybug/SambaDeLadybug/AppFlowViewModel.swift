@@ -68,7 +68,7 @@ final class AppFlowViewModel: ObservableObject {
         (3, "Clear_08", 8),
         (4, "Clear_09", 9)
     ]
-    let useTestingAchievementRewards = false
+    let useTestingAchievementRewards = true
 
     private var achievementRewards: [(milestone: Int, clearImageName: String, illustrationID: Int)] {
         useTestingAchievementRewards ? testingAchievementRewards : defaultAchievementRewards
