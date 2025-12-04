@@ -11,11 +11,12 @@
 		A1B01C5E2F1A000100000002 /* AppFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B01C432F1A000100000002 /* AppFlowViewModel.swift */; };
 		A1B01C5E2F1A000100000003 /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B01C432F1A000100000003 /* Screens.swift */; };
 		A1B01C5E2F1A000100000004 /* RakutenRewardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B01C432F1A000100000004 /* RakutenRewardManager.swift */; };
-		B2099A0C2F1C010100000001 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2099A0B2F1C010100000001 /* AdjustManager.swift */; };
 		A1B01C5F2F1A000100000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B01C442F1A000100000004 /* Assets.xcassets */; };
 		A1B01C5F2F1A000100000002 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B01C462F1A000100000001 /* Preview Assets.xcassets */; };
 		B20000012F1B000100000001 /* RakutenRewardSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B20000022F1B000100000001 /* RakutenRewardSDK */; };
+		B2099A0C2F1C010100000001 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2099A0B2F1C010100000001 /* AdjustManager.swift */; };
 		B2099A102F1C010100000001 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = B2099A0F2F1C010100000001 /* Adjust */; };
+		B2099A152F1C020100000001 /* TrackingAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2099A142F1C020100000001 /* TrackingAuthorizationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,11 +24,12 @@
 		A1B01C432F1A000100000002 /* AppFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowViewModel.swift; sourceTree = "<group>"; };
 		A1B01C432F1A000100000003 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		A1B01C432F1A000100000004 /* RakutenRewardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RakutenRewardManager.swift; sourceTree = "<group>"; };
-		B2099A0B2F1C010100000001 /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
 		A1B01C442F1A000100000004 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1B01C462F1A000100000001 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A1B01C472F1A000100000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1B01C522F1A000100000001 /* SambaDeLadybug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SambaDeLadybug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2099A0B2F1C010100000001 /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
+		B2099A142F1C020100000001 /* TrackingAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAuthorizationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				A1B01C432F1A000100000001 /* SambaDeLadybugApp.swift */,
 				A1B01C432F1A000100000002 /* AppFlowViewModel.swift */,
 				B2099A0B2F1C010100000001 /* AdjustManager.swift */,
+				B2099A142F1C020100000001 /* TrackingAuthorizationManager.swift */,
 				A1B01C432F1A000100000003 /* Screens.swift */,
 				A1B01C432F1A000100000004 /* RakutenRewardManager.swift */,
 				A1B01C442F1A000100000004 /* Assets.xcassets */,
@@ -92,6 +95,7 @@
 				A1B01C572F1A000100000001 /* Sources */,
 				A1B01C582F1A000100000001 /* Frameworks */,
 				A1B01C592F1A000100000001 /* Resources */,
+				B2D000102F1C050100000001 /* Copy RakutenReward dSYM */,
 			);
 			buildRules = (
 			);
@@ -155,12 +159,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B2D000102F1C050100000001 /* Copy RakutenReward dSYM */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy RakutenReward dSYM";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FRAMEWORK_NAME=\"RakutenRewardSDK\"\nFRAMEWORK_EXEC=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\nDSYM_DEST=\"${DWARF_DSYM_FOLDER_PATH}/${FRAMEWORK_NAME}.framework.dSYM\"\n\nif [ -f \"${FRAMEWORK_EXEC}\" ]; then\n    rm -rf \"${DSYM_DEST}\"\n    mkdir -p \"${DWARF_DSYM_FOLDER_PATH}\"\n    dsymutil \"${FRAMEWORK_EXEC}\" -o \"${DSYM_DEST}\"\nelse\n    echo \"warning: Framework binary not found at ${FRAMEWORK_EXEC}\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A1B01C572F1A000100000001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B2099A0C2F1C010100000001 /* AdjustManager.swift in Sources */,
+				B2099A152F1C020100000001 /* TrackingAuthorizationManager.swift in Sources */,
 				A1B01C5E2F1A000100000004 /* RakutenRewardManager.swift in Sources */,
 				A1B01C5E2F1A000100000003 /* Screens.swift in Sources */,
 				A1B01C5E2F1A000100000002 /* AppFlowViewModel.swift in Sources */,
@@ -282,17 +308,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CYL6UUSFK2;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = Y9JJ3V7P98;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = SambaDeLadybug/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "サンバ";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sambadeladybug.app;
+				PRODUCT_BUNDLE_IDENTIFIER = sanbadetento.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -307,17 +334,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CYL6UUSFK2;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = Y9JJ3V7P98;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = SambaDeLadybug/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "サンバ";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sambadeladybug.app;
+				PRODUCT_BUNDLE_IDENTIFIER = sanbadetento.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -350,14 +378,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B2099A112F1C010100000001 /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/adjust/ios_sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.38.0;
-			};
-		};
 		B20000032F1B000100000001 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Rakuten-Reward-SDK/Reward-SDK-iOS-SPM.git";
@@ -366,18 +386,26 @@
 				version = 12.0.0;
 			};
 		};
+		B2099A112F1C010100000001 /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adjust/ios_sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.38.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B2099A0F2F1C010100000001 /* Adjust */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B2099A112F1C010100000001 /* XCRemoteSwiftPackageReference "ios_sdk" */;
-			productName = Adjust;
-		};
 		B20000022F1B000100000001 /* RakutenRewardSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B20000032F1B000100000001 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */;
 			productName = RakutenRewardSDK;
+		};
+		B2099A0F2F1C010100000001 /* Adjust */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2099A112F1C010100000001 /* XCRemoteSwiftPackageReference "ios_sdk" */;
+			productName = Adjust;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

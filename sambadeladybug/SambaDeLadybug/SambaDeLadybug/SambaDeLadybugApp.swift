@@ -8,6 +8,7 @@ struct SambaDeLadybugApp: App {
     init() {
         AdjustManager.shared.configureAdjust()
         RakutenRewardManager.shared.configure()
+        TrackingAuthorizationManager.requestTrackingAuthorizationIfNeeded()
     }
 
     var body: some Scene {

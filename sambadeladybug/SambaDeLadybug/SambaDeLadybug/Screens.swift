@@ -29,17 +29,21 @@ struct HomeScreen: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let layout = HomeLayoutMetrics(size: proxy.size, isPad: UIDevice.current.userInterfaceIdiom == .pad)
+            let layout = HomeLayoutMetrics(size: proxy.size, isPad: isPadDevice)
             ZStack {
                 homeBackground(in: proxy.size, isPad: layout.isPad)
                 VStack(spacing: layout.mainSpacing) {
+                    if layout.isPad {
+                        Spacer()
+                            .frame(height: proxy.size.height * 0.02)
+                    }
                     GeometryReader { geo in
                         let buttonHeight: CGFloat = 150
                         let spacing: CGFloat = 16
                         let columns: CGFloat = 3
                         let itemWidth = (geo.size.width - spacing * (columns - 1)) / columns
-                        let specimenCenterY = geo.size.height * 0.25
-                        let menuCenterY = geo.size.height * 0.4
+                        let specimenCenterY = geo.size.height * (layout.isPad ? 0.3 : 0.25)
+                        let menuCenterY = geo.size.height * (layout.isPad ? 0.7 : 0.4)
 
                         ZStack(alignment: .top) {
                             HStack(spacing: spacing) {
@@ -66,10 +70,20 @@ struct HomeScreen: View {
                             }
                         }
                     }
-                    HomeMenuButton(title: "スタート", imageName: "Start", scale: 1.8, height: 300, action: {
+                    let startScale: CGFloat = layout.isPad ? 1.4 : 1.8
+                    let startHeight: CGFloat = layout.isPad ? 210 : 300
+                    let startTopPadding: CGFloat = layout.isPad ? 0 : 0
+                    HomeMenuButton(title: "スタート", imageName: "Start", scale: startScale, height: startHeight, action: {
                         viewModel.startGame()
                     })
-                    Spacer()
+                    .padding(.top, startTopPadding)
+                    .offset(y: layout.isPad ? proxy.size.height * 0.25 : 0)
+                    if layout.isPad {
+                        Spacer()
+                            .frame(minHeight: proxy.size.height * 0.08)
+                    } else {
+                        Spacer()
+                    }
                 }
                 .frame(maxWidth: layout.contentWidth ?? .infinity)
                 .padding(.horizontal, layout.horizontalPadding)
@@ -78,7 +92,7 @@ struct HomeScreen: View {
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
             .overlay(
-                statusCard(maxWidth: layout.statusCardWidth)
+                statusCard(maxWidth: layout.statusCardWidth, isPad: layout.isPad)
                     .padding(.horizontal, layout.horizontalPadding)
                     .allowsHitTesting(false),
                 alignment: .center
@@ -166,8 +180,9 @@ private struct HomeMenuButton: View {
 }
 
 private extension HomeScreen {
-    func statusCard(maxWidth: CGFloat? = nil) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+    func statusCard(maxWidth: CGFloat? = nil, isPad: Bool = false) -> some View {
+        let verticalOffset: CGFloat = isPad ? 30 : 0
+        return VStack(alignment: .leading, spacing: 8) {
             Text("総クリア数: \(viewModel.completedRuns)")
                 .font(.title3.bold())
                 .foregroundColor(.black)
@@ -180,6 +195,7 @@ private extension HomeScreen {
         .background(Color.white.opacity(0.9))
         .cornerRadius(12)
         .shadow(radius: 4)
+        .offset(y: verticalOffset)
     }
 
     @ViewBuilder
@@ -475,7 +491,7 @@ private struct SettingsPanel: View {
 private struct AchievementRewardView: View {
     let imageName: String
     let dismiss: () -> Void
-    private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
+    private var isPad: Bool { isPadDevice }
 
     var body: some View {
         GeometryReader { proxy in
@@ -543,46 +559,70 @@ struct GameScreen: View {
         GeometryReader { proxy in
             let backgroundName = String(format: "Game_%02d", min(max(viewModel.currentStage, 1), viewModel.totalStages))
             let halfHeight = proxy.size.height / 2
+            let safeInsets = proxy.safeAreaInsets
+            let topSafePadding = safeInsets.top
+            let bottomSafePadding = safeInsets.bottom
+            let isPad = isPadDevice
+
+            let buttonWidthRatio: CGFloat = isPad ? 0.6 : 0.8
+            let buttonHeightRatio: CGFloat = isPad ? 0.65 : 0.8
+            let buttonTopPadding = topSafePadding + proxy.size.height * (isPad ? 0.025 : 0.04)
+            let buttonBottomPadding = bottomSafePadding + proxy.size.height * (isPad ? 0.1 : 0.07)
+            let buttonVerticalOffset = proxy.size.height * (isPad ? 0.3 : 0.2)
+            let topSpacerMinHeight = halfHeight * (isPad ? 0.25 : 0.0)
+            let bottomSpacerMinHeight = halfHeight * (isPad ? 0.35 : 0.25)
+
             ZStack {
-                Image(backgroundName)
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                
+                // 背景は専用のレイヤーで中央配置
+                GeometryReader { bgProxy in
+                    Image(backgroundName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: bgProxy.size.width, height: bgProxy.size.height, alignment: .center)
+                        .background(Color.black)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                        .clipped()
+                        .ignoresSafeArea()
+                }
+
                 VStack {
-                    HStack {
-                        remainingTapView
-                        Spacer()
-                    }
-                    .padding(.top, 16)
-                    .padding(.horizontal, 16)
+                    remainingTapView
+                        .frame(maxWidth: .infinity, alignment: isPad ? .center : .leading)
+                        .padding(.top, 16 + topSafePadding)
+                        .padding(.horizontal, 16)
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                
+
                 VStack(spacing: 0) {
                     Spacer()
-                        .frame(height: halfHeight)
+                        .frame(minHeight: topSpacerMinHeight)
                     Button(action: handleTap) {
                         Image("Tap")
                             .resizable()
                             .scaledToFit()
+                            .frame(maxWidth: proxy.size.width * buttonWidthRatio, maxHeight: halfHeight * buttonHeightRatio)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .accessibilityLabel("タップする")
                     }
                     .frame(height: halfHeight)
-                    .offset(y: -halfHeight * 0.1)
-                    .background(Color.red.opacity(0.2))
+                    Spacer()
+                        .frame(minHeight: bottomSpacerMinHeight)
                 }
-                
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.top, buttonTopPadding)
+                .padding(.bottom, buttonBottomPadding)
+                .offset(y: buttonVerticalOffset)
+
                 VStack {
+                    Spacer()
+                        .frame(height: topSafePadding + proxy.size.height * (isPad ? 0.2 : 0.13))
                     Image(characterName)
                         .resizable()
                         .scaledToFit()
                         .frame(width: min(proxy.size.width * 0.28, 140) * 1.5)
                         .rotationEffect(rotationState.angle)
                         .scaleEffect(x: rotationState.isMirrored ? -1 : 1, y: 1)
-                        .position(x: proxy.size.width / 2, y: proxy.size.height * 0.3)
                         .animation(.easeInOut(duration: 0.2), value: rotationState)
                     Spacer()
                 }
@@ -670,7 +710,7 @@ struct StageChangeScreen: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let isPad = UIDevice.current.userInterfaceIdiom == .pad
+            let isPad = isPadDevice
             ZStack {
                 Color.black
                     .ignoresSafeArea()
@@ -700,13 +740,18 @@ struct StageChangeScreen: View {
 
             if isPad {
                 image
-                    .scaledToFit()
-                    .frame(width: min(size.width * 0.85, 900))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: size.width, height: size.height, alignment: .center)
+                    .background(Color.black)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .clipped()
+                    .ignoresSafeArea()
             } else {
                 image
-                    .scaledToFit()
-                    .frame(width: size.width, height: size.height)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: size.width, height: size.height, alignment: .center)
+                    .background(Color.black)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .clipped()
                     .ignoresSafeArea()
             }
@@ -719,37 +764,46 @@ struct StageChangeScreen: View {
     @ViewBuilder
     private func stageOverlay(in proxy: GeometryProxy, isPad: Bool) -> some View {
         if isPad {
-            VStack(spacing: 0) {
+            let cardTopPadding = proxy.safeAreaInsets.top + 50
+            let cardVerticalOffset = proxy.size.height * 0.3
+            let buttonVerticalOffset = proxy.size.height * 0.03
+            let buttonHorizontalPadding = min(proxy.size.width * 0.2, 100)
+
+            ZStack {
+                Color.clear
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+
                 VStack {
                     if remainingStages > 0 {
                         Text("残り\(remainingStages)ステージ")
-                            .font(.system(size: 28, weight: .semibold))
+                            .font(.system(size: 18, weight: .semibold))
                             .foregroundColor(.black)
                             .padding(.horizontal, 32)
-                            .padding(.vertical, 14)
+                            .padding(.vertical, 10)
                             .background(Color.white)
                             .clipShape(Capsule())
                     }
+                    Spacer()
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.top, proxy.safeAreaInsets.top + 60)
-                .padding(.bottom, 32)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .padding(.top, cardTopPadding)
+                .offset(y: cardVerticalOffset)
 
-                Button(action: { viewModel.proceedToNextStage() }) {
-                    Image("Next")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: min(proxy.size.width * 0.45, 360))
-                        .accessibilityLabel("次へ")
+                VStack {
+                    Spacer()
+                    Button(action: { viewModel.proceedToNextStage() }) {
+                        Image("Next")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: min(proxy.size.width * 0.45, 360), height: 180)
+                            .accessibilityLabel("次へ")
+                    }
+                    Spacer()
                 }
-
-                Spacer()
-
-                Color.clear
-                    .frame(width: proxy.size.width * 0.92, height: proxy.size.height * 0.4)
-                    .padding(.bottom, max(proxy.safeAreaInsets.bottom + 120, 48))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.horizontal, buttonHorizontalPadding)
+                .offset(y: buttonVerticalOffset)
             }
-            .frame(width: proxy.size.width, height: proxy.size.height)
             .ignoresSafeArea()
         } else {
             VStack(spacing: 12) {
@@ -762,7 +816,7 @@ struct StageChangeScreen: View {
                         .accessibilityLabel("次へ")
                 }
             }
-            .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+            .position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
         }
     }
 
@@ -776,6 +830,12 @@ struct GameClearScreen: View {
     @State private var hasTriggeredMissionAction = false
 
     var body: some View {
+        let isPad = isPadDevice
+        let buttonHorizontalPadding: CGFloat = isPad ? 120 : 24
+        let buttonBottomPadding: CGFloat = isPad ? 70 : 24
+        let buttonVerticalPadding: CGFloat = isPad ? 32 : 18
+        let buttonOffset: CGFloat = isPad ? -20 : 0
+
         ZStack {
             Image(viewModel.currentClearImageName)
                 .resizable()
@@ -792,9 +852,11 @@ struct GameClearScreen: View {
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
+                        .padding(.vertical, buttonVerticalPadding)
                 }
-                .padding(24)
+                .padding(.horizontal, buttonHorizontalPadding)
+                .padding(.bottom, buttonBottomPadding)
+                .offset(y: buttonOffset)
             }
         }
         .onAppear {
@@ -829,3 +891,13 @@ private extension GameClearScreen {
         RakutenRewardManager.shared.triggerMissionActionIfNeeded()
     }
 }
+
+#if canImport(UIKit)
+private var isPadDevice: Bool {
+    let idiomIsPad = UIDevice.current.userInterfaceIdiom == .pad
+    let modelIndicatesPad = UIDevice.current.model.lowercased().contains("ipad")
+    return idiomIsPad || modelIndicatesPad
+}
+#else
+private let isPadDevice = false
+#endif

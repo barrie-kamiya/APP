@@ -9,7 +9,7 @@ final class RakutenRewardManager {
 
     private let appKey = "anAuY28ucmFrdXRlbi5yZXdhcmQuaW9zLXpyUENiMWNTZDJ4Rlk4UU8wflNDYTg4a3VubTYwZlVv"
     private let missionActionCode = "h5vJfiWkAZKtRTEi"
-    private let missionDailyLimit = 30
+    private let missionDailyLimit = 25
     private let missionDailyCountKey = "rakutenRewardMissionDailyCount"
     private let missionLastResetDateKey = "rakutenRewardMissionLastResetDate"
     private let defaults = UserDefaults.standard
