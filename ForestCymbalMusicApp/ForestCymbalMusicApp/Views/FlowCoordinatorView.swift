@@ -25,7 +25,7 @@ struct FlowCoordinatorView: View {
         return flags
     }()
 
-    private let useTestingAchievementRewards = true
+    private let useTestingAchievementRewards = false
     private let totalStages = 6
     private var targetTapCount: Int { useTestingAchievementRewards ? 5 : 50 }
     private var clearImageWeights: [(name: String, weight: Double)] {
