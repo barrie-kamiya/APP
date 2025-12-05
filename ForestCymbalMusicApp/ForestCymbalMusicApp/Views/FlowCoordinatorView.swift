@@ -25,7 +25,7 @@ struct FlowCoordinatorView: View {
         return flags
     }()
 
-    private let useTestingAchievementRewards = false
+    private let useTestingAchievementRewards = true
     private let totalStages = 6
     private var targetTapCount: Int { useTestingAchievementRewards ? 5 : 50 }
     private var clearImageWeights: [(name: String, weight: Double)] {
@@ -137,6 +137,7 @@ struct FlowCoordinatorView: View {
             }
         }
         .animation(.easeInOut, value: screen)
+        .ignoresSafeArea()
     }
 
     private func transition(to newScreen: Screen) {

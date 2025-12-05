@@ -38,27 +38,23 @@ struct StageChangeView: View {
     @ViewBuilder
     private func backgroundLayer(size: CGSize) -> some View {
         if let name = backgroundImageName {
-#if canImport(UIKit)
-            if isPadDevice {
-                Color.black
-                    .ignoresSafeArea()
-                Image(name)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: min(size.width * 0.78, 820))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                Image(name)
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+            ZStack {
+                if isPadDevice {
+                    Color.black.ignoresSafeArea()
+                    Image(name)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: size.width, height: size.height)
+                        .clipped()
+                } else {
+                    Image(name)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: size.width, height: size.height)
+                        .clipped()
+                        .ignoresSafeArea()
+                }
             }
-#else
-        Image(name)
-            .resizable()
-            .scaledToFill()
-            .ignoresSafeArea()
-#endif
         } else {
             Color(.systemBackground)
                 .ignoresSafeArea()

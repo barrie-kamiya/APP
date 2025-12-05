@@ -96,11 +96,11 @@ struct GameView: View {
     }
 
     private var characterPositionRatio: CGFloat {
-        return isPadDevice ? 0.17 : 0.16
+        return isPadDevice ? 0.17 : 0.2
     }
 
     private var tapButtonPositionRatio: CGFloat {
-        return isPadDevice ? 0.77 : 0.79
+        return isPadDevice ? 0.77 : 0.74
     }
 
     private var statusPositionXRatio: CGFloat {
@@ -136,29 +136,24 @@ struct GameView: View {
         return Image(name)
     }
 
-    @ViewBuilder
     private func backgroundLayer(for size: CGSize) -> some View {
-#if canImport(UIKit)
-        if isPadDevice {
-            Color.black
-                .ignoresSafeArea()
-            backgroundImage
-                .resizable()
-                .scaledToFit()
-                .frame(width: min(size.width * 0.78, 820))
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else {
-            backgroundImage
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        ZStack {
+            if isPadDevice {
+                Color.black.ignoresSafeArea()
+                backgroundImage
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+            } else {
+                backgroundImage
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+                    .ignoresSafeArea()
+            }
         }
-#else
-        backgroundImage
-            .resizable()
-            .scaledToFill()
-            .ignoresSafeArea()
-#endif
     }
 }
 

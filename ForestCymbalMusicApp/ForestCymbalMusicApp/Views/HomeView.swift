@@ -32,7 +32,7 @@ struct HomeView: View {
             let baseStartWidth = layout.contentWidth ?? proxy.size.width * 0.8
             let startButtonWidth = layout.isPad ? baseStartWidth * 0.5 : baseStartWidth
             ZStack {
-                homeBackground(for: proxy.size, isPad: layout.isPad)
+                homeBackground(for: proxy.size)
                 menuStack(size: proxy.size, layout: layout)
                 HomeMenuButton(title: "スタート",
                                imageName: "Start",
@@ -48,7 +48,7 @@ struct HomeView: View {
         }
         .overlay(alignment: .top) {
             statusBanner
-                .padding(.top, 20)
+                .padding(.top, statusTopPadding)
                 .padding(.horizontal, 20)
                 .allowsHitTesting(false)
         }
@@ -97,6 +97,10 @@ struct HomeView: View {
         }
     }
 
+    private var statusTopPadding: CGFloat {
+        isPadDevice ? 80 : 100
+    }
+
     private func menuStack(size: CGSize, layout: HomeLayoutMetrics) -> some View {
         let contentWidth = layout.contentWidth ?? (size.width - layout.horizontalPadding * 2)
         let adjustedSpacing = layout.isPad ? layout.menuSpacing * 0.5 : layout.menuSpacing
@@ -135,21 +139,23 @@ struct HomeView: View {
         }
     }
 
-    @ViewBuilder
-    private func homeBackground(for size: CGSize, isPad: Bool) -> some View {
-        if isPad {
-            Color.black.opacity(0.95)
-                .ignoresSafeArea()
-            Image("HomeView")
-                .resizable()
-                .scaledToFit()
-                .frame(width: min(size.width * 0.78, 820))
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else {
-            Image("HomeView")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+    private func homeBackground(for size: CGSize) -> some View {
+        ZStack {
+            if isPadDevice {
+                Color.black.ignoresSafeArea()
+                Image("HomeView")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+            } else {
+                Image("HomeView")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+                    .ignoresSafeArea()
+            }
         }
     }
 
@@ -489,9 +495,9 @@ private struct HomeLayoutProfile {
         startButtonScale: 1.2,
         contentWidthMultiplier: nil,
         contentWidthMaximum: nil,
-        specimenVerticalRatio: 0.45,
-        menuRowVerticalRatio: 0.58,
-        startButtonVerticalRatio: 0.85
+        specimenVerticalRatio: 0.42,
+        menuRowVerticalRatio: 0.52,
+        startButtonVerticalRatio: 0.8
     )
 
     static let pad = HomeLayoutProfile(

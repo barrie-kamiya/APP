@@ -22,29 +22,24 @@ struct GameClearView: View {
         }
     }
 
-    @ViewBuilder
     private func backgroundLayer(size: CGSize) -> some View {
-#if canImport(UIKit)
-        if isPadDevice {
-            Color.black
-                .ignoresSafeArea()
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: min(size.width * 0.78, 820))
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        ZStack {
+            if isPadDevice {
+                Color.black.ignoresSafeArea()
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+            } else {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size.width, height: size.height)
+                    .clipped()
+                    .ignoresSafeArea()
+            }
         }
-#else
-        Image(imageName)
-            .resizable()
-            .scaledToFill()
-            .ignoresSafeArea()
-#endif
     }
 
     private func okButtonWidth(for size: CGSize) -> CGFloat {
@@ -53,7 +48,7 @@ struct GameClearView: View {
     }
 
     private var okButtonVerticalRatio: CGFloat {
-        isPadDevice ? 0.9 : 0.93
+        isPadDevice ? 0.9 : 0.87
     }
 }
 
