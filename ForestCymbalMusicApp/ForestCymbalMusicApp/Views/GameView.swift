@@ -28,15 +28,10 @@ struct GameView: View {
                               y: proxy.size.height * characterPositionRatio)
 
                 Button(action: {
-                    triggerHapticIfNeeded()
-                    showPoseA = true
-                    onTapArea()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
-                        withAnimation(.easeInOut(duration: 0.08)) {
-                            showPoseA = false
-                        }
-                    }
-                }) {
+                              triggerHapticIfNeeded()
+                              showPoseA.toggle()
+                              onTapArea()
+                          }) {
                     Image("Tap")
                         .resizable()
                         .scaledToFit()
@@ -48,8 +43,9 @@ struct GameView: View {
                 .edgesIgnoringSafeArea(.bottom)
 
                 remainingTapIndicator
-                    .padding(.top, 16)
-                    .padding(.leading, isPadDevice ? 10 : 16)
+                    .frame(width: proxy.size.width * statusWidthRatio)
+                    .position(x: proxy.size.width * statusPositionXRatio,
+                              y: proxy.size.height * statusPositionYRatio)
             }
         }
     }
@@ -80,9 +76,9 @@ struct GameView: View {
             Text("完了まで")
             Text("あと")
             Text("\(remainingTaps)")
-                .font(.title2.bold())
+                .font(statusCountFont)
         }
-        .font(.headline)
+        .font(statusLabelFont)
         .foregroundColor(.black)
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -105,6 +101,26 @@ struct GameView: View {
 
     private var tapButtonPositionRatio: CGFloat {
         return isPadDevice ? 0.77 : 0.79
+    }
+
+    private var statusPositionXRatio: CGFloat {
+        isPadDevice ? 0.22 : 0.17
+    }
+
+    private var statusPositionYRatio: CGFloat {
+        isPadDevice ? 0.1 : 0.12
+    }
+
+    private var statusWidthRatio: CGFloat {
+        isPadDevice ? 0.3 : 0.6
+    }
+
+    private var statusLabelFont: Font {
+        isPadDevice ? .caption : .subheadline
+    }
+
+    private var statusCountFont: Font {
+        isPadDevice ? .headline.bold() : .title3.weight(.semibold)
     }
 
     private var backgroundImage: Image {
