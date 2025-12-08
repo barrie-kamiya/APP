@@ -16,6 +16,8 @@ struct GameView: View {
     }
 
     @State private var showPoseA: Bool = true
+    @State private var characterOffsetProgress: CGFloat = 0
+    @State private var movingLeft: Bool = true
 
     var body: some View {
         GeometryReader { proxy in
@@ -23,13 +25,16 @@ struct GameView: View {
                 backgroundLayer(for: proxy.size)
 
                 characterView
-                    .frame(width: proxy.size.width * 0.6, height: 180)
-                    .position(x: proxy.size.width / 2,
+                    .frame(width: proxy.size.width * characterWidthRatio, height: 180)
+                    .position(x: characterXPosition(for: proxy.size),
                               y: proxy.size.height * characterPositionRatio)
 
                 Button(action: {
                               triggerHapticIfNeeded()
                               showPoseA.toggle()
+                              withAnimation(.easeInOut(duration: 0.18)) {
+                                  moveCharacterHorizontally()
+                              }
                               onTapArea()
                           }) {
                     Image("Tap")
@@ -91,8 +96,35 @@ struct GameView: View {
         max(targetTapCount - tapCount, 0)
     }
 
+    private func moveCharacterHorizontally() {
+        let step: CGFloat = 0.12
+        if movingLeft {
+            characterOffsetProgress -= step
+            if characterOffsetProgress <= -1 {
+                characterOffsetProgress = -1
+                movingLeft.toggle()
+            }
+        } else {
+            characterOffsetProgress += step
+            if characterOffsetProgress >= 1 {
+                characterOffsetProgress = 1
+                movingLeft.toggle()
+            }
+        }
+    }
+
+    private func characterXPosition(for size: CGSize) -> CGFloat {
+        let characterWidth = size.width * characterWidthRatio
+        let maxOffset = max((size.width - characterWidth) / 2, 0)
+        return size.width / 2 + characterOffsetProgress * maxOffset
+    }
+
     private var tapButtonWidthRatio: CGFloat {
         return isPadDevice ? 0.6 : 0.75
+    }
+
+    private var characterWidthRatio: CGFloat {
+        0.6
     }
 
     private var characterPositionRatio: CGFloat {
