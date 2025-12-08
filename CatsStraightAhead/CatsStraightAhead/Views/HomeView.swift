@@ -36,6 +36,7 @@ struct HomeView: View {
     @State private var rewardMilestone: Int?
     @State private var showingRewardOverlay = false
     @State private var selectedIllustration: IllustrationItem?
+    @Environment(\.isPadLayout) private var isPadLayout
 
     private var orderedIllustrations: [IllustrationItem] {
         var items = illustrationItems.filter { $0.id != "Ilustrated_none" }
@@ -48,7 +49,7 @@ struct HomeView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let layout = HomeLayoutMetrics(size: geometry.size)
+            let layout = HomeLayoutMetrics(size: geometry.size, isPadLayout: isPadLayout)
             ZStack {
                 AdaptiveBackgroundImage(imageName: "HomeView")
 
@@ -75,7 +76,7 @@ struct HomeView: View {
 
                 if isShowingSettings {
                     Color.black.opacity(0.5)
-                        .ignoresSafeArea()
+                        .ignoresSafeArea(isPadLayout ? [] : .all)
                         .onTapGesture { isShowingSettings = false }
                     settingsPanel
                         .frame(maxWidth: min(geometry.size.width * 0.8, layout.settingsPanelMaxWidth))
@@ -97,7 +98,7 @@ struct HomeView: View {
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
-        .ignoresSafeArea()
+        .ignoresSafeArea(isPadLayout ? [] : .all)
     }
 
     private var statusPanel: some View {
@@ -108,18 +109,22 @@ struct HomeView: View {
             statusText = "全特別図鑑を解放しました"
         }
 
+        let titleFontSize: CGFloat = isPadLayout ? 20 : 24
+        let detailFontSize: CGFloat = isPadLayout ? 13 : 16
+
         return VStack(spacing: 6) {
             Text("累計クリア: \(totalClears)周")
-                .font(.system(size: 24, weight: .bold))
+                .font(.system(size: titleFontSize, weight: .bold))
             Text(statusText)
-                .font(.system(size: 16, weight: .semibold))
+                .font(.system(size: detailFontSize, weight: .semibold))
         }
         .foregroundColor(.black)
-        .padding(.vertical, 16)
-        .padding(.horizontal, 20)
+        .padding(.vertical, isPadLayout ? 12 : 16)
+        .padding(.horizontal, isPadLayout ? 16 : 20)
         .background(Color.white.opacity(0.95))
         .cornerRadius(16)
         .shadow(radius: 10)
+        .scaleEffect(isPadLayout ? 0.85 : 1.0)
     }
 
     private var settingsPanel: some View {
@@ -183,6 +188,8 @@ struct HomeView: View {
                 isShowingCollection = true
                 selectedIllustration = nil
             }
+        case "交換":
+            RakutenRewardManager.shared.openPortal()
         case "達成":
             guard hasAchievementReward,
                   let reward = onClaimAchievement() else { return }
@@ -212,7 +219,7 @@ struct HomeView: View {
         GeometryReader { proxy in
             ZStack {
                 Color.black.opacity(0.7)
-                    .ignoresSafeArea()
+                    .ignoresSafeArea(isPadLayout ? [] : .all)
                     .onTapGesture {
                         withAnimation {
                             isShowingCollection = false
@@ -273,7 +280,7 @@ struct HomeView: View {
     private func illustratedZoomOverlay(imageName: String, in proxy: GeometryProxy) -> some View {
         ZStack {
             Color.black.opacity(0.7)
-                .ignoresSafeArea()
+                .ignoresSafeArea(isPadLayout ? [] : .all)
                 .onTapGesture { selectedIllustration = nil }
 
             VStack(spacing: 12) {
@@ -308,12 +315,13 @@ private struct AchievementRewardOverlay: View {
     let milestone: Int
     let onClose: () -> Void
     @State private var offsetRatio: CGFloat = 1
+    @Environment(\.isPadLayout) private var isPadLayout
 
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .bottom) {
                 Color.black.opacity(0.7)
-                    .ignoresSafeArea()
+                    .ignoresSafeArea(isPadLayout ? [] : .all)
                     .onTapGesture { dismiss() }
                 VStack(spacing: 16) {
                     Text("\(milestone)周達成！")
@@ -404,8 +412,9 @@ private struct HomeMenuButton: View {
 
 private struct HomeLayoutMetrics {
     let size: CGSize
+    let isPadLayout: Bool
 
-    private var isPad: Bool { isPadDevice }
+    private var isPad: Bool { isPadLayout }
     private var baseContentWidth: CGFloat {
         let ratio: CGFloat = isPad ? 0.5 : 0.78
         let maxWidth: CGFloat = isPad ? 520 : 420
@@ -413,21 +422,21 @@ private struct HomeLayoutMetrics {
     }
 
     var titleVerticalRatio: CGFloat { isPad ? 0.14 : 0.12 }
-    var menuStackVerticalRatio: CGFloat { isPad ? 0.38 : 0.43 }
-    var menuStackHorizontalRatio: CGFloat { isPad ? 0.0 : -0.05 }
+    var menuStackVerticalRatio: CGFloat { isPad ? 0.48 : 0.43 }
+    var menuStackHorizontalRatio: CGFloat { isPad ? 0.05 : -0.05 }
     var startButtonVerticalRatio: CGFloat { isPad ? 0.8 : 0.78 }
     var menuContentWidth: CGFloat { baseContentWidth }
-    var menuButtonWidth: CGFloat { baseContentWidth * (isPad ? 1.4 : 1.25) }
+    var menuButtonWidth: CGFloat { baseContentWidth * (isPad ? 1.1 : 1.25) }
     var menuButtonHeight: CGFloat {
-        let ratio: CGFloat = isPad ? 0.16 : 0.14
-        let minHeight: CGFloat = isPad ? 130 : 100
+        let ratio: CGFloat = isPad ? 0.12 : 0.14
+        let minHeight: CGFloat = isPad ? 100 : 100
         return max(size.height * ratio, minHeight)
     }
     var menuSpacing: CGFloat {
         let ratio: CGFloat = isPad ? 0.025 : 0.02
         return size.height * ratio
     }
-    var menuButtonImageScale: CGFloat { isPad ? 1.35 : 1.15 }
+    var menuButtonImageScale: CGFloat { isPad ? 0.95 : 1.15 }
     var startButtonWidth: CGFloat { min(baseContentWidth * 1.2, size.width * 0.85) }
     var startButtonHeight: CGFloat {
         let ratio: CGFloat = isPad ? 0.38 : 0.32
@@ -436,7 +445,13 @@ private struct HomeLayoutMetrics {
     }
     var startButtonImageScale: CGFloat { isPad ? 1.0 : 1.0 }
     var settingsPanelMaxWidth: CGFloat { isPad ? 420 : 320 }
-    var statusPanelWidth: CGFloat { min(baseContentWidth * 1.0, size.width * 0.7) }
+    var statusPanelWidth: CGFloat {
+        if isPad {
+            return min(baseContentWidth * 1.35, size.width * 0.85)
+        } else {
+            return min(baseContentWidth * 1.0, size.width * 0.7)
+        }
+    }
     var statusPosition: CGPoint {
         if isPad {
             return CGPoint(x: 0.5, y: 0.4)

@@ -1,15 +1,4 @@
 import SwiftUI
-#if canImport(UIKit)
-import UIKit
-#endif
-
-let isPadDevice: Bool = {
-#if os(iOS)
-    return UIDevice.current.userInterfaceIdiom == .pad
-#else
-    return false
-#endif
-}()
 
 enum AppScreen {
     case splash
@@ -47,7 +36,7 @@ enum CharacterPose: CaseIterable {
 }
 
 final class AppFlowState: ObservableObject {
-    private let useTestingAchievementRewards = true
+    private let useTestingAchievementRewards = false
     private let productionCharacterWeights: [(name: String, weight: Double)] = [
         ("Chara01", 0.75),
         ("Chara02", 0.15),
@@ -334,6 +323,8 @@ final class AppFlowState: ObservableObject {
         for milestone in milestoneRounds where totalClears >= milestone {
             unlockedMilestones.insert(milestone)
         }
+        RakutenRewardManager.shared.logClearAction()
+        AdjustManager.shared.trackGameCycleCompletion(total: totalClears)
         if let forced = milestoneClearMapping[totalClears] {
             forcedClearBackground = forced
         }
@@ -355,49 +346,61 @@ struct FlowCoordinatorView: View {
     @EnvironmentObject private var state: AppFlowState
 
     var body: some View {
-        ZStack(alignment: .top) {
-            Group {
-                switch state.currentScreen {
-                case .splash:
-                    SplashView(onFinish: state.showHome)
-                case .home:
-                    HomeView(onStart: state.startGame,
-                             onClaimAchievement: state.claimAchievementReward,
-                             vibrationEnabled: state.isVibrationEnabled,
-                             onVibrationChange: state.setVibration,
-                             hasAchievementReward: state.hasClaimableReward,
-                             unlockedIllustrations: state.unlockedIllustrations,
-                             totalClears: state.totalClears,
-                             nextMilestone: state.nextMilestoneTarget,
-                             runsUntilNext: state.runsUntilNextMilestone)
-                case .game:
-                    GameView(stage: state.currentStage,
-                             tapCount: state.tapCount,
-                             tapGoal: state.tapsPerStage,
-                             characterName: state.currentCharacterName,
-                             characterPose: state.currentCharacterPose,
-                             characterOffsetRatio: state.characterOffsetRatio,
-                             isVibrationEnabled: state.isVibrationEnabled,
-                             onTapAreaPressed: state.registerTap)
-                case .stageChange:
-                    StageChangeView(currentStage: state.currentStage,
-                                    totalStages: state.totalStages,
-                                    onNext: state.proceedFromStageChange)
-                case .clear:
-                    GameClearView(backgroundImageName: state.clearBackgroundName,
-                                  onFinish: state.finishGame)
+        GeometryReader { geometry in
+            let padLayout = DeviceLayoutResolver.isPadLayout(for: geometry.size)
+            let contentWidth = DeviceLayoutResolver.contentWidth(for: geometry.size, isPadLayout: padLayout)
+            ZStack {
+                if padLayout {
+                    Color.black.ignoresSafeArea()
                 }
+                ZStack(alignment: .top) {
+                    Group {
+                        switch state.currentScreen {
+                        case .splash:
+                            SplashView(onFinish: state.showHome)
+                        case .home:
+                            HomeView(onStart: state.startGame,
+                                     onClaimAchievement: state.claimAchievementReward,
+                                     vibrationEnabled: state.isVibrationEnabled,
+                                     onVibrationChange: state.setVibration,
+                                     hasAchievementReward: state.hasClaimableReward,
+                                     unlockedIllustrations: state.unlockedIllustrations,
+                                     totalClears: state.totalClears,
+                                     nextMilestone: state.nextMilestoneTarget,
+                                     runsUntilNext: state.runsUntilNextMilestone)
+                        case .game:
+                            GameView(stage: state.currentStage,
+                                     tapCount: state.tapCount,
+                                     tapGoal: state.tapsPerStage,
+                                     characterName: state.currentCharacterName,
+                                     characterPose: state.currentCharacterPose,
+                                     characterOffsetRatio: state.characterOffsetRatio,
+                                     isVibrationEnabled: state.isVibrationEnabled,
+                                     onTapAreaPressed: state.registerTap)
+                        case .stageChange:
+                            StageChangeView(currentStage: state.currentStage,
+                                            totalStages: state.totalStages,
+                                            onNext: state.proceedFromStageChange)
+                        case .clear:
+                            GameClearView(backgroundImageName: state.clearBackgroundName,
+                                          onFinish: state.finishGame)
+                        }
+                    }
+                    if state.isDebugModeEnabled {
+                        Text("デバッグモード")
+                            .font(.caption.bold())
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 6)
+                            .background(Color.black.opacity(0.5))
+                            .cornerRadius(16)
+                            .padding(.top, 12)
+                    }
+                }
+                .frame(width: contentWidth, height: geometry.size.height)
             }
-            if state.isDebugModeEnabled {
-                Text("デバッグモード")
-                    .font(.caption.bold())
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 6)
-                    .background(Color.black.opacity(0.5))
-                    .cornerRadius(16)
-                    .padding(.top, 12)
-            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .environment(\.isPadLayout, padLayout)
         }
         .animation(.easeInOut, value: state.currentScreen)
     }
@@ -405,11 +408,12 @@ struct FlowCoordinatorView: View {
 
 struct AdaptiveBackgroundImage: View {
     let imageName: String
+    @Environment(\.isPadLayout) private var isPadLayout
 
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                if isPadDevice {
+                if isPadLayout {
                     Color.black
                         .ignoresSafeArea()
                     Image(imageName)
@@ -433,7 +437,7 @@ struct AdaptiveBackgroundImage: View {
                 }
             }
         }
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: isPadLayout ? [] : .all)
         .allowsHitTesting(false)
     }
 }

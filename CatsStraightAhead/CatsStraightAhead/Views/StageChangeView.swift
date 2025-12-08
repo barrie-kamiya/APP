@@ -4,6 +4,7 @@ struct StageChangeView: View {
     let currentStage: Int
     let totalStages: Int
     let onNext: () -> Void
+    @Environment(\.isPadLayout) private var isPadLayout
 
     private var isFinalStage: Bool { currentStage >= totalStages }
     private var backgroundImageName: String {
@@ -39,7 +40,7 @@ struct StageChangeView: View {
                     }
                     .buttonStyle(.plain)
                     .position(x: geometry.size.width / 2,
-                              y: geometry.size.height * 0.45)
+                              y: geometry.size.height * (isPadLayout ? 0.48 : 0.49))
 
                     if !isFinalStage {
                         VStack(spacing: 4) {
@@ -55,11 +56,11 @@ struct StageChangeView: View {
                         .cornerRadius(10)
                         .shadow(radius: 4)
                         .position(x: geometry.size.width * indicatorPosition.x,
-                                  y: geometry.size.height * 0.37)
+                                  y: geometry.size.height * (isPadLayout ? 0.41 : 0.41))
                     }
                 }
             }
         }
-        .ignoresSafeArea(edges: .bottom)
+        .ignoresSafeArea(edges: isPadLayout ? [] : .all)
     }
 }

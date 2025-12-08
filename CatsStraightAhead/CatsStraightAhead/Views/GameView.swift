@@ -12,9 +12,13 @@ struct GameView: View {
     let characterOffsetRatio: CGFloat
     let isVibrationEnabled: Bool
     let onTapAreaPressed: () -> Void
+    @Environment(\.isPadLayout) private var isPadLayout
 
     private var remainingTaps: Int { max(tapGoal - tapCount, 0) }
-    private let indicatorPositionRatio = CGPoint(x: 0.2, y: 0.02)
+    private var indicatorPositionRatio: CGPoint {
+        if isPadLayout { return CGPoint(x: 0.15, y: 0.07) }
+        return CGPoint(x: 0.17, y: 0.08)
+    }
     private let indicatorWidthRatio: CGFloat = 0.16
 
     private var backgroundImageName: String {
@@ -33,7 +37,7 @@ struct GameView: View {
         ZStack {
             AdaptiveBackgroundImage(imageName: backgroundImageName)
             Color.black.opacity(0.25)
-                .ignoresSafeArea()
+                .ignoresSafeArea(isPadLayout ? [] : .all)
             GeometryReader { geometry in
                 let characterWidth = geometry.size.width * 0.5
                 let maxOffset = max((geometry.size.width - characterWidth) / 2, 0)
@@ -46,7 +50,7 @@ struct GameView: View {
                             .scaleEffect(x: characterPose.scaleX, y: 1)
                             .rotationEffect(characterPose.rotation)
                             .shadow(radius: 6)
-                            .padding(.top, -10)
+                            .padding(.top, isPadLayout ? 20 : 40)
                             .offset(x: characterOffsetRatio * maxOffset)
                         Spacer()
                         Button(action: handleTap) {
@@ -58,6 +62,7 @@ struct GameView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .frame(height: geometry.size.height / 2)
+                        .padding(.bottom, isPadLayout ? -20 : -10)
                         .cornerRadius(32)
                         .shadow(radius: 12)
                         .buttonStyle(.plain)
@@ -82,8 +87,7 @@ struct GameView: View {
                 }
             }
         }
-        .background(Color(.systemBackground))
-        .ignoresSafeArea(edges: .bottom)
+        .ignoresSafeArea(edges: isPadLayout ? [] : .all)
     }
 
     private func handleTap() {

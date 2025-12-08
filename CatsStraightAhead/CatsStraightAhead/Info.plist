@@ -22,15 +22,13 @@
     <string>1</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>パーソナライズされた体験と広告計測のため、トラッキングへの許可をお願いします。</string>
     <key>UILaunchScreen</key>
     <dict/>
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
-    </array>
-    <key>UIDeviceFamily</key>
-    <array>
-        <integer>1</integer>
     </array>
     <key>UIApplicationSceneManifest</key>
     <dict>

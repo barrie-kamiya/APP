@@ -14,6 +14,12 @@
 		C3A4A2E229F8A2B100000024 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000014 /* GameView.swift */; };
 		C3A4A2E229F8A2B100000025 /* StageChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000015 /* StageChangeView.swift */; };
 		C3A4A2E229F8A2B100000026 /* GameClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000016 /* GameClearView.swift */; };
+		C3F5F9A42C1D4A6C00A0AA01 /* DeviceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5F9A32C1D4A6C00A0AA01 /* DeviceLayout.swift */; };
+		C3F6E6002C1EC8B100000020 /* RakutenRewardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F6E6012C1EC8B100000021 /* RakutenRewardManager.swift */; };
+		C3F6E6022C1EC8B100000022 /* RakutenRewardSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C3F6E6042C1EC8B100000024 /* RakutenRewardSDK */; };
+		C3F6E6112C1ED2A700000030 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F6E6102C1ED2A70000002F /* AdjustManager.swift */; };
+		C3F6E6122C1ED2A700000031 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = C3F6E6162C1ED2A700000033 /* Adjust */; };
+		C3F6E6182C1ED55E00000035 /* TrackingAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F6E6192C1ED55E00000036 /* TrackingAuthorizationManager.swift */; };
 		C3A4A2E229F8A2B100000027 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000017 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +34,10 @@
 		C3A4A2E229F8A2B100000017 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C3A4A2E229F8A2B100000018 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3A4A2E229F8A2B10000002F /* ネコまっしぐら.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ネコまっしぐら.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3F5F9A32C1D4A6C00A0AA01 /* DeviceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLayout.swift; sourceTree = "<group>"; };
+		C3F6E6012C1EC8B100000021 /* RakutenRewardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RakutenRewardManager.swift; sourceTree = "<group>"; };
+		C3F6E6102C1ED2A70000002F /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
+		C3F6E6192C1ED55E00000036 /* TrackingAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAuthorizationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3F6E6022C1EC8B100000022 /* RakutenRewardSDK in Frameworks */,
+				C3F6E6122C1ED2A700000031 /* Adjust in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +75,9 @@
 				C3A4A2E229F8A2B100000010 /* CatsStraightAheadApp.swift */,
 				C3A4A2E229F8A2B10000000E /* Views */,
 				C3A4A2E229F8A2B100000017 /* Assets.xcassets */,
+				C3F6E6102C1ED2A70000002F /* AdjustManager.swift */,
+				C3F6E6012C1EC8B100000021 /* RakutenRewardManager.swift */,
+				C3F6E6192C1ED55E00000036 /* TrackingAuthorizationManager.swift */,
 				C3A4A2E229F8A2B100000018 /* Info.plist */,
 			);
 			path = CatsStraightAhead;
@@ -77,6 +92,7 @@
 				C3A4A2E229F8A2B100000014 /* GameView.swift */,
 				C3A4A2E229F8A2B100000015 /* StageChangeView.swift */,
 				C3A4A2E229F8A2B100000016 /* GameClearView.swift */,
+				C3F5F9A32C1D4A6C00A0AA01 /* DeviceLayout.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -98,6 +114,8 @@
 			);
 			name = CatsStraightAhead;
 			packageProductDependencies = (
+				C3F6E6042C1EC8B100000024 /* RakutenRewardSDK */,
+				C3F6E6162C1ED2A700000033 /* Adjust */,
 			);
 			productName = CatsStraightAhead;
 			productReference = C3A4A2E229F8A2B10000002F /* ネコまっしぐら.app */;
@@ -128,6 +146,8 @@
 			);
 			mainGroup = C3A4A2E229F8A2B100000001;
 			packageReferences = (
+				C3F6E6032C1EC8B100000023 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */,
+				C3F6E6172C1ED2A700000034 /* XCRemoteSwiftPackageReference "ios_sdk" */,
 			);
 			productRefGroup = C3A4A2E229F8A2B100000003 /* Products */;
 			projectDirPath = "";
@@ -157,6 +177,10 @@
 				C3A4A2E229F8A2B100000026 /* GameClearView.swift in Sources */,
 				C3A4A2E229F8A2B100000023 /* HomeView.swift in Sources */,
 				C3A4A2E229F8A2B100000020 /* CatsStraightAheadApp.swift in Sources */,
+				C3F6E6112C1ED2A700000030 /* AdjustManager.swift in Sources */,
+				C3F6E6002C1EC8B100000020 /* RakutenRewardManager.swift in Sources */,
+				C3F6E6182C1ED55E00000035 /* TrackingAuthorizationManager.swift in Sources */,
+				C3F5F9A42C1D4A6C00A0AA01 /* DeviceLayout.swift in Sources */,
 				C3A4A2E229F8A2B100000024 /* GameView.swift in Sources */,
 				C3A4A2E229F8A2B100000021 /* FlowCoordinatorView.swift in Sources */,
 				C3A4A2E229F8A2B100000025 /* StageChangeView.swift in Sources */,
@@ -286,7 +310,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CatsStraightAhead.app;
 				PRODUCT_NAME = "ネコまっしぐら";
 				REGISTER_APP_GROUPS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -318,7 +342,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CatsStraightAhead.app;
 				PRODUCT_NAME = "ネコまっしぐら";
 				REGISTER_APP_GROUPS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -328,6 +352,38 @@
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C3F6E6032C1EC8B100000023 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Rakuten-Reward-SDK/Reward-SDK-iOS-SPM.git";
+			requirement = {
+				kind = exactVersion;
+				version = 12.0.0;
+			};
+		};
+		C3F6E6172C1ED2A700000034 /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adjust/ios_sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.38.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C3F6E6042C1EC8B100000024 /* RakutenRewardSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C3F6E6032C1EC8B100000023 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */;
+			productName = RakutenRewardSDK;
+		};
+		C3F6E6162C1ED2A700000033 /* Adjust */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C3F6E6172C1ED2A700000034 /* XCRemoteSwiftPackageReference "ios_sdk" */;
+			productName = Adjust;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCConfigurationList section */
 		C3A4A2E229F8A2B100000007 /* Build configuration list for PBXProject "CatsStraightAhead" */ = {
