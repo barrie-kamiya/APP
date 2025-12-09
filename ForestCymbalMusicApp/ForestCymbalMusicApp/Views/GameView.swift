@@ -32,6 +32,7 @@ struct GameView: View {
                 Button(action: {
                               triggerHapticIfNeeded()
                               showPoseA.toggle()
+                              playSymbalIfNeededOnPoseB()
                               withAnimation(.easeInOut(duration: 0.18)) {
                                   moveCharacterHorizontally()
                               }
@@ -186,6 +187,13 @@ struct GameView: View {
                     .ignoresSafeArea()
             }
         }
+    }
+
+    private func playSymbalIfNeededOnPoseB() {
+#if canImport(UIKit)
+        guard !showPoseA else { return }
+        SoundEffectPlayer.shared.playSymbalCue()
+#endif
     }
 }
 

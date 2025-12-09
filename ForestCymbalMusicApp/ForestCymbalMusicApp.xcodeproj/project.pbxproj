@@ -21,6 +21,7 @@
 		C3F1E4072C8F0C4E00000060 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F1E4062C8F0C4E00000060 /* AdjustManager.swift */; };
 		C3F1E4092C8F0CF200000061 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = C3F1E4082C8F0CF200000061 /* Adjust */; };
 		C3F1E40C2C8F159B00000062 /* TrackingAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F1E40B2C8F159B00000062 /* TrackingAuthorizationManager.swift */; };
+		C3F1E4102C8F207D00000063 /* SoundEffectPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F1E40F2C8F207D00000063 /* SoundEffectPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		C3F1E4002C8EFA0100000050 /* RakutenRewardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RakutenRewardManager.swift; sourceTree = "<group>"; };
 		C3F1E4062C8F0C4E00000060 /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
 		C3F1E40B2C8F159B00000062 /* TrackingAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAuthorizationManager.swift; sourceTree = "<group>"; };
+		C3F1E40F2C8F207D00000063 /* SoundEffectPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEffectPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				C3F1E4062C8F0C4E00000060 /* AdjustManager.swift */,
 				C3F1E40B2C8F159B00000062 /* TrackingAuthorizationManager.swift */,
 				C3F1E4002C8EFA0100000050 /* RakutenRewardManager.swift */,
+				C3F1E40F2C8F207D00000063 /* SoundEffectPlayer.swift */,
 				C3A4A2E229F8A2B10000000E /* Views */,
 				C3A4A2E229F8A2B100000017 /* Assets.xcassets */,
 				C3A4A2E229F8A2B100000018 /* Info.plist */,
@@ -193,6 +196,7 @@
 				C3A4A2E229F8A2B100000021 /* FlowCoordinatorView.swift in Sources */,
 				C3A4A2E229F8A2B100000025 /* StageChangeView.swift in Sources */,
 				C3A4A2E229F8A2B100000022 /* SplashView.swift in Sources */,
+				C3F1E4102C8F207D00000063 /* SoundEffectPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
