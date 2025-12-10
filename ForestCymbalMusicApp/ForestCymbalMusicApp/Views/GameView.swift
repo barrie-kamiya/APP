@@ -54,6 +54,12 @@ struct GameView: View {
                               y: proxy.size.height * statusPositionYRatio)
             }
         }
+        .onAppear {
+            startSymbalBgm()
+        }
+        .onDisappear {
+            stopSymbalBgm()
+        }
     }
 
     private func triggerHapticIfNeeded() {
@@ -193,6 +199,18 @@ struct GameView: View {
 #if canImport(UIKit)
         guard !showPoseA else { return }
         SoundEffectPlayer.shared.playSymbalCue()
+#endif
+    }
+
+    private func startSymbalBgm() {
+#if canImport(UIKit)
+        SymbalBgmPlayer.shared.play()
+#endif
+    }
+
+    private func stopSymbalBgm() {
+#if canImport(UIKit)
+        SymbalBgmPlayer.shared.stop()
 #endif
     }
 }

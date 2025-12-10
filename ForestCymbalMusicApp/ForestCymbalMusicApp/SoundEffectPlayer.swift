@@ -31,4 +31,40 @@ final class SoundEffectPlayer {
         }
     }
 }
+
+/// ゲーム中のBGMを制御するプレイヤー
+final class SymbalBgmPlayer {
+    static let shared = SymbalBgmPlayer()
+
+    private var bgmPlayer: AVAudioPlayer?
+
+    private init() {}
+
+    func play() {
+        preparePlayerIfNeeded()
+        guard bgmPlayer?.isPlaying != true else { return }
+        bgmPlayer?.currentTime = 0
+        bgmPlayer?.play()
+    }
+
+    func stop() {
+        bgmPlayer?.stop()
+        bgmPlayer?.currentTime = 0
+    }
+
+    private func preparePlayerIfNeeded() {
+        guard bgmPlayer == nil else { return }
+        guard let asset = NSDataAsset(name: "SymbalBgm") else {
+            assertionFailure("SymbalBgm asset not found")
+            return
+        }
+        do {
+            bgmPlayer = try AVAudioPlayer(data: asset.data)
+            bgmPlayer?.numberOfLoops = -1
+            bgmPlayer?.prepareToPlay()
+        } catch {
+            assertionFailure("Failed to load SymbalBgm: \(error.localizedDescription)")
+        }
+    }
+}
 #endif

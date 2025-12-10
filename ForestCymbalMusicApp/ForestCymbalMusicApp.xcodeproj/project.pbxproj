@@ -25,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0720253D2EE962820064019F /* ForestCymbalMusicApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ForestCymbalMusicApp.xcodeproj; sourceTree = SOURCE_ROOT; };
 		C3A4A2E229F8A2B100000010 /* ForestCymbalMusicAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForestCymbalMusicAppApp.swift; sourceTree = "<group>"; };
 		C3A4A2E229F8A2B100000011 /* FlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinatorView.swift; sourceTree = "<group>"; };
 		C3A4A2E229F8A2B100000012 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 				C3A4A2E229F8A2B100000017 /* Assets.xcassets */,
 				C3A4A2E229F8A2B100000018 /* Info.plist */,
 				C3A4A2E229F8A2B10000001A /* Preview Content */,
+				0720253D2EE962820064019F /* ForestCymbalMusicApp.xcodeproj */,
 			);
 			path = ForestCymbalMusicApp;
 			sourceTree = "<group>";
@@ -123,11 +125,11 @@
 			);
 			dependencies = (
 			);
+			name = ForestCymbalMusicApp;
 			packageProductDependencies = (
 				C3F1E4082C8F0CF200000061 /* Adjust */,
 				C3F1E4042C8EFB4C00000051 /* RakutenRewardSDK */,
 			);
-			name = ForestCymbalMusicApp;
 			productName = ForestCymbalMusicApp;
 			productReference = C3A4A2E229F8A2B10000002F /* 森のシンバル音楽会.app */;
 			productType = "com.apple.product-type.application";
@@ -156,13 +158,13 @@
 				Base,
 			);
 			mainGroup = C3A4A2E229F8A2B100000001;
-			productRefGroup = C3A4A2E229F8A2B100000003 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
 			packageReferences = (
 				C3F1E40A2C8F0CF200000061 /* XCRemoteSwiftPackageReference "ios_sdk" */,
 				C3F1E4032C8EFB4C00000051 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */,
 			);
+			productRefGroup = C3A4A2E229F8A2B100000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				C3A4A2E229F8A2B100000002 /* ForestCymbalMusicApp */,
 			);
@@ -367,38 +369,6 @@
 		};
 /* End XCBuildConfiguration section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		C3F1E40A2C8F0CF200000061 /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/adjust/ios_sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.38.4;
-			};
-		};
-		C3F1E4032C8EFB4C00000051 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Rakuten-Reward-SDK/Reward-SDK-iOS-SPM.git";
-			requirement = {
-				kind = exactVersion;
-				version = 12.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C3F1E4082C8F0CF200000061 /* Adjust */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C3F1E40A2C8F0CF200000061 /* XCRemoteSwiftPackageReference "ios_sdk" */;
-			productName = Adjust;
-		};
-		C3F1E4042C8EFB4C00000051 /* RakutenRewardSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C3F1E4032C8EFB4C00000051 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */;
-			productName = RakutenRewardSDK;
-		};
-/* End XCSwiftPackageProductDependency section */
-
 /* Begin XCConfigurationList section */
 		C3A4A2E229F8A2B100000007 /* Build configuration list for PBXProject "ForestCymbalMusicApp" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +389,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C3F1E4032C8EFB4C00000051 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Rakuten-Reward-SDK/Reward-SDK-iOS-SPM.git";
+			requirement = {
+				kind = exactVersion;
+				version = 12.0.0;
+			};
+		};
+		C3F1E40A2C8F0CF200000061 /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adjust/ios_sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.38.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C3F1E4042C8EFB4C00000051 /* RakutenRewardSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C3F1E4032C8EFB4C00000051 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */;
+			productName = RakutenRewardSDK;
+		};
+		C3F1E4082C8F0CF200000061 /* Adjust */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C3F1E40A2C8F0CF200000061 /* XCRemoteSwiftPackageReference "ios_sdk" */;
+			productName = Adjust;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C3A4A2E229F8A2B100000000 /* Project object */;
 }
