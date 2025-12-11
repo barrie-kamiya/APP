@@ -139,13 +139,11 @@ final class AppFlowState: ObservableObject {
     }
     
     func returnToHomeDuringRun() {
-        isRunInProgress = false
-        clearPersistedProgress()
-        currentStage = 1
+        guard currentScreen == .game else { return }
         tapCount = 0
-        lastClearedStage = 0
-        cumulativeTapCount = 0
-        cumulativeTapCountAtStageStart = 0
+        cumulativeTapCount = cumulativeTapCountAtStageStart
+        saveCurrentProgress()
+        isRunInProgress = false
         prepareCharacterForNewStage()
         currentScreen = .home
     }
