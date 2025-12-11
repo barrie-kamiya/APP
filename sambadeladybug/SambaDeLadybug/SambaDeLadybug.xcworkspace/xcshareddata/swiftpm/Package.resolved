@@ -1,0 +1,24 @@
+{
+  "originHash" : "2042f25d4545c1cb78cf4b771e502dfb4b108ef691362ba695980e76c2697dd7",
+  "pins" : [
+    {
+      "identity" : "ios_sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/adjust/ios_sdk.git",
+      "state" : {
+        "revision" : "e163732d55c3c0eb749f22418b6e4855839696c3",
+        "version" : "4.38.4"
+      }
+    },
+    {
+      "identity" : "reward-sdk-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Rakuten-Reward-SDK/Reward-SDK-iOS-SPM.git",
+      "state" : {
+        "revision" : "1f4031e9f599c17098141804f8f61f9af5d4fa8f",
+        "version" : "12.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

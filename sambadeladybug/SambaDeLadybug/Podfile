@@ -1,0 +1,6 @@
+  platform :ios, '16.0'
+
+  target 'SambaDeLadybug' do
+    use_frameworks!
+    pod 'FiveAd'
+  end

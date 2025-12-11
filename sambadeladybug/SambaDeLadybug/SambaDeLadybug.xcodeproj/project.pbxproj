@@ -17,9 +17,13 @@
 		B2099A0C2F1C010100000001 /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2099A0B2F1C010100000001 /* AdjustManager.swift */; };
 		B2099A102F1C010100000001 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = B2099A0F2F1C010100000001 /* Adjust */; };
 		B2099A152F1C020100000001 /* TrackingAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2099A142F1C020100000001 /* TrackingAuthorizationManager.swift */; };
+		B2099A182F1C087000000001 /* FiveAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2099A152F1C087000000001 /* FiveAdManager.swift */; };
+		B2099A192F1C087000000001 /* FiveAdVideoRewardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2099A172F1C087000000001 /* FiveAdVideoRewardManager.swift */; };
+		EA945AB8C8A5629D1FC0B0C0 /* Pods_SambaDeLadybug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8D463CE5AA30B2009668EE /* Pods_SambaDeLadybug.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6530E88DE0249EBFD3E9D007 /* Pods-SambaDeLadybug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SambaDeLadybug.debug.xcconfig"; path = "Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug.debug.xcconfig"; sourceTree = "<group>"; };
 		A1B01C432F1A000100000001 /* SambaDeLadybugApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SambaDeLadybugApp.swift; sourceTree = "<group>"; };
 		A1B01C432F1A000100000002 /* AppFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowViewModel.swift; sourceTree = "<group>"; };
 		A1B01C432F1A000100000003 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
@@ -28,8 +32,12 @@
 		A1B01C462F1A000100000001 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A1B01C472F1A000100000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1B01C522F1A000100000001 /* SambaDeLadybug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SambaDeLadybug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4BB6C20FA70C01BDB4566F9 /* Pods-SambaDeLadybug.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SambaDeLadybug.release.xcconfig"; path = "Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug.release.xcconfig"; sourceTree = "<group>"; };
 		B2099A0B2F1C010100000001 /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
 		B2099A142F1C020100000001 /* TrackingAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAuthorizationManager.swift; sourceTree = "<group>"; };
+		B2099A152F1C087000000001 /* FiveAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveAdManager.swift; sourceTree = "<group>"; };
+		B2099A172F1C087000000001 /* FiveAdVideoRewardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveAdVideoRewardManager.swift; sourceTree = "<group>"; };
+		CE8D463CE5AA30B2009668EE /* Pods_SambaDeLadybug.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SambaDeLadybug.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,17 +47,29 @@
 			files = (
 				B2099A102F1C010100000001 /* Adjust in Frameworks */,
 				B20000012F1B000100000001 /* RakutenRewardSDK in Frameworks */,
+				EA945AB8C8A5629D1FC0B0C0 /* Pods_SambaDeLadybug.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		854CB7C853600BA4E981CD08 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6530E88DE0249EBFD3E9D007 /* Pods-SambaDeLadybug.debug.xcconfig */,
+				A4BB6C20FA70C01BDB4566F9 /* Pods-SambaDeLadybug.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		A1B01C3F2F1A000100000001 = {
 			isa = PBXGroup;
 			children = (
 				A1B01C402F1A000100000001 /* SambaDeLadybug */,
 				A1B01C512F1A000100000001 /* Products */,
+				854CB7C853600BA4E981CD08 /* Pods */,
+				EB466BC88CE0830681353CCC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,6 +79,8 @@
 				A1B01C432F1A000100000001 /* SambaDeLadybugApp.swift */,
 				A1B01C432F1A000100000002 /* AppFlowViewModel.swift */,
 				B2099A0B2F1C010100000001 /* AdjustManager.swift */,
+				B2099A152F1C087000000001 /* FiveAdManager.swift */,
+				B2099A172F1C087000000001 /* FiveAdVideoRewardManager.swift */,
 				B2099A142F1C020100000001 /* TrackingAuthorizationManager.swift */,
 				A1B01C432F1A000100000003 /* Screens.swift */,
 				A1B01C432F1A000100000004 /* RakutenRewardManager.swift */,
@@ -85,6 +107,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		EB466BC88CE0830681353CCC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE8D463CE5AA30B2009668EE /* Pods_SambaDeLadybug.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -92,10 +122,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1B01C612F1A000100000001 /* Build configuration list for PBXNativeTarget "SambaDeLadybug" */;
 			buildPhases = (
+				E0687A28D152B332376A3550 /* [CP] Check Pods Manifest.lock */,
 				A1B01C572F1A000100000001 /* Sources */,
 				A1B01C582F1A000100000001 /* Frameworks */,
 				A1B01C592F1A000100000001 /* Resources */,
 				B2D000102F1C050100000001 /* Copy RakutenReward dSYM */,
+				E1C3ADA9E3AA81482413F315 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -178,6 +210,49 @@
 			shellPath = /bin/sh;
 			shellScript = "FRAMEWORK_NAME=\"RakutenRewardSDK\"\nFRAMEWORK_EXEC=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\"\nDSYM_DEST=\"${DWARF_DSYM_FOLDER_PATH}/${FRAMEWORK_NAME}.framework.dSYM\"\n\nif [ -f \"${FRAMEWORK_EXEC}\" ]; then\n    rm -rf \"${DSYM_DEST}\"\n    mkdir -p \"${DWARF_DSYM_FOLDER_PATH}\"\n    dsymutil \"${FRAMEWORK_EXEC}\" -o \"${DSYM_DEST}\"\nelse\n    echo \"warning: Framework binary not found at ${FRAMEWORK_EXEC}\"\nfi\n";
 		};
+		E0687A28D152B332376A3550 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SambaDeLadybug-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1C3ADA9E3AA81482413F315 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -187,6 +262,8 @@
 			files = (
 				B2099A0C2F1C010100000001 /* AdjustManager.swift in Sources */,
 				B2099A152F1C020100000001 /* TrackingAuthorizationManager.swift in Sources */,
+				B2099A182F1C087000000001 /* FiveAdManager.swift in Sources */,
+				B2099A192F1C087000000001 /* FiveAdVideoRewardManager.swift in Sources */,
 				A1B01C5E2F1A000100000004 /* RakutenRewardManager.swift in Sources */,
 				A1B01C5E2F1A000100000003 /* Screens.swift in Sources */,
 				A1B01C5E2F1A000100000002 /* AppFlowViewModel.swift in Sources */,
@@ -304,6 +381,7 @@
 		};
 		A1B01C602F1A000100000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6530E88DE0249EBFD3E9D007 /* Pods-SambaDeLadybug.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -318,7 +396,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = sanbadetento.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -330,6 +408,7 @@
 		};
 		A1B01C602F1A000100000002 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4BB6C20FA70C01BDB4566F9 /* Pods-SambaDeLadybug.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -344,7 +423,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = sanbadetento.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

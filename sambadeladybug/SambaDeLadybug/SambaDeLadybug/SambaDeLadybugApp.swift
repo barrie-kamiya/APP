@@ -1,4 +1,13 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
+
+enum FeatureFlags {
+    static let isAdjustEnabled = true
+    static let isRakutenRewardEnabled = true
+    static let isFiveAdEnabled = true
+}
 
 @main
 struct SambaDeLadybugApp: App {
@@ -6,9 +15,21 @@ struct SambaDeLadybugApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
-        AdjustManager.shared.configureAdjust()
-        RakutenRewardManager.shared.configure()
+        if FeatureFlags.isAdjustEnabled {
+            AdjustManager.shared.configureAdjust()
+        }
+        if FeatureFlags.isRakutenRewardEnabled {
+            RakutenRewardManager.shared.configure()
+        }
         TrackingAuthorizationManager.requestTrackingAuthorizationIfNeeded()
+        if FeatureFlags.isFiveAdEnabled {
+            FiveAdManager.shared.configureIfNeeded()
+#if canImport(UIKit)
+            let width = Float(UIScreen.main.bounds.width * 0.92)
+            FiveAdBannerLoader.shared.preloadBannerIfNeeded(width: width)
+#endif
+            FiveAdVideoRewardManager.shared.preloadRewardIfNeeded()
+        }
     }
 
     var body: some Scene {
@@ -22,9 +43,13 @@ struct SambaDeLadybugApp: App {
         .onChange(of: scenePhase) { newPhase in
             switch newPhase {
             case .active:
-                AdjustManager.shared.setOfflineMode(false)
+                if FeatureFlags.isAdjustEnabled {
+                    AdjustManager.shared.setOfflineMode(false)
+                }
             case .background:
-                AdjustManager.shared.setOfflineMode(true)
+                if FeatureFlags.isAdjustEnabled {
+                    AdjustManager.shared.setOfflineMode(true)
+                }
             default:
                 break
             }

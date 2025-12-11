@@ -1,0 +1,669 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		45E4E3BB00608C49C8FFB883F83CC963 /* FiveAd */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E5F25FA63860054BCAD1204E8B57520F /* Build configuration list for PBXAggregateTarget "FiveAd" */;
+			buildPhases = (
+				A626D4C5E3AABC1B566E27B58FB75EB9 /* [CP] Copy XCFrameworks */,
+			);
+			dependencies = (
+				3C3DF89754DC288DA12DF747BE8742AB /* PBXTargetDependency */,
+			);
+			name = FiveAd;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		0D652F2C63D096045A5F0C45B2332715 /* Pods-SambaDeLadybug-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D41A24FFAE9E512AA80CB1603A78A /* Pods-SambaDeLadybug-dummy.m */; };
+		0D7BE832A2DF7E7B15802A79D788EC08 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		95A961FC320EBD0D4B583233FB7C607E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 52654332A21F318BB8B3D8F30E22BF21 /* PrivacyInfo.xcprivacy */; };
+		BDC308D60A03716F5140FDE0FC43CE97 /* Pods-SambaDeLadybug-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CCFD4CA8279698A6E83ADFD1EEC9CA4D /* Pods-SambaDeLadybug-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		484F36F4A01BB7602F501DC12E0BB096 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 45E4E3BB00608C49C8FFB883F83CC963;
+			remoteInfo = FiveAd;
+		};
+		AE32EA8C5754F9E8A801E0FCE15654C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4161E275819E6001E025CC2427528572;
+			remoteInfo = "FiveAd-FiveAd_resources";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0CBE2CACE3E4B70AD1DC541FFDC67B3A /* Pods-SambaDeLadybug.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SambaDeLadybug.modulemap"; sourceTree = "<group>"; };
+		0EEDC0A30C6D87A49E55D47D9818CBCE /* Pods-SambaDeLadybug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SambaDeLadybug.debug.xcconfig"; sourceTree = "<group>"; };
+		0F7D41A24FFAE9E512AA80CB1603A78A /* Pods-SambaDeLadybug-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SambaDeLadybug-dummy.m"; sourceTree = "<group>"; };
+		1860680B2211A582D65B3F5DE8310FEA /* FiveAd-FiveAd_resources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "FiveAd-FiveAd_resources"; path = FiveAd_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		4A7C9B6D0C9149380529400828CD6223 /* FiveAd-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "FiveAd-xcframeworks.sh"; sourceTree = "<group>"; };
+		4D4D47B71AAB473EBBE17F9E67BF55FD /* Pods-SambaDeLadybug-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SambaDeLadybug-Info.plist"; sourceTree = "<group>"; };
+		4EF6A4AEB54197FAF3C77AA8B5596659 /* FiveAd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FiveAd.release.xcconfig; sourceTree = "<group>"; };
+		52654332A21F318BB8B3D8F30E22BF21 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = "FiveAd.xcframework/ios-arm64/FiveAd.framework/PrivacyInfo.xcprivacy"; sourceTree = "<group>"; };
+		72ACC5E43BBCE221BE276269A61B8599 /* Pods-SambaDeLadybug */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-SambaDeLadybug"; path = Pods_SambaDeLadybug.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9E81D8AF082F80BE48E40018209C6204 /* Pods-SambaDeLadybug.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SambaDeLadybug.release.xcconfig"; sourceTree = "<group>"; };
+		A1532413242C9F7C534386DB37462C75 /* Pods-SambaDeLadybug-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SambaDeLadybug-acknowledgements.markdown"; sourceTree = "<group>"; };
+		A25010D4EC54B0FAF067122239EC3399 /* FiveAd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FiveAd.debug.xcconfig; sourceTree = "<group>"; };
+		BC6D379FF970B328555A30B012D290E6 /* ResourceBundle-FiveAd_resources-FiveAd-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-FiveAd_resources-FiveAd-Info.plist"; sourceTree = "<group>"; };
+		CCFD4CA8279698A6E83ADFD1EEC9CA4D /* Pods-SambaDeLadybug-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SambaDeLadybug-umbrella.h"; sourceTree = "<group>"; };
+		D60B5E0B9CF17BDF968B3B05E0FD5736 /* Pods-SambaDeLadybug-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SambaDeLadybug-resources.sh"; sourceTree = "<group>"; };
+		DC7FF226290A97F430A824EC55413944 /* Pods-SambaDeLadybug-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SambaDeLadybug-acknowledgements.plist"; sourceTree = "<group>"; };
+		E100E23701EE53DD3B5654229F9AC425 /* FiveAd.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = FiveAd.xcframework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0AAECE491659BC9A0214EBD6284125B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		54997169A6B1F4BF4D3351EFB3E933E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D7BE832A2DF7E7B15802A79D788EC08 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		177709EDCEC99B275D15B155ABBB69AD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				52654332A21F318BB8B3D8F30E22BF21 /* PrivacyInfo.xcprivacy */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		19952BD464DF81FDE81FC2FEAE4E3C79 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4A7C9B6D0C9149380529400828CD6223 /* FiveAd-xcframeworks.sh */,
+				A25010D4EC54B0FAF067122239EC3399 /* FiveAd.debug.xcconfig */,
+				4EF6A4AEB54197FAF3C77AA8B5596659 /* FiveAd.release.xcconfig */,
+				BC6D379FF970B328555A30B012D290E6 /* ResourceBundle-FiveAd_resources-FiveAd-Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/FiveAd";
+			sourceTree = "<group>";
+		};
+		5B9262E5E9E493E1F278048413F69356 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1860680B2211A582D65B3F5DE8310FEA /* FiveAd-FiveAd_resources */,
+				72ACC5E43BBCE221BE276269A61B8599 /* Pods-SambaDeLadybug */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7A77198B499095CA282C3DDD16301BB2 /* Pods-SambaDeLadybug */ = {
+			isa = PBXGroup;
+			children = (
+				0CBE2CACE3E4B70AD1DC541FFDC67B3A /* Pods-SambaDeLadybug.modulemap */,
+				A1532413242C9F7C534386DB37462C75 /* Pods-SambaDeLadybug-acknowledgements.markdown */,
+				DC7FF226290A97F430A824EC55413944 /* Pods-SambaDeLadybug-acknowledgements.plist */,
+				0F7D41A24FFAE9E512AA80CB1603A78A /* Pods-SambaDeLadybug-dummy.m */,
+				4D4D47B71AAB473EBBE17F9E67BF55FD /* Pods-SambaDeLadybug-Info.plist */,
+				D60B5E0B9CF17BDF968B3B05E0FD5736 /* Pods-SambaDeLadybug-resources.sh */,
+				CCFD4CA8279698A6E83ADFD1EEC9CA4D /* Pods-SambaDeLadybug-umbrella.h */,
+				0EEDC0A30C6D87A49E55D47D9818CBCE /* Pods-SambaDeLadybug.debug.xcconfig */,
+				9E81D8AF082F80BE48E40018209C6204 /* Pods-SambaDeLadybug.release.xcconfig */,
+			);
+			name = "Pods-SambaDeLadybug";
+			path = "Target Support Files/Pods-SambaDeLadybug";
+			sourceTree = "<group>";
+		};
+		A88437072B1B391AAD65D54F9E92DD34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E100E23701EE53DD3B5654229F9AC425 /* FiveAd.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BAEFA32FEB316A541B0FBA9DB5EE6417 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E075BD0D9D462352E78B696F13EE5B38 /* FiveAd */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				BAEFA32FEB316A541B0FBA9DB5EE6417 /* Pods */,
+				5B9262E5E9E493E1F278048413F69356 /* Products */,
+				F91F6ED082E6AED727215419B9D03AD8 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4801F62A6B08CD9B5410329F1A18FDE /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E075BD0D9D462352E78B696F13EE5B38 /* FiveAd */ = {
+			isa = PBXGroup;
+			children = (
+				A88437072B1B391AAD65D54F9E92DD34 /* Frameworks */,
+				177709EDCEC99B275D15B155ABBB69AD /* Resources */,
+				19952BD464DF81FDE81FC2FEAE4E3C79 /* Support Files */,
+			);
+			name = FiveAd;
+			path = FiveAd;
+			sourceTree = "<group>";
+		};
+		E4801F62A6B08CD9B5410329F1A18FDE /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		F91F6ED082E6AED727215419B9D03AD8 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7A77198B499095CA282C3DDD16301BB2 /* Pods-SambaDeLadybug */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F347AF54688B0C56252D3A88DE1A0362 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDC308D60A03716F5140FDE0FC43CE97 /* Pods-SambaDeLadybug-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4161E275819E6001E025CC2427528572 /* FiveAd-FiveAd_resources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43172D8364A2BE0415A0E5609DA8AAA0 /* Build configuration list for PBXNativeTarget "FiveAd-FiveAd_resources" */;
+			buildPhases = (
+				4B492612D5EC3D24BC2789E549086E35 /* Sources */,
+				0AAECE491659BC9A0214EBD6284125B2 /* Frameworks */,
+				866C12B074858030D29121EF70EA5FB6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "FiveAd-FiveAd_resources";
+			productName = FiveAd_resources;
+			productReference = 1860680B2211A582D65B3F5DE8310FEA /* FiveAd-FiveAd_resources */;
+			productType = "com.apple.product-type.bundle";
+		};
+		8D1B403AAAF1F2BF8C189F86F0A4E866 /* Pods-SambaDeLadybug */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DC2AEC762D9839FFD9D607075EC0097 /* Build configuration list for PBXNativeTarget "Pods-SambaDeLadybug" */;
+			buildPhases = (
+				F347AF54688B0C56252D3A88DE1A0362 /* Headers */,
+				24627C33734788734A97E916A120C49F /* Sources */,
+				54997169A6B1F4BF4D3351EFB3E933E3 /* Frameworks */,
+				FA902C3036EB2976F46A29A36E343E4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E984EE6DE949959E840421C82C83D52D /* PBXTargetDependency */,
+			);
+			name = "Pods-SambaDeLadybug";
+			productName = Pods_SambaDeLadybug;
+			productReference = 72ACC5E43BBCE221BE276269A61B8599 /* Pods-SambaDeLadybug */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5B9262E5E9E493E1F278048413F69356 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				45E4E3BB00608C49C8FFB883F83CC963 /* FiveAd */,
+				4161E275819E6001E025CC2427528572 /* FiveAd-FiveAd_resources */,
+				8D1B403AAAF1F2BF8C189F86F0A4E866 /* Pods-SambaDeLadybug */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		866C12B074858030D29121EF70EA5FB6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95A961FC320EBD0D4B583233FB7C607E /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA902C3036EB2976F46A29A36E343E4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A626D4C5E3AABC1B566E27B58FB75EB9 /* [CP] Copy XCFrameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/FiveAd/FiveAd-xcframeworks-input-files.xcfilelist",
+			);
+			name = "[CP] Copy XCFrameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/FiveAd/FiveAd-xcframeworks-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/FiveAd/FiveAd-xcframeworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		24627C33734788734A97E916A120C49F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D652F2C63D096045A5F0C45B2332715 /* Pods-SambaDeLadybug-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B492612D5EC3D24BC2789E549086E35 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3C3DF89754DC288DA12DF747BE8742AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "FiveAd-FiveAd_resources";
+			target = 4161E275819E6001E025CC2427528572 /* FiveAd-FiveAd_resources */;
+			targetProxy = AE32EA8C5754F9E8A801E0FCE15654C7 /* PBXContainerItemProxy */;
+		};
+		E984EE6DE949959E840421C82C83D52D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FiveAd;
+			target = 45E4E3BB00608C49C8FFB883F83CC963 /* FiveAd */;
+			targetProxy = 484F36F4A01BB7602F501DC12E0BB096 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		07C4A445F4B27704092E53F9E5FF2219 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A25010D4EC54B0FAF067122239EC3399 /* FiveAd.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1F0D8A68B4D80355DBFE14F1FC1D733A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A25010D4EC54B0FAF067122239EC3399 /* FiveAd.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/FiveAd";
+				IBSC_MODULE = FiveAd;
+				INFOPLIST_FILE = "Target Support Files/FiveAd/ResourceBundle-FiveAd_resources-FiveAd-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_NAME = FiveAd_resources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		30E0B9EFD9A5C45D0D351231E81B30B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		6A42853BB97BF33460C2E74FB25F2ABD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4EF6A4AEB54197FAF3C77AA8B5596659 /* FiveAd.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		89588A628B9AC48679378CC88381946D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E81D8AF082F80BE48E40018209C6204 /* Pods-SambaDeLadybug.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A4FEA4F05FBF1A3E839462F4158854C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4EF6A4AEB54197FAF3C77AA8B5596659 /* FiveAd.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/FiveAd";
+				IBSC_MODULE = FiveAd;
+				INFOPLIST_FILE = "Target Support Files/FiveAd/ResourceBundle-FiveAd_resources-FiveAd-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_NAME = FiveAd_resources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		CBFFF6078F505CF8BD872B7C4DF3A365 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0EEDC0A30C6D87A49E55D47D9818CBCE /* Pods-SambaDeLadybug.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SambaDeLadybug/Pods-SambaDeLadybug.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F4FF6A0D1970CA9705974E3CB2134802 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2DC2AEC762D9839FFD9D607075EC0097 /* Build configuration list for PBXNativeTarget "Pods-SambaDeLadybug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CBFFF6078F505CF8BD872B7C4DF3A365 /* Debug */,
+				89588A628B9AC48679378CC88381946D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43172D8364A2BE0415A0E5609DA8AAA0 /* Build configuration list for PBXNativeTarget "FiveAd-FiveAd_resources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F0D8A68B4D80355DBFE14F1FC1D733A /* Debug */,
+				A4FEA4F05FBF1A3E839462F4158854C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4FF6A0D1970CA9705974E3CB2134802 /* Debug */,
+				30E0B9EFD9A5C45D0D351231E81B30B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5F25FA63860054BCAD1204E8B57520F /* Build configuration list for PBXAggregateTarget "FiveAd" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07C4A445F4B27704092E53F9E5FF2219 /* Debug */,
+				6A42853BB97BF33460C2E74FB25F2ABD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

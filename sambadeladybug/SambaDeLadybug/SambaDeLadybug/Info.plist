@@ -15,11 +15,22 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.0</string>
 	<key>CFBundleVersion</key>
 	<string>2</string>
+	<key>FIVE_APP_ID</key>
+	<string>64513311</string>
+	<key>FIVE_IS_TEST</key>
+	<false/>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>あなたの体験向上のため、トラッキングを許可してください。</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>com.adjust</string>
+		</dict>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -1,0 +1,16 @@
+PODS:
+  - FiveAd (2.9.20250930)
+
+DEPENDENCIES:
+  - FiveAd
+
+SPEC REPOS:
+  trunk:
+    - FiveAd
+
+SPEC CHECKSUMS:
+  FiveAd: a2a79a8c040cbbb449ed59b1fe0646819beb2a1d
+
+PODFILE CHECKSUM: e71ce5fc28072827b76aa8bdcd35c14e08aa7c8e
+
+COCOAPODS: 1.16.2

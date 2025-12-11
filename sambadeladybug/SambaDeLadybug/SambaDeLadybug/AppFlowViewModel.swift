@@ -19,6 +19,9 @@ final class AppFlowViewModel: ObservableObject {
     @Published private(set) var completedRuns: Int = 0
     @Published private(set) var claimedAchievementMilestones: Set<Int> = []
     @Published var isVibrationEnabled: Bool = true
+    @Published private(set) var adStagesInCycle: Set<Int> = []
+    @Published private(set) var stageAdThresholds: [Int: Int] = [:]
+    @Published private(set) var shownAdStages: Set<Int> = []
     var hasClaimableAchievement: Bool {
         nextAchievementReward() != nil
     }
@@ -68,7 +71,7 @@ final class AppFlowViewModel: ObservableObject {
         (3, "Clear_08", 8),
         (4, "Clear_09", 9)
     ]
-    let useTestingAchievementRewards = true
+    let useTestingAchievementRewards = false
 
     private var achievementRewards: [(milestone: Int, clearImageName: String, illustrationID: Int)] {
         useTestingAchievementRewards ? testingAchievementRewards : defaultAchievementRewards
@@ -95,6 +98,7 @@ final class AppFlowViewModel: ObservableObject {
     }
 
     func startGame() {
+        prepareStageAdSchedule()
         resetProgress(forNewRun: true)
         currentIllustrationID = nil
         currentScreen = .game
@@ -120,6 +124,9 @@ final class AppFlowViewModel: ObservableObject {
         currentScreen = .home
         resetProgress(forNewRun: true)
         currentIllustrationID = nil
+        adStagesInCycle = []
+        stageAdThresholds = [:]
+        shownAdStages = []
     }
 
     private func handleStageCompletion() {
@@ -146,6 +153,28 @@ final class AppFlowViewModel: ObservableObject {
         if forNewRun {
             currentStage = 1
         }
+    }
+
+    private func prepareStageAdSchedule() {
+        let count = min(3, totalStages)
+        let stages = Array(1...totalStages).shuffled().prefix(count)
+        adStagesInCycle = Set(stages)
+        stageAdThresholds = Dictionary(uniqueKeysWithValues: adStagesInCycle.map { stage in
+            (stage, Int.random(in: 12...40))
+        })
+        shownAdStages = []
+    }
+
+    func stageAdThreshold(for stage: Int) -> Int? {
+        stageAdThresholds[stage]
+    }
+
+    func shouldShowStageAd(for stage: Int) -> Bool {
+        adStagesInCycle.contains(stage) && !shownAdStages.contains(stage)
+    }
+
+    func markStageAdShown(stage: Int) {
+        shownAdStages.insert(stage)
     }
 
     private func assignIllustrationFlag(fromClearImage clearImageName: String) {

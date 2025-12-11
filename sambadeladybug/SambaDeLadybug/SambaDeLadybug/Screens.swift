@@ -1,5 +1,8 @@
 import SwiftUI
 import UIKit
+#if canImport(FiveAd)
+import FiveAd
+#endif
 struct SplashScreen: View {
     @EnvironmentObject private var viewModel: AppFlowViewModel
 
@@ -554,6 +557,9 @@ struct GameScreen: View {
     
     @State private var characterName: String = "Chara01"
     @State private var rotationState: CharacterRotation = .standard
+    @State private var stageAdThreshold: Int = 0
+    @State private var hasTriggeredStageAd = false
+    @State private var isPresentingStageAd = false
 
     var body: some View {
         GeometryReader { proxy in
@@ -635,6 +641,22 @@ struct GameScreen: View {
         }
         .ignoresSafeArea(edges: .bottom)
         .statusBar(hidden: true)
+        .onAppear {
+            resetStageAdState(forcePreload: true)
+        }
+        .onChange(of: viewModel.currentStage) { _ in
+            resetStageAdState(forcePreload: true)
+        }
+        .overlay {
+            if FeatureFlags.isFiveAdEnabled && isPresentingStageAd {
+                Color.black.opacity(0.45)
+                    .ignoresSafeArea()
+                StageAdView {
+                    isPresentingStageAd = false
+                    FiveAdVideoRewardManager.shared.preloadRewardIfNeeded()
+                }
+            }
+        }
     }
     
     private func configureCharacter() {
@@ -649,6 +671,7 @@ struct GameScreen: View {
             generator.impactOccurred()
         }
         viewModel.recordTap()
+        maybeTriggerStageAd()
     }
 
     private func updateRotationForTap() {
@@ -670,6 +693,26 @@ struct GameScreen: View {
             }
         }
         return weights.first?.name ?? "Chara01"
+    }
+
+    private func resetStageAdState(forcePreload: Bool) {
+        hasTriggeredStageAd = false
+        if FeatureFlags.isFiveAdEnabled, viewModel.shouldShowStageAd(for: viewModel.currentStage) {
+            stageAdThreshold = viewModel.stageAdThreshold(for: viewModel.currentStage) ?? Int.max
+            FiveAdVideoRewardManager.shared.preloadRewardIfNeeded(force: forcePreload)
+        } else {
+            stageAdThreshold = Int.max
+        }
+    }
+
+    private func maybeTriggerStageAd() {
+        guard FeatureFlags.isFiveAdEnabled else { return }
+        guard !hasTriggeredStageAd else { return }
+        guard viewModel.shouldShowStageAd(for: viewModel.currentStage) else { return }
+        guard viewModel.tapCount >= stageAdThreshold else { return }
+        hasTriggeredStageAd = true
+        viewModel.markStageAdShown(stage: viewModel.currentStage)
+        isPresentingStageAd = true
     }
 }
 
@@ -719,6 +762,17 @@ struct StageChangeScreen: View {
             }
         }
         .ignoresSafeArea(edges: .bottom)
+        .onAppear {
+            if FeatureFlags.isFiveAdEnabled {
+#if canImport(UIKit)
+                let width = Float(UIScreen.main.bounds.width * 0.92)
+#else
+                let width: Float = 320
+#endif
+                FiveAdBannerLoader.shared.preloadBannerIfNeeded(width: width)
+                FiveAdVideoRewardManager.shared.preloadRewardIfNeeded()
+            }
+        }
     }
 
     private var remainingStagesView: some View {
@@ -764,59 +818,78 @@ struct StageChangeScreen: View {
     @ViewBuilder
     private func stageOverlay(in proxy: GeometryProxy, isPad: Bool) -> some View {
         if isPad {
-            let cardTopPadding = proxy.safeAreaInsets.top + 50
-            let cardVerticalOffset = proxy.size.height * 0.3
-            let buttonVerticalOffset = proxy.size.height * 0.03
-            let buttonHorizontalPadding = min(proxy.size.width * 0.2, 100)
+                VStack(spacing: 0) {
+                    Spacer(minLength: proxy.size.height * 0.32)
 
-            ZStack {
-                Color.clear
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-
-                VStack {
-                    if remainingStages > 0 {
-                        Text("残り\(remainingStages)ステージ")
-                            .font(.system(size: 18, weight: .semibold))
+                    VStack(spacing: 16) {
+                        if remainingStages > 0 {
+                            Text("残り\(remainingStages)ステージ")
+                                .font(.system(size: 23, weight: .semibold))
                             .foregroundColor(.black)
-                            .padding(.horizontal, 32)
+                            .padding(.horizontal, 24)
                             .padding(.vertical, 10)
                             .background(Color.white)
                             .clipShape(Capsule())
                     }
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .padding(.top, cardTopPadding)
-                .offset(y: cardVerticalOffset)
 
-                VStack {
-                    Spacer()
                     Button(action: { viewModel.proceedToNextStage() }) {
                         Image("Next")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: min(proxy.size.width * 0.45, 360), height: 180)
+                            .frame(width: min(proxy.size.width * 0.6, 420), height: min(proxy.size.height * 0.12, 140))
                             .accessibilityLabel("次へ")
                     }
-                    Spacer()
+                    .padding(.top, proxy.size.height * 0.02)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.horizontal, buttonHorizontalPadding)
-                .offset(y: buttonVerticalOffset)
+                    .padding(.bottom, proxy.size.height * -0.01)
+
+                    Spacer()
+
+#if canImport(FiveAd)
+                if FeatureFlags.isFiveAdEnabled {
+                    let bannerWidth = proxy.size.width * 0.98
+                    let bannerHeight = proxy.size.height * 0.45
+                    FiveAdBannerDemoView(targetWidth: bannerWidth)
+                        .frame(width: bannerWidth, height: bannerHeight)
+                        .padding(.bottom, max(proxy.safeAreaInsets.bottom - 5, 0))
+                }
+#endif
             }
+            .frame(width: proxy.size.width, height: proxy.size.height)
             .ignoresSafeArea()
         } else {
-            VStack(spacing: 12) {
-                remainingStagesView
-                Button(action: { viewModel.proceedToNextStage() }) {
-                    Image("Next")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: min(proxy.size.width * 0.5, 240))
-                        .accessibilityLabel("次へ")
+            ZStack {
+                VStack(spacing: 16) {
+                    Spacer(minLength: proxy.size.height * 0.25)
+
+                    remainingStagesView
+
+                    Button(action: { viewModel.proceedToNextStage() }) {
+                        Image("Next")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: min(proxy.size.width * 0.55, 260))
+                            .accessibilityLabel("次へ")
+                    }
+                    .padding(.top, proxy.size.height * 0.02)
+
+                    Spacer()
                 }
+
+#if canImport(FiveAd)
+                if FeatureFlags.isFiveAdEnabled {
+                    VStack {
+                        Spacer()
+                        let bannerWidth = proxy.size.width * 0.92
+                        FiveAdBannerDemoView(targetWidth: bannerWidth)
+                            .frame(width: bannerWidth, height: proxy.size.height * 0.40)
+                            .padding(.bottom, max(proxy.safeAreaInsets.bottom + proxy.size.height * 0.01, 0))
+                    }
+                }
+#endif
             }
-            .position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
+            .frame(width: proxy.size.width, height: proxy.size.height)
+            .ignoresSafeArea()
         }
     }
 
@@ -865,6 +938,235 @@ struct GameClearScreen: View {
     }
 }
 
+#if canImport(SwiftUI)
+struct StageAdView: View {
+    let onClose: () -> Void
+    @State private var viewState: AdViewState = .loading
+    @State private var hasStarted = false
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .topTrailing) {
+                Color.black
+                    .ignoresSafeArea()
+
+                VStack(spacing: 32) {
+                    Spacer()
+
+                    RoundedRectangle(cornerRadius: 32, style: .continuous)
+                        .fill(Color.white.opacity(0.08))
+                        .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.55)
+                        .overlay(
+                            VStack(spacing: 20) {
+                                Text("FIVE Ad")
+                                    .font(.system(size: 28, weight: .bold))
+                                    .foregroundColor(.white)
+
+                                Image(systemName: "play.rectangle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: geometry.size.width * 0.3)
+                                    .foregroundColor(.white.opacity(0.7))
+
+                                Group {
+                                    switch viewState {
+                                    case .loading:
+                                        VStack(spacing: 10) {
+                                            ProgressView()
+                                                .progressViewStyle(.circular)
+                                                .tint(.white)
+                                            Text("広告を読み込んでいます…")
+                                                .font(.system(size: 16, weight: .semibold))
+                                        }
+                                    case .error(let message):
+                                        VStack(spacing: 12) {
+                                            Text(message)
+                                                .multilineTextAlignment(.center)
+                                                .font(.system(size: 16, weight: .semibold))
+                                            Button(action: restartAd) {
+                                                Text("再読み込み")
+                                                    .font(.system(size: 15, weight: .bold))
+                                                    .padding(.horizontal, 24)
+                                                    .padding(.vertical, 10)
+                                                    .background(Color.white.opacity(0.2))
+                                                    .clipShape(Capsule())
+                                            }
+                                            .buttonStyle(.plain)
+                                        }
+                                    }
+                                }
+                                .foregroundStyle(.white.opacity(0.85))
+                            }
+                            .padding(36)
+                        )
+
+                    Spacer()
+
+                    Text(viewState.bottomMessage)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.7))
+                        .padding(.bottom, geometry.safeAreaInsets.bottom + 24)
+                }
+                .padding(.horizontal, max(geometry.size.width * 0.08, 24))
+
+                Button(action: handleClose) {
+                    Text("Close")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.white)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 22)
+                        .background(Color.white.opacity(0.2))
+                        .clipShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .disabled(viewState.isCloseDisabled)
+                .opacity(viewState.isCloseDisabled ? 0.4 : 1)
+                .padding(.top, geometry.safeAreaInsets.top + 12)
+                .padding(.trailing, geometry.safeAreaInsets.trailing + 18)
+            }
+            .onAppear {
+                guard !hasStarted else { return }
+                hasStarted = true
+                restartAd()
+            }
+        }
+    }
+
+    private func restartAd() {
+        guard FeatureFlags.isFiveAdEnabled else {
+            onClose()
+            return
+        }
+        viewState = .loading
+        FiveAdVideoRewardManager.shared.presentRewardAd { result in
+            switch result {
+            case .completed:
+                onClose()
+            case .failed(let error):
+                viewState = .error(error.localizedDescription)
+            }
+        }
+    }
+
+    private func handleClose() {
+        if FeatureFlags.isFiveAdEnabled {
+            FiveAdVideoRewardManager.shared.cancelPendingPresentation()
+        }
+        onClose()
+    }
+
+    private enum AdViewState {
+        case loading
+        case error(String)
+
+        var isCloseDisabled: Bool {
+            switch self {
+            case .loading:
+                return true
+            case .error:
+                return false
+            }
+        }
+
+        var bottomMessage: String {
+            switch self {
+            case .loading:
+                return "広告終了後は右上のボタンで閉じてください"
+            case .error:
+                return "エラーが発生しました。再読み込みをお試しください"
+            }
+        }
+    }
+}
+#endif
+
+#if canImport(FiveAd)
+struct FiveAdBannerDemoView: UIViewRepresentable {
+    let targetWidth: CGFloat
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    func makeUIView(context: Context) -> FiveAdBannerContainerView {
+        let view = FiveAdBannerContainerView()
+        context.coordinator.prepareAd(in: view, targetWidth: targetWidth)
+        return view
+    }
+
+    func updateUIView(_ uiView: FiveAdBannerContainerView, context: Context) {}
+
+    final class Coordinator: NSObject, FADLoadDelegate {
+        private weak var container: FiveAdBannerContainerView?
+        private var adView: FADAdViewCustomLayout?
+        private let slotId = "69770687"
+        private var targetWidth: CGFloat = 0
+
+        func prepareAd(in container: FiveAdBannerContainerView, targetWidth: CGFloat) {
+            self.container = container
+            self.targetWidth = targetWidth
+            container.configurePlaceholder()
+            let width = Float(targetWidth)
+            if let preloaded = FiveAdBannerLoader.shared.takePreparedBanner(width: width) as? FADAdViewCustomLayout {
+                container.embed(adView: preloaded)
+            } else {
+                loadAdIfNeeded(width: width)
+            }
+        }
+
+        private func loadAdIfNeeded(width: Float) {
+            guard adView == nil else { return }
+            let ad = FADAdViewCustomLayout(slotId: slotId, width: width)
+            ad?.setLoadDelegate(self)
+            adView = ad
+            ad?.loadAdAsync()
+        }
+
+        func fiveAdDidLoad(_ ad: FADAdInterface!) {
+            DispatchQueue.main.async { [weak self] in
+                guard let self, let container = self.container, let adView = self.adView else { return }
+                container.embed(adView: adView)
+            }
+        }
+
+        func fiveAd(_ ad: FADAdInterface!, didFailedToReceiveAdWithError errorCode: FADErrorCode) {
+#if DEBUG
+            print("[FiveAd] Failed to load banner: errorCode=\(errorCode.rawValue)")
+#endif
+        }
+    }
+}
+
+final class FiveAdBannerContainerView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .clear
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        backgroundColor = .clear
+    }
+
+    func configurePlaceholder() {
+        backgroundColor = .clear
+        layer.borderWidth = 0
+        subviews.forEach { $0.removeFromSuperview() }
+    }
+
+    func embed(adView: UIView) {
+        subviews.forEach { $0.removeFromSuperview() }
+        addSubview(adView)
+        adView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            adView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            adView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            adView.topAnchor.constraint(equalTo: topAnchor),
+            adView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+}
+#endif
 private extension GameClearScreen {
     var illustrationView: some View {
         Group {
