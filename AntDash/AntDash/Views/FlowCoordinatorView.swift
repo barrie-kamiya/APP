@@ -17,7 +17,16 @@ struct CharacterGhost: Identifiable {
 }
 
 final class AppFlowState: ObservableObject {
-    private let useTestingAchievementRewards = true
+    private enum PersistenceKey {
+        static let stage = "AppFlowState.savedStage"
+        static let cumulative = "AppFlowState.savedCumulative"
+        static let hasProgress = "AppFlowState.hasProgress"
+    }
+
+    private let persistence = UserDefaults.standard
+    private var isRunInProgress = false
+    private var cumulativeTapCountAtStageStart: Int = 0
+    private let useTestingAchievementRewards = false
     @Published var currentScreen: AppScreen = .splash
     @Published private(set) var currentStage: Int = 1
     @Published private(set) var tapCount: Int = 0
@@ -112,16 +121,55 @@ final class AppFlowState: ObservableObject {
         3: ("Clear_08", "Ilustrated_08"),
         4: ("Clear_09", "Ilustrated_09")
     ]
+    
+    private var hasSavedProgress: Bool {
+        persistence.bool(forKey: PersistenceKey.hasProgress)
+    }
+    
+    init() {
+        if hasSavedProgress {
+            restoreSavedProgress()
+        } else {
+            prepareCharacterForNewStage()
+        }
+    }
 
     func handleSplashTap() {
         currentScreen = .home
     }
-
-    func startGame() {
+    
+    func returnToHomeDuringRun() {
+        isRunInProgress = false
+        clearPersistedProgress()
         currentStage = 1
         tapCount = 0
         lastClearedStage = 0
+        cumulativeTapCount = 0
+        cumulativeTapCountAtStageStart = 0
         prepareCharacterForNewStage()
+        currentScreen = .home
+    }
+
+    func startGame() {
+        tapCount = 0
+        let shouldResume = hasSavedProgress
+        isRunInProgress = true
+        if shouldResume {
+            currentStage = loadSavedStage()
+            let savedCumulative = loadSavedCumulativeTapCount()
+            cumulativeTapCount = savedCumulative
+            cumulativeTapCountAtStageStart = savedCumulative
+            lastClearedStage = max(currentStage - 1, 0)
+        } else {
+            clearPersistedProgress()
+            currentStage = 1
+            cumulativeTapCount = 0
+            lastClearedStage = 0
+            cumulativeTapCountAtStageStart = 0
+            saveCurrentProgress()
+        }
+        prepareCharacterForNewStage()
+        saveCurrentProgress()
         currentScreen = .game
     }
 
@@ -155,9 +203,13 @@ final class AppFlowState: ObservableObject {
                 AdjustManager.shared.trackGameCycleCompletion(total: prospectiveRunCount)
             }
             RakutenRewardManager.shared.logClearAction()
+            isRunInProgress = false
+            clearPersistedProgress()
             currentScreen = .clear
         } else {
             currentStage += 1
+            cumulativeTapCountAtStageStart = cumulativeTapCount
+            saveCurrentProgress()
             prepareCharacterForNewStage()
             currentScreen = .stageChange
         }
@@ -170,9 +222,13 @@ final class AppFlowState: ObservableObject {
     }
 
     func returnHomeFromClear() {
+        isRunInProgress = false
+        clearPersistedProgress()
         currentStage = 1
         tapCount = 0
         lastClearedStage = 0
+        cumulativeTapCount = 0
+        cumulativeTapCountAtStageStart = 0
         prepareCharacterForNewStage()
         currentScreen = .home
     }
@@ -283,6 +339,41 @@ final class AppFlowState: ObservableObject {
         return (reward.clear, milestone)
     }
     
+    private func loadSavedStage() -> Int {
+        let stage = persistence.integer(forKey: PersistenceKey.stage)
+        return max(stage, 1)
+    }
+    
+    private func loadSavedCumulativeTapCount() -> Int {
+        max(persistence.integer(forKey: PersistenceKey.cumulative), 0)
+    }
+    
+    private func saveCurrentProgress() {
+        guard isRunInProgress else { return }
+        persistence.set(currentStage, forKey: PersistenceKey.stage)
+        persistence.set(cumulativeTapCountAtStageStart, forKey: PersistenceKey.cumulative)
+        persistence.set(true, forKey: PersistenceKey.hasProgress)
+    }
+    
+    private func clearPersistedProgress() {
+        persistence.removeObject(forKey: PersistenceKey.stage)
+        persistence.removeObject(forKey: PersistenceKey.cumulative)
+        persistence.set(false, forKey: PersistenceKey.hasProgress)
+    }
+    
+    private func restoreSavedProgress() {
+        isRunInProgress = true
+        let savedStage = loadSavedStage()
+        let savedCumulative = loadSavedCumulativeTapCount()
+        tapCount = 0
+        currentStage = savedStage
+        cumulativeTapCount = savedCumulative
+        cumulativeTapCountAtStageStart = savedCumulative
+        lastClearedStage = max(savedStage - 1, 0)
+        prepareCharacterForNewStage()
+        currentScreen = .game
+    }
+    
     private func isSpecialClearImage(_ name: String) -> Bool {
         specialRewardMapping.values.contains(where: { $0.clear == name })
     }
@@ -335,7 +426,8 @@ struct FlowCoordinatorView: View {
                      isCharacterFlipped: state.isCharacterFlipped,
                      characterGhosts: state.characterGhosts,
                      cumulativeTapCount: state.cumulativeTapCount,
-                     onTap: state.registerTap)
+                     onTap: state.registerTap,
+                     onExitToHome: state.returnToHomeDuringRun)
         case .stageChange:
             StageChangeView(currentStage: state.currentStage,
                             totalStages: state.totalStages,

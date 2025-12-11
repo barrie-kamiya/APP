@@ -10,6 +10,7 @@ struct GameView: View {
     let characterGhosts: [CharacterGhost]
     let cumulativeTapCount: Int
     let onTap: () -> Void
+    let onExitToHome: () -> Void
 
     private var backgroundImageName: String {
         switch stage {
@@ -34,6 +35,8 @@ struct GameView: View {
 
                 Color.black.opacity(0.25)
                     .ignoresSafeArea()
+                
+                exitButtonOverlay(in: layout)
                 
                 ghostLayers(in: layout)
                 characterLayer(in: layout)
@@ -120,9 +123,9 @@ struct GameView: View {
         let verticalOffset = -size.height * layout.infoVerticalRatio
 
         return VStack(spacing: 6) {
-            Text("完了まで")
+            Text("次ステージ")
                 .font(.headline)
-            Text("あと")
+            Text("まで")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             Text("\(remainingTaps)")
@@ -130,7 +133,7 @@ struct GameView: View {
         }
         .foregroundColor(.black)
         .frame(width: boxWidth, height: boxHeight)
-        .background(Color.white.opacity(0.9))
+        .background(Color.white.opacity(0.7))
         .cornerRadius(14)
         .shadow(radius: 6)
         .position(x: size.width - horizontalOffset, y: layout.infoPositionY(for: verticalOffset, boxHeight: boxHeight))
@@ -140,11 +143,48 @@ struct GameView: View {
         let size = layout.size
         let position = CGPoint(x: size.width * layout.cumulativeHorizontalRatio,
                                y: size.height * layout.cumulativeVerticalRatio)
-        return Text("\(cumulativeTapCount)")
-            .font(layout.isPad ? .largeTitle.bold() : .title.bold())
+        let background = RoundedRectangle(cornerRadius: layout.isPad ? 20 : 14, style: .continuous)
+        return Text("累計ダッシュ数：\(cumulativeTapCount)")
+            .font(layout.isPad ? .title.bold() : .title3.bold())
             .foregroundColor(.white)
-            .shadow(color: .black.opacity(0.6), radius: 6, x: 0, y: 2)
+            .padding(.horizontal, layout.isPad ? 20 : 14)
+            .padding(.vertical, layout.isPad ? 12 : 8)
+            .background(background.fill(Color.black.opacity(0.35)))
+            .overlay(background.stroke(Color.black.opacity(0.45), lineWidth: 1))
+            .shadow(color: .black.opacity(0.5), radius: 8, x: 0, y: 2)
             .position(position)
+    }
+    
+    private func exitButtonOverlay(in layout: GameLayout) -> some View {
+        let buttonSize = CGSize(width: layout.size.width * 0.28, height: layout.size.height * 0.05)
+        return VStack {
+            HStack {
+                backHomeButton(in: layout)
+                Spacer()
+            }
+            Spacer()
+        }
+        .padding(.leading, layout.exitButtonLeadingPadding)
+        .padding(.top, layout.exitButtonTopPadding)
+    }
+    
+    private func backHomeButton(in layout: GameLayout) -> some View {
+        Button(action: onExitToHome) {
+            Text("ホームに戻る")
+                .font(layout.isPad ? .headline : .caption.bold())
+                .foregroundColor(.white)
+                .padding(.horizontal, layout.isPad ? 16 : 12)
+                .padding(.vertical, layout.isPad ? 10 : 10)
+                .frame(minWidth: layout.exitButtonWidth, minHeight: layout.exitButtonHeight)
+                .background(Color.green.opacity(0.4))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.white.opacity(0.8), lineWidth: layout.isPad ? 1.5 : 1)
+                )
+                .cornerRadius(12)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("ホームに戻る"))
     }
 }
 
@@ -160,6 +200,10 @@ private struct GameLayout {
     let infoVerticalRatio: CGFloat
     let cumulativeHorizontalRatio: CGFloat
     let cumulativeVerticalRatio: CGFloat
+    let exitButtonWidth: CGFloat
+    let exitButtonHeight: CGFloat
+    let exitButtonTopPadding: CGFloat
+    let exitButtonLeadingPadding: CGFloat
     
     func tapButtonMaxWidth(for width: CGFloat) -> CGFloat {
         isPad ? width * 0.6 : width * 0.8
@@ -185,9 +229,13 @@ private struct GameLayout {
         let infoHeight = min(size.height * (isPad ? 0.12 : 0.15), isPad ? 95 : 100)
         infoBoxSize = CGSize(width: infoWidth, height: infoHeight)
         infoHorizontalRatio = isPad ? 0.3 : 0.2
-        infoVerticalRatio = isPad ? 0.42 : 0.45
-        cumulativeHorizontalRatio = isPad ? 0.78 : 0.82
-        cumulativeVerticalRatio = isPad ? 0.48 : 0.45
+        infoVerticalRatio = isPad ? 0.47 : 0.45
+        cumulativeHorizontalRatio = isPad ? 0.64 : 0.70
+        cumulativeVerticalRatio = isPad ? 0.48 : 0.48
+        exitButtonWidth = isPad ? min(size.width * 0.18, 200) : min(size.width * 0.1, 120)
+        exitButtonHeight = isPad ? 44 : 32
+        exitButtonTopPadding = isPad ? 40 : 42
+        exitButtonLeadingPadding = isPad ? min(size.width * 0.2, 180) : 16
     }
     
     func infoPositionY(for verticalOffset: CGFloat, boxHeight: CGFloat) -> CGFloat {
