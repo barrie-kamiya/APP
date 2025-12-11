@@ -147,6 +147,7 @@ final class AppFlowViewModel: ObservableObject {
         tapCount = 0
         if forNewRun {
             currentStage = 1
+            cumulativeTapCount = 0
         }
     }
 

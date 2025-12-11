@@ -679,10 +679,10 @@ private extension GameScreen {
     var remainingTapView: some View {
         let remaining = max(viewModel.targetTaps - viewModel.tapCount, 0)
         return VStack(spacing: 4) {
-            Text("完了まで")
+            Text("アガる")
                 .font(.caption)
                 .foregroundColor(.black)
-            Text("あと")
+            Text("まで")
                 .font(.caption)
                 .foregroundColor(.black)
             Text("\(remaining)")
@@ -697,14 +697,19 @@ private extension GameScreen {
     
     func cumulativeTapOverlay(in size: CGSize) -> some View {
         let isPad = isPadDevice
-        let position = CGPoint(x: size.width * (isPad ? 0.8 : 0.85),
-                               y: size.height * (isPad ? 0.47 : 0.45))
-        return Text("\(viewModel.cumulativeTapCount)")
-            .font(isPad ? .largeTitle.weight(.heavy) : .title.weight(.semibold))
+        let position = CGPoint(x: size.width * (isPad ? 0.78 : 0.80),
+                               y: size.height * (isPad ? 0.45 : 0.43))
+        let background = RoundedRectangle(cornerRadius: isPad ? 20 : 14, style: .continuous)
+        return Text("累計ダンス数：\(viewModel.cumulativeTapCount)")
+            .font(isPad ? .title2.bold() : .headline.bold())
             .foregroundColor(.white)
-            .shadow(color: .black.opacity(0.65), radius: 5, x: 0, y: 2)
+            .padding(.horizontal, isPad ? 20 : 14)
+            .padding(.vertical, isPad ? 12 : 8)
+            .background(background.fill(Color.black.opacity(0.4)))
+            .overlay(background.stroke(Color.black.opacity(0.55), lineWidth: 1))
+            .shadow(color: .black.opacity(0.6), radius: 6, x: 0, y: 2)
             .position(position)
-            .accessibilityLabel(Text("累計タップ \(viewModel.cumulativeTapCount)"))
+            .accessibilityLabel(Text("累計ダンス数 \(viewModel.cumulativeTapCount)"))
     }
 }
 

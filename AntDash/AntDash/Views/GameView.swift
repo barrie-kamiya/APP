@@ -11,6 +11,8 @@ struct GameView: View {
     let cumulativeTapCount: Int
     let onTap: () -> Void
     let onExitToHome: () -> Void
+    
+    @State private var showHomeConfirmation = false
 
     private var backgroundImageName: String {
         switch stage {
@@ -61,6 +63,17 @@ struct GameView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .ignoresSafeArea(edges: .bottom)
+        .alert("ホームに戻る", isPresented: $showHomeConfirmation) {
+            Button("Yes") {
+                showHomeConfirmation = false
+                onExitToHome()
+            }
+            Button("No", role: .cancel) {
+                showHomeConfirmation = false
+            }
+        } message: {
+            Text("ホームに戻ると、このステージのダッシュ数はリセットされます。戻ってよろしいですか？")
+        }
     }
 
     private func backgroundView(layout: GameLayout) -> some View {
@@ -156,7 +169,6 @@ struct GameView: View {
     }
     
     private func exitButtonOverlay(in layout: GameLayout) -> some View {
-        let buttonSize = CGSize(width: layout.size.width * 0.28, height: layout.size.height * 0.05)
         return VStack {
             HStack {
                 backHomeButton(in: layout)
@@ -169,7 +181,7 @@ struct GameView: View {
     }
     
     private func backHomeButton(in layout: GameLayout) -> some View {
-        Button(action: onExitToHome) {
+        Button(action: { showHomeConfirmation = true }) {
             Text("ホームに戻る")
                 .font(layout.isPad ? .headline : .caption.bold())
                 .foregroundColor(.white)
