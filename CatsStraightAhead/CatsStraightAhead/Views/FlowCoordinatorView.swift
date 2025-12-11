@@ -115,6 +115,7 @@ final class AppFlowState: ObservableObject {
     @Published private(set) var unlockedMilestones: Set<Int> = []
     @Published private(set) var unlockedIllustrations: Set<String> = ["Ilustrated_none"]
     @Published var isVibrationEnabled: Bool = true
+    @Published private(set) var cumulativeTapCount: Int = 0
 
     let totalStages: Int = 6
     var tapsPerStage: Int { useTestingAchievementRewards ? 5 : 50 }
@@ -201,6 +202,7 @@ final class AppFlowState: ObservableObject {
     func registerTap() {
         guard currentScreen == .game else { return }
         tapCount += 1
+        cumulativeTapCount += 1
         updateCharacterPoseAfterTap()
         updateCharacterPositionAfterTap()
         if tapCount >= tapsPerStage {
@@ -368,15 +370,16 @@ struct FlowCoordinatorView: View {
                                      totalClears: state.totalClears,
                                      nextMilestone: state.nextMilestoneTarget,
                                      runsUntilNext: state.runsUntilNextMilestone)
-                        case .game:
-                            GameView(stage: state.currentStage,
-                                     tapCount: state.tapCount,
-                                     tapGoal: state.tapsPerStage,
-                                     characterName: state.currentCharacterName,
-                                     characterPose: state.currentCharacterPose,
-                                     characterOffsetRatio: state.characterOffsetRatio,
-                                     isVibrationEnabled: state.isVibrationEnabled,
-                                     onTapAreaPressed: state.registerTap)
+        case .game:
+            GameView(stage: state.currentStage,
+                     tapCount: state.tapCount,
+                     tapGoal: state.tapsPerStage,
+                     characterName: state.currentCharacterName,
+                     characterPose: state.currentCharacterPose,
+                     characterOffsetRatio: state.characterOffsetRatio,
+                     isVibrationEnabled: state.isVibrationEnabled,
+                     cumulativeTapCount: state.cumulativeTapCount,
+                     onTapAreaPressed: state.registerTap)
                         case .stageChange:
                             StageChangeView(currentStage: state.currentStage,
                                             totalStages: state.totalStages,

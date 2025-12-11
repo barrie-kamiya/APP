@@ -593,6 +593,8 @@ struct GameScreen: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                
+                cumulativeTapOverlay(in: proxy.size)
 
                 VStack(spacing: 0) {
                     Spacer()
@@ -691,6 +693,18 @@ private extension GameScreen {
         .background(Color.white.opacity(0.95))
         .cornerRadius(10)
         .shadow(radius: 2)
+    }
+    
+    func cumulativeTapOverlay(in size: CGSize) -> some View {
+        let isPad = isPadDevice
+        let position = CGPoint(x: size.width * (isPad ? 0.8 : 0.85),
+                               y: size.height * (isPad ? 0.47 : 0.45))
+        return Text("\(viewModel.cumulativeTapCount)")
+            .font(isPad ? .largeTitle.weight(.heavy) : .title.weight(.semibold))
+            .foregroundColor(.white)
+            .shadow(color: .black.opacity(0.65), radius: 5, x: 0, y: 2)
+            .position(position)
+            .accessibilityLabel(Text("累計タップ \(viewModel.cumulativeTapCount)"))
     }
 }
 

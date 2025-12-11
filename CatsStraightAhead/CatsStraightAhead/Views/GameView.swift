@@ -11,6 +11,7 @@ struct GameView: View {
     let characterPose: CharacterPose
     let characterOffsetRatio: CGFloat
     let isVibrationEnabled: Bool
+    let cumulativeTapCount: Int
     let onTapAreaPressed: () -> Void
     @Environment(\.isPadLayout) private var isPadLayout
 
@@ -84,22 +85,39 @@ struct GameView: View {
                     .shadow(radius: 6)
                     .position(x: geometry.size.width * indicatorPositionRatio.x,
                               y: geometry.size.height * indicatorPositionRatio.y)
+
+                    cumulativeTapOverlay
+                        .position(x: geometry.size.width * cumulativePositionRatio.x,
+                                  y: geometry.size.height * cumulativePositionRatio.y)
                 }
             }
         }
         .ignoresSafeArea(edges: isPadLayout ? [] : .all)
     }
 
-    private func handleTap() {
-        triggerHapticIfNeeded()
-        onTapAreaPressed()
-    }
+private func handleTap() {
+    triggerHapticIfNeeded()
+    onTapAreaPressed()
+}
 
-    private func triggerHapticIfNeeded() {
-        guard isVibrationEnabled else { return }
+private func triggerHapticIfNeeded() {
+    guard isVibrationEnabled else { return }
 #if os(iOS)
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
+    let generator = UIImpactFeedbackGenerator(style: .medium)
+    generator.impactOccurred()
 #endif
-    }
+}
+
+private var cumulativeTapOverlay: some View {
+    Text("\(cumulativeTapCount)")
+        .font(isPadLayout ? .largeTitle.weight(.heavy) : .title.weight(.semibold))
+        .foregroundColor(.white)
+        .shadow(color: .black.opacity(0.7), radius: 5, x: 0, y: 2)
+        .accessibilityHidden(true)
+}
+
+private var cumulativePositionRatio: CGPoint {
+    if isPadLayout { return CGPoint(x: 0.82, y: 0.43) }
+    return CGPoint(x: 0.85, y: 0.45)
+}
 }

@@ -17,6 +17,7 @@ final class AppFlowViewModel: ObservableObject {
     @Published private(set) var currentIllustrationID: Int?
     @Published private(set) var currentClearImageName: String = "Clear_01"
     @Published private(set) var completedRuns: Int = 0
+    @Published private(set) var cumulativeTapCount: Int = 0
     @Published private(set) var claimedAchievementMilestones: Set<Int> = []
     @Published var isVibrationEnabled: Bool = true
     var hasClaimableAchievement: Bool {
@@ -103,6 +104,7 @@ final class AppFlowViewModel: ObservableObject {
     func recordTap() {
         guard currentScreen == .game, tapCount < targetTaps else { return }
         tapCount += 1
+        cumulativeTapCount += 1
 
         if tapCount >= targetTaps {
             handleStageCompletion()

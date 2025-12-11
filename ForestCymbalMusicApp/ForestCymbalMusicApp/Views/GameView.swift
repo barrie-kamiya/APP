@@ -9,6 +9,7 @@ struct GameView: View {
     var targetTapCount: Int
     var vibrationEnabled: Bool
     var characterName: String
+    var cumulativeTapCount: Int
     var onTapArea: () -> Void
 
     private var progress: Double {
@@ -52,6 +53,10 @@ struct GameView: View {
                     .frame(width: proxy.size.width * statusWidthRatio)
                     .position(x: proxy.size.width * statusPositionXRatio,
                               y: proxy.size.height * statusPositionYRatio)
+
+                cumulativeTapOverlay
+                    .position(x: proxy.size.width * cumulativePositionXRatio,
+                              y: proxy.size.height * cumulativePositionYRatio)
             }
         }
         .onAppear {
@@ -160,6 +165,25 @@ struct GameView: View {
 
     private var statusCountFont: Font {
         isPadDevice ? .headline.bold() : .title3.weight(.semibold)
+    }
+
+    private var cumulativeTapOverlay: some View {
+        Text("\(cumulativeTapCount)")
+            .font(cumulativeFont)
+            .foregroundColor(.white)
+            .shadow(color: .black.opacity(0.6), radius: 4, x: 0, y: 2)
+    }
+
+    private var cumulativeFont: Font {
+        isPadDevice ? .largeTitle.weight(.heavy) : .title.weight(.semibold)
+    }
+
+    private var cumulativePositionXRatio: CGFloat {
+        isPadDevice ? 0.8 : 0.85
+    }
+
+    private var cumulativePositionYRatio: CGFloat {
+        isPadDevice ? 0.46 : 0.45
     }
 
     private var backgroundImage: Image {

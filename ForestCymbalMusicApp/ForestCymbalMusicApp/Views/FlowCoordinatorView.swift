@@ -24,6 +24,7 @@ struct FlowCoordinatorView: View {
         }
         return flags
     }()
+    @State private var cumulativeTapCount: Int = 0
 
     private let useTestingAchievementRewards = false
     private let totalStages = 6
@@ -110,7 +111,8 @@ struct FlowCoordinatorView: View {
                              tapCount: tapCount,
                              targetTapCount: targetTapCount,
                              vibrationEnabled: vibrationEnabled,
-                             characterName: currentCharacter) {
+                             characterName: currentCharacter,
+                             cumulativeTapCount: cumulativeTapCount) {
                         handleTap()
                     }
                 case .stageChange:
@@ -162,6 +164,7 @@ struct FlowCoordinatorView: View {
     private func handleTap() {
         guard screen == .game else { return }
         tapCount += 1
+        cumulativeTapCount += 1
         if tapCount >= targetTapCount {
             completedStage = currentStage
             if currentStage >= totalStages {
