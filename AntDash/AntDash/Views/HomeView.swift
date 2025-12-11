@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 struct HomeView: View {
     let onStart: () -> Void
@@ -36,6 +39,7 @@ struct HomeView: View {
                     secondaryMenu(layout: layout)
                     titleView
                     statusCard(layout: layout)
+                        .padding(.top, layout.statusTopPadding)
                     startButton(width: layout.startButtonSize.width,
                                 height: layout.startButtonSize.height)
                         .padding(.top, layout.startButtonTopPadding)
@@ -66,28 +70,14 @@ struct HomeView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    private func achievementsButton(layout: HomeLayout) -> some View {
-        Group {
-            if let first = menuButtons.last {
-                HomeMenuButton(imageName: first.imageName,
-                               title: first.title,
-                               width: layout.menuItemWidth,
-                               height: layout.menuButtonHeight,
-                               action: { handleMenuAction(first.title) },
-                               isDisabled: !hasAchievementReward,
-                               animatePulse: hasAchievementReward)
-            }
-        }
-    }
-
     private func secondaryMenu(layout: HomeLayout) -> some View {
         HStack(spacing: layout.menuSpacing) {
             ForEach(menuButtons.indices.prefix(3), id: \.self) { index in
                 let item = menuButtons[index]
                 HomeMenuButton(imageName: item.imageName,
                                title: item.title,
-                               width: layout.menuItemWidth,
-                               height: layout.menuButtonHeight,
+                               width: layout.menuItemWidth(for: layout.isPad),
+                               height: layout.menuButtonHeight(for: layout.isPad),
                                action: { handleMenuAction(item.title) })
             }
         }
@@ -110,10 +100,10 @@ struct HomeView: View {
 
         return VStack(spacing: 2) {
             Text("\(totalClears)周クリア")
-                .font(.headline)
+                .font(layout.isPad ? .title.bold() : .headline)
                 .foregroundColor(.white)
             Text(detailText)
-                .font(.subheadline)
+                .font(layout.isPad ? .title3 : .subheadline)
                 .fontWeight(.semibold)
                 .foregroundColor(.white.opacity(0.9))
         }
@@ -124,6 +114,21 @@ struct HomeView: View {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(Color.white.opacity(0.35), lineWidth: 1)
         )
+    }
+
+    private func achievementsButton(layout: HomeLayout) -> some View {
+        Group {
+            if let first = menuButtons.last {
+                HomeMenuButton(imageName: first.imageName,
+                               title: first.title,
+                               width: layout.menuItemWidth(for: layout.isPad),
+                               height: layout.menuButtonHeight(for: layout.isPad),
+                               action: { handleMenuAction(first.title) },
+                               isDisabled: !hasAchievementReward,
+                               animatePulse: hasAchievementReward)
+                .padding(.top, layout.isPad ? layout.menuButtonHeight(for: layout.isPad) * 0.25 : 0)
+            }
+        }
     }
 
     private func startButton(width: CGFloat, height: CGFloat) -> some View {
@@ -152,6 +157,8 @@ struct HomeView: View {
         switch title {
         case "図鑑":
             withAnimation(.easeInOut) { showingIllustrations = true }
+        case "交換":
+            RakutenRewardManager.shared.openPortal()
         case "達成":
             if let reward = onClaimAchievement() {
                 withAnimation(.spring(response: 0.5, dampingFraction: 0.85)) {
@@ -413,8 +420,10 @@ private struct HomeLayout {
     let horizontalPadding: CGFloat
     let menuAvailableWidth: CGFloat
     let menuSpacing: CGFloat
-    let menuItemWidth: CGFloat
-    let menuButtonHeight: CGFloat
+    let menuItemWidthPhone: CGFloat
+    let menuButtonHeightPhone: CGFloat
+    let menuItemWidthPad: CGFloat
+    let menuButtonHeightPad: CGFloat
     let achievementButtonSize: CGSize
     let startButtonSize: CGSize
     let startButtonTopPadding: CGFloat
@@ -424,43 +433,54 @@ private struct HomeLayout {
     let secondaryMenuBottomPadding: CGFloat
     let secondaryMenuLift: CGFloat
     let contentWidth: CGFloat
+    let statusTopPadding: CGFloat
 
     init(size: CGSize) {
         self.size = size
-        let longSide = max(size.width, size.height)
-        isPad = UIDevice.current.userInterfaceIdiom == .pad || longSide >= 1024
+        isPad = isPadDevice
         if isPad {
             mainSpacing = size.height * 0.03
             topSpacerHeight = size.height * 0.05
-            horizontalPadding = min(size.width * 0.12, 120)
-            menuAvailableWidth = min(size.width * 0.8, 620)
-            menuSpacing = 24
-            menuItemWidth = (menuAvailableWidth - menuSpacing * 2) / 3 * 1.1
-            menuButtonHeight = min(size.height * 0.13, 150)
+            horizontalPadding = min(size.width * 0.1, 110)
+            menuAvailableWidth = min(size.width * 0.85, 820)
+            menuSpacing = 20
+            let computedPhoneMenuItemWidth = (menuAvailableWidth - menuSpacing * 2) / 3 * 1.2
+            let computedPhoneMenuButtonHeight = min(size.height * 0.2, 140)
+            let computedPadMenuItemWidth = min(size.width * 0.18, 180)
+            let computedPadMenuButtonHeight = min(size.height * 0.12, 115)
+            menuItemWidthPhone = computedPhoneMenuItemWidth
+            menuButtonHeightPhone = computedPhoneMenuButtonHeight
+            menuItemWidthPad = computedPadMenuItemWidth
+            menuButtonHeightPad = computedPadMenuButtonHeight
             achievementButtonSize = CGSize(width: min(menuAvailableWidth * 0.6, 320),
-                                           height: menuButtonHeight)
+                                           height: computedPadMenuButtonHeight)
             startButtonSize = CGSize(width: min(size.width * 0.68, 500),
                                      height: size.height * 0.26)
-            startButtonTopPadding = size.height * 0.03
+            startButtonTopPadding = size.height * 0.05
             statusBoxSize = CGSize(width: min(size.width * 0.45, 360),
                                    height: min(size.height * 0.12, 120))
             overlaySize = CGSize(width: min(size.width * 0.6, 520),
                                  height: min(size.height * 0.7, 620))
             settingsOverlaySize = CGSize(width: min(size.width * 0.5, 420),
                                          height: min(size.height * 0.55, 460))
-            secondaryMenuBottomPadding = size.height * 0.02
-            secondaryMenuLift = menuButtonHeight * 0.5
-            contentWidth = min(size.width * 0.8, 600)
+            secondaryMenuBottomPadding = size.height * 0.015
+            secondaryMenuLift = computedPadMenuButtonHeight * 0.1
+            contentWidth = min(size.width * 0.85, 820)
+            statusTopPadding = size.height * 0.1
         } else {
             mainSpacing = size.height * 0.025
             topSpacerHeight = size.height * 0.05
             horizontalPadding = max(size.width * 0.08, 20)
             menuAvailableWidth = size.width - horizontalPadding * 2
             menuSpacing = 16
-            menuItemWidth = (menuAvailableWidth - menuSpacing * 2) / 3 * 1.1
-            menuButtonHeight = min(size.height * 0.18, 130)
+            let sharedMenuItemWidth = (menuAvailableWidth - menuSpacing * 2) / 3 * 1.1
+            let sharedMenuButtonHeight = min(size.height * 0.18, 130)
+            menuItemWidthPad = sharedMenuItemWidth
+            menuButtonHeightPad = sharedMenuButtonHeight
+            menuItemWidthPhone = sharedMenuItemWidth
+            menuButtonHeightPhone = sharedMenuButtonHeight
             achievementButtonSize = CGSize(width: min(menuAvailableWidth * 0.7, 260),
-                                           height: menuButtonHeight)
+                                           height: sharedMenuButtonHeight)
             startButtonSize = CGSize(width: min(size.width * 0.95, 480),
                                      height: size.height * 0.3)
             startButtonTopPadding = size.height * 0.02
@@ -471,9 +491,28 @@ private struct HomeLayout {
             settingsOverlaySize = CGSize(width: min(size.width * 0.85, 360),
                                          height: min(size.height * 0.6, 400))
             secondaryMenuBottomPadding = size.height * 0.02
-            secondaryMenuLift = menuButtonHeight * 0.7
+            secondaryMenuLift = sharedMenuButtonHeight * 0.7
             contentWidth = menuAvailableWidth
+            statusTopPadding = 0
         }
+#if DEBUG
+        debugLogHomeLayoutMetrics(
+            size: size,
+            isPad: isPad,
+            contentWidth: contentWidth,
+            menuAvailableWidth: menuAvailableWidth,
+            menuItemWidth: isPad ? menuItemWidthPad : menuItemWidthPhone,
+            menuButtonHeight: isPad ? menuButtonHeightPad : menuButtonHeightPhone,
+            startButtonSize: startButtonSize
+        )
+#endif
+    }
+    func menuItemWidth(for isPad: Bool) -> CGFloat {
+        isPad ? menuItemWidthPad : menuItemWidthPhone
+    }
+
+    func menuButtonHeight(for isPad: Bool) -> CGFloat {
+        isPad ? menuButtonHeightPad : menuButtonHeightPhone
     }
 }
 
@@ -512,8 +551,8 @@ private struct RewardSlideView: View {
                 Image(imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: size.width * 0.9)
-                    .padding(.bottom, 40)
+                    .frame(width: size.width * 0.85)
+                    .padding(.bottom, size.height * 0.08)
             }
             .frame(width: size.width, height: size.height)
             .background(Color.black)
@@ -526,3 +565,38 @@ private struct RewardSlideView: View {
         }
     }
 }
+
+#if canImport(UIKit)
+private var isPadDevice: Bool {
+    let idiomIsPad = UIDevice.current.userInterfaceIdiom == .pad
+    let bounds = UIScreen.main.bounds
+    let longSide = max(bounds.width, bounds.height)
+    return idiomIsPad || longSide >= 1024
+}
+#else
+private let isPadDevice = false
+#endif
+
+#if DEBUG
+private var lastHomeLayoutLog: (CGSize, Bool)?
+
+private func debugLogHomeLayoutMetrics(size: CGSize,
+                                       isPad: Bool,
+                                       contentWidth: CGFloat,
+                                       menuAvailableWidth: CGFloat,
+                                       menuItemWidth: CGFloat,
+                                       menuButtonHeight: CGFloat,
+                                       startButtonSize: CGSize) {
+    if let lastLog = lastHomeLayoutLog,
+       lastLog.0 == size,
+       lastLog.1 == isPad {
+        return
+    }
+    lastHomeLayoutLog = (size, isPad)
+    let formattedSize = "\(Int(size.width))x\(Int(size.height))"
+    let menuInfo = "menuWidth=\(menuItemWidth.rounded()) menuHeight=\(menuButtonHeight.rounded())"
+    let contentInfo = "contentWidth=\(contentWidth.rounded()) availableMenu=\(menuAvailableWidth.rounded())"
+    let startButtonInfo = "startButton=\(Int(startButtonSize.width))x\(Int(startButtonSize.height))"
+    print("[HomeLayout] size=\(formattedSize) isPad=\(isPad) \(contentInfo) \(menuInfo) \(startButtonInfo)")
+}
+#endif

@@ -31,6 +31,7 @@ final class AppFlowState: ObservableObject {
     @Published private(set) var claimedRewardMilestones: Set<Int> = []
     @Published var isVibrationEnabled: Bool = true
     @Published private(set) var characterGhosts: [CharacterGhost] = []
+    @Published private(set) var cumulativeTapCount: Int = 0
 
     let totalStages: Int = 6
     var tapsPerStage: Int { useTestingAchievementRewards ? 5 : 50 }
@@ -128,6 +129,7 @@ final class AppFlowState: ObservableObject {
         guard currentScreen == .game else { return }
         if tapCount < tapsPerStage {
             tapCount += 1
+            cumulativeTapCount += 1
             if isVibrationEnabled {
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             }
@@ -149,6 +151,10 @@ final class AppFlowState: ObservableObject {
             let prospectiveRunCount = totalClears + 1
             clearBackgroundImageName = selectClearBackgroundImage()
             recordRunCompletion(runCount: prospectiveRunCount, clearName: clearBackgroundImageName)
+            if !useTestingAchievementRewards {
+                AdjustManager.shared.trackGameCycleCompletion(total: prospectiveRunCount)
+            }
+            RakutenRewardManager.shared.logClearAction()
             currentScreen = .clear
         } else {
             currentStage += 1
@@ -328,6 +334,7 @@ struct FlowCoordinatorView: View {
                      characterOffsetRatio: state.characterOffsetRatio,
                      isCharacterFlipped: state.isCharacterFlipped,
                      characterGhosts: state.characterGhosts,
+                     cumulativeTapCount: state.cumulativeTapCount,
                      onTap: state.registerTap)
         case .stageChange:
             StageChangeView(currentStage: state.currentStage,

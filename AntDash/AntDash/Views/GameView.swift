@@ -8,6 +8,7 @@ struct GameView: View {
     let characterOffsetRatio: CGFloat
     let isCharacterFlipped: Bool
     let characterGhosts: [CharacterGhost]
+    let cumulativeTapCount: Int
     let onTap: () -> Void
 
     private var backgroundImageName: String {
@@ -24,7 +25,7 @@ struct GameView: View {
     private var remainingTaps: Int {
         max(tapGoal - tapCount, 0)
     }
-
+    
     var body: some View {
         GeometryReader { proxy in
             let layout = GameLayout(size: proxy.size)
@@ -37,6 +38,7 @@ struct GameView: View {
                 ghostLayers(in: layout)
                 characterLayer(in: layout)
                 remainingInfoOverlay(in: layout)
+                cumulativeTapOverlay(in: layout)
 
                 VStack(spacing: 0) {
                     Spacer()
@@ -46,8 +48,8 @@ struct GameView: View {
                         Image("Tap")
                             .resizable()
                             .scaledToFit()
-                            .frame(maxWidth: proxy.size.width * 0.8,
-                                   maxHeight: proxy.size.height / 2 - 32)
+                            .frame(maxWidth: layout.tapButtonMaxWidth(for: proxy.size.width),
+                                   maxHeight: layout.tapButtonMaxHeight(for: proxy.size.height))
                     }
                     .buttonStyle(.plain)
                     .frame(height: proxy.size.height / 2)
@@ -112,7 +114,7 @@ struct GameView: View {
 
     private func remainingInfoOverlay(in layout: GameLayout) -> some View {
         let size = layout.size
-        let boxWidth = layout.infoBoxSize.width
+        let boxWidth = layout.infoBoxSize.width * (layout.isPad ? 0.7 : 1)
         let boxHeight = layout.infoBoxSize.height
         let horizontalOffset = size.width * layout.infoHorizontalRatio
         let verticalOffset = -size.height * layout.infoVerticalRatio
@@ -133,6 +135,17 @@ struct GameView: View {
         .shadow(radius: 6)
         .position(x: size.width - horizontalOffset, y: layout.infoPositionY(for: verticalOffset, boxHeight: boxHeight))
     }
+    
+    private func cumulativeTapOverlay(in layout: GameLayout) -> some View {
+        let size = layout.size
+        let position = CGPoint(x: size.width * layout.cumulativeHorizontalRatio,
+                               y: size.height * layout.cumulativeVerticalRatio)
+        return Text("\(cumulativeTapCount)")
+            .font(layout.isPad ? .largeTitle.bold() : .title.bold())
+            .foregroundColor(.white)
+            .shadow(color: .black.opacity(0.6), radius: 6, x: 0, y: 2)
+            .position(position)
+    }
 }
 
 private struct GameLayout {
@@ -145,6 +158,16 @@ private struct GameLayout {
     let infoBoxSize: CGSize
     let infoHorizontalRatio: CGFloat
     let infoVerticalRatio: CGFloat
+    let cumulativeHorizontalRatio: CGFloat
+    let cumulativeVerticalRatio: CGFloat
+    
+    func tapButtonMaxWidth(for width: CGFloat) -> CGFloat {
+        isPad ? width * 0.6 : width * 0.8
+    }
+    
+    func tapButtonMaxHeight(for height: CGFloat) -> CGFloat {
+        isPad ? height / 2 - 80 : height / 2 - 32
+    }
 
     init(size: CGSize) {
         self.size = size
@@ -158,11 +181,13 @@ private struct GameLayout {
         characterWidth = min((isPad ? padContentWidth : size.width) * 0.35, isPad ? 320 : 220)
         movementRange = max((size.width - characterWidth) / 2, 0)
         characterVerticalRatio = isPad ? 0.2 : 0.25
-        let infoWidth = min(size.width * (isPad ? 0.22 : 0.26), isPad ? 200 : 160)
+        let infoWidth = min(size.width * (isPad ? 0.22 : 0.26), isPad ? 160 : 160)
         let infoHeight = min(size.height * (isPad ? 0.12 : 0.15), isPad ? 95 : 100)
         infoBoxSize = CGSize(width: infoWidth, height: infoHeight)
-        infoHorizontalRatio = isPad ? 0.22 : 0.2
+        infoHorizontalRatio = isPad ? 0.3 : 0.2
         infoVerticalRatio = isPad ? 0.42 : 0.45
+        cumulativeHorizontalRatio = isPad ? 0.78 : 0.82
+        cumulativeVerticalRatio = isPad ? 0.48 : 0.45
     }
     
     func infoPositionY(for verticalOffset: CGFloat, boxHeight: CGFloat) -> CGFloat {

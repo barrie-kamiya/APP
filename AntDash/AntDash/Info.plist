@@ -37,5 +37,7 @@
         <key>UIApplicationSupportsMultipleScenes</key>
         <false/>
     </dict>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>パーソナライズされた広告を表示し、アプリ体験を向上させるために追跡を許可してください。</string>
 </dict>
 </plist>

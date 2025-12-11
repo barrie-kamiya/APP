@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 struct StageChangeView: View {
     let currentStage: Int
@@ -34,7 +37,7 @@ struct StageChangeView: View {
 
                 VStack(spacing: 0) {
                     Spacer()
-                        .frame(height: proxy.size.height * 0.41)
+                        .frame(height: proxy.size.height * (isPad ? 0.43 : 0.41))
 
                     Button(action: onNext) {
                         Image("Next")
@@ -44,7 +47,7 @@ struct StageChangeView: View {
                                    height: min(proxy.size.height * 0.12, 80))
                     }
                     .accessibilityLabel(Text("次へ"))
-                    .padding(.top, 24)
+                    .padding(.top, isPad ? 32 : 24)
 
                     Spacer()
                 }
@@ -73,3 +76,14 @@ struct StageChangeView: View {
             .position(position)
     }
 }
+
+#if canImport(UIKit)
+private var isPad: Bool {
+    let idiomIsPad = UIDevice.current.userInterfaceIdiom == .pad
+    let bounds = UIScreen.main.bounds
+    let longSide = max(bounds.width, bounds.height)
+    return idiomIsPad || longSide >= 1024
+}
+#else
+private let isPad = false
+#endif
