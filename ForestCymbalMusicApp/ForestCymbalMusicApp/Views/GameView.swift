@@ -11,6 +11,8 @@ struct GameView: View {
     var characterName: String
     var cumulativeTapCount: Int
     var onTapArea: () -> Void
+    var onExitToHome: () -> Void
+    @State private var showHomeAlert = false
 
     private var progress: Double {
         Double(tapCount) / Double(targetTapCount)
@@ -65,6 +67,18 @@ struct GameView: View {
         .onDisappear {
             stopSymbalBgm()
         }
+        .overlay(homeButtonLayer, alignment: .topTrailing)
+        .alert("ホームに戻る", isPresented: $showHomeAlert) {
+            Button("Yes") {
+                showHomeAlert = false
+                onExitToHome()
+            }
+            Button("No", role: .cancel) {
+                showHomeAlert = false
+            }
+        } message: {
+            Text("ホームに戻ると、このステージの演奏数はリセットされます。戻ってよろしいですか？")
+        }
     }
 
     private func triggerHapticIfNeeded() {
@@ -89,9 +103,12 @@ struct GameView: View {
     }
 
     private var remainingTapIndicator: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text("完了まで")
-            Text("あと")
+        VStack(alignment: .center, spacing: 4) {
+            Text("次ステージ")
+                .font(.headline)
+            Text("まで")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
             Text("\(remainingTaps)")
                 .font(statusCountFont)
         }
@@ -99,9 +116,11 @@ struct GameView: View {
         .foregroundColor(.black)
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(Color.white.opacity(0.9))
+        .background(Color.white.opacity(0.7))
         .cornerRadius(12)
         .shadow(radius: 4)
+        .scaleEffect(isPadDevice ? 0.5 : 1)
+        .offset(y: isPadDevice ? -20 : 0)
     }
 
     private var remainingTaps: Int {
@@ -152,7 +171,7 @@ struct GameView: View {
     }
 
     private var statusPositionYRatio: CGFloat {
-        isPadDevice ? 0.1 : 0.12
+        isPadDevice ? 0.08 : 0.105
     }
 
     private var statusWidthRatio: CGFloat {
@@ -168,22 +187,42 @@ struct GameView: View {
     }
 
     private var cumulativeTapOverlay: some View {
-        Text("\(cumulativeTapCount)")
-            .font(cumulativeFont)
+        let background = RoundedRectangle(cornerRadius: isPadDevice ? 20 : 14, style: .continuous)
+        return Text("累計演奏数：\(cumulativeTapCount)")
+            .font(isPadDevice ? .title2.bold() : .headline.bold())
             .foregroundColor(.white)
-            .shadow(color: .black.opacity(0.6), radius: 4, x: 0, y: 2)
-    }
-
-    private var cumulativeFont: Font {
-        isPadDevice ? .largeTitle.weight(.heavy) : .title.weight(.semibold)
+            .padding(.horizontal, isPadDevice ? 22 : 18)
+            .padding(.vertical, isPadDevice ? 12 : 9)
+            .background(background.fill(Color.black.opacity(0.35)))
+            .overlay(background.stroke(Color.black.opacity(0.5), lineWidth: 1))
+            .shadow(color: .black.opacity(0.6), radius: 6, x: 0, y: 2)
+            .scaleEffect(isPadDevice ? 0.5 : 1)
     }
 
     private var cumulativePositionXRatio: CGFloat {
-        isPadDevice ? 0.8 : 0.85
+        isPadDevice ? 0.54 : 0.77
     }
 
     private var cumulativePositionYRatio: CGFloat {
-        isPadDevice ? 0.46 : 0.45
+        isPadDevice ? 0.42 : 0.45
+    }
+    
+    private var homeButtonLayer: some View {
+        Button(action: { showHomeAlert = true }) {
+            Text("ホームに戻る")
+                .font(isPadDevice ? .headline : .caption.bold())
+                .foregroundColor(.black)
+                .padding(.horizontal, isPadDevice ? 18 : 12)
+                .padding(.vertical, isPadDevice ? 10 : 6)
+                .background(Color.yellow.opacity(0.5))
+                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.black.opacity(0.6), lineWidth: 1))
+                .cornerRadius(12)
+        }
+        .buttonStyle(.plain)
+        .padding(.top, isPadDevice ? 50 : 55)
+        .padding(.trailing, isPadDevice ? 30 : 16)
+        .scaleEffect(isPadDevice ? 0.5 : 1, anchor: .topTrailing)
+        .offset(x: isPadDevice ? -30 : 0)
     }
 
     private var backgroundImage: Image {

@@ -1,6 +1,20 @@
 import SwiftUI
 
 struct FlowCoordinatorView: View {
+    private enum PersistenceKey {
+        static let stage = "ForestCymbal.stage"
+        static let cumulative = "ForestCymbal.cumulative"
+        static let hasProgress = "ForestCymbal.hasProgress"
+    }
+    
+    private static let initialProgress: (stage: Int, cumulative: Int, hasProgress: Bool, character: String) = {
+        let defaults = UserDefaults.standard
+        let has = defaults.bool(forKey: PersistenceKey.hasProgress)
+        let stage = has ? max(defaults.integer(forKey: PersistenceKey.stage), 1) : 1
+        let cumulative = has ? max(defaults.integer(forKey: PersistenceKey.cumulative), 0) : 0
+        let character = defaults.string(forKey: "ForestCymbal.character") ?? "Chara01"
+        return (stage, cumulative, has, character)
+    }()
     private enum Screen {
         case splash
         case home
@@ -10,12 +24,12 @@ struct FlowCoordinatorView: View {
     }
 
     @State private var screen: Screen = .splash
-    @State private var currentStage: Int = 1
+    @State private var currentStage: Int = FlowCoordinatorView.initialProgress.stage
     @State private var completedStage: Int = 0
     @State private var tapCount: Int = 0
     @State private var vibrationEnabled: Bool = true
     @State private var clearImageName: String = "Clear_01"
-    @State private var currentCharacter: String = "Chara01"
+    @State private var currentCharacter: String = FlowCoordinatorView.initialProgress.character
     @State private var completedRuns: Int = 0
     @State private var unlockedClearFlags: [String: Bool] = {
         var flags: [String: Bool] = [:]
@@ -24,7 +38,8 @@ struct FlowCoordinatorView: View {
         }
         return flags
     }()
-    @State private var cumulativeTapCount: Int = 0
+    @State private var cumulativeTapCount: Int = FlowCoordinatorView.initialProgress.cumulative
+    @State private var stageStartCumulative: Int = FlowCoordinatorView.initialProgress.cumulative
 
     private let useTestingAchievementRewards = false
     private let totalStages = 6
@@ -95,11 +110,25 @@ struct FlowCoordinatorView: View {
             Group {
                 switch screen {
                 case .splash:
-                    SplashView {
-                        transition(to: .home)
+                    if FlowCoordinatorView.initialProgress.hasProgress {
+                        GameView(stage: currentStage,
+                                 tapCount: tapCount,
+                                 targetTapCount: targetTapCount,
+                                 vibrationEnabled: vibrationEnabled,
+                                 characterName: currentCharacter,
+                                 cumulativeTapCount: cumulativeTapCount,
+                                 onTapArea: handleTap,
+                                 onExitToHome: transitionToHomeFromGame)
+                            .onAppear {
+                                startGame(resumeOnly: true)
+                            }
+                    } else {
+                        SplashView {
+                            transition(to: .home)
+                        }
                     }
                 case .home:
-                    HomeView(onStart: startGame,
+                    HomeView(onStart: { startGame() },
                              vibrationEnabled: $vibrationEnabled,
                              unlockedIllustrations: unlockedIllustrationNames,
                              isAchievementAvailable: hasAchievementToClaim(),
@@ -112,9 +141,9 @@ struct FlowCoordinatorView: View {
                              targetTapCount: targetTapCount,
                              vibrationEnabled: vibrationEnabled,
                              characterName: currentCharacter,
-                             cumulativeTapCount: cumulativeTapCount) {
-                        handleTap()
-                    }
+                             cumulativeTapCount: cumulativeTapCount,
+                             onTapArea: handleTap,
+                             onExitToHome: transitionToHomeFromGame)
                 case .stageChange:
                     StageChangeView(stage: completedStage,
                                     totalStages: totalStages) {
@@ -122,7 +151,7 @@ struct FlowCoordinatorView: View {
                     }
                 case .clear:
                     GameClearView(imageName: clearImageName) {
-                        transition(to: .home)
+                        returnHomeFromClear()
                     }
                 }
             }
@@ -143,14 +172,25 @@ struct FlowCoordinatorView: View {
     }
 
     private func transition(to newScreen: Screen) {
-        if newScreen == .home {
-            resetProgress()
-        }
         screen = newScreen
     }
 
-    private func startGame() {
-        resetProgress()
+    private func startGame(resumeOnly: Bool = false) {
+        tapCount = 0
+        let saved = loadSavedProgress()
+        if resumeOnly, let saved = saved {
+            currentStage = saved.stage
+            stageStartCumulative = saved.cumulative
+            cumulativeTapCount = saved.cumulative
+        } else if let saved = saved {
+            currentStage = saved.stage
+            stageStartCumulative = saved.cumulative
+            cumulativeTapCount = saved.cumulative
+            currentCharacter = pickCharacter()
+        } else {
+            resetProgress()
+        }
+        persistProgress(stage: currentStage, cumulative: stageStartCumulative)
         screen = .game
     }
 
@@ -158,7 +198,10 @@ struct FlowCoordinatorView: View {
         currentStage = 1
         completedStage = 0
         tapCount = 0
+        cumulativeTapCount = 0
+        stageStartCumulative = 0
         currentCharacter = pickCharacter()
+        clearSavedProgress()
     }
 
     private func handleTap() {
@@ -167,6 +210,8 @@ struct FlowCoordinatorView: View {
         cumulativeTapCount += 1
         if tapCount >= targetTapCount {
             completedStage = currentStage
+            stageStartCumulative = cumulativeTapCount
+            persistProgress(stage: min(currentStage + 1, totalStages), cumulative: stageStartCumulative)
             if currentStage >= totalStages {
                 finishFinalStage()
             } else {
@@ -183,7 +228,21 @@ struct FlowCoordinatorView: View {
             tapCount = 0
             currentCharacter = pickCharacter()
             screen = .game
+            persistProgress(stage: currentStage, cumulative: stageStartCumulative)
         }
+    }
+    
+    private func transitionToHomeFromGame() {
+        guard screen == .game else { return }
+        tapCount = 0
+        cumulativeTapCount = stageStartCumulative
+        persistProgress(stage: currentStage, cumulative: stageStartCumulative)
+        screen = .home
+    }
+    
+    private func returnHomeFromClear() {
+        resetProgress()
+        screen = .home
     }
 
     private func finishFinalStage() {
@@ -193,6 +252,7 @@ struct FlowCoordinatorView: View {
         completedRuns += 1
         RakutenRewardManager.shared.trackGameClearAction()
         AdjustManager.shared.trackGameCycleCompletion(total: completedRuns)
+        clearSavedProgress()
     }
 
     private func pickClearImage() -> String {
@@ -251,5 +311,28 @@ struct FlowCoordinatorView: View {
             return nil
         }
         return max(next - completedRuns, 0)
+    }
+    
+    private func loadSavedProgress() -> (stage: Int, cumulative: Int)? {
+        let defaults = UserDefaults.standard
+        guard defaults.bool(forKey: PersistenceKey.hasProgress) else { return nil }
+        let stage = max(defaults.integer(forKey: PersistenceKey.stage), 1)
+        let cumulative = max(defaults.integer(forKey: PersistenceKey.cumulative), 0)
+        return (stage, cumulative)
+    }
+    
+    private func persistProgress(stage: Int, cumulative: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(max(stage, 1), forKey: PersistenceKey.stage)
+        defaults.set(max(cumulative, 0), forKey: PersistenceKey.cumulative)
+        defaults.set(currentCharacter, forKey: "ForestCymbal.character")
+        defaults.set(true, forKey: PersistenceKey.hasProgress)
+    }
+    
+    private func clearSavedProgress() {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: PersistenceKey.stage)
+        defaults.removeObject(forKey: PersistenceKey.cumulative)
+        defaults.set(false, forKey: PersistenceKey.hasProgress)
     }
 }

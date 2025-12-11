@@ -23,12 +23,10 @@ struct StageChangeView: View {
             AdaptiveBackgroundImage(imageName: backgroundImageName)
             GeometryReader { geometry in
                 ZStack {
-                    let remainingStages = max(totalStages - currentStage, 0)
-                    let indicatorPosition = CGPoint(x: 0.5, y: 0.42)
-                    VStack(spacing: 0) {
-                        Color.clear
-                            .frame(height: geometry.size.height / 2)
-                        Color.clear
+                     VStack(spacing: 0) {
+                         Color.clear
+                             .frame(height: geometry.size.height / 2)
+                         Color.clear
                             .frame(height: geometry.size.height / 2)
                     }
                     Button(action: onNext) {
@@ -42,22 +40,6 @@ struct StageChangeView: View {
                     .position(x: geometry.size.width / 2,
                               y: geometry.size.height * (isPadLayout ? 0.48 : 0.49))
 
-                    if !isFinalStage {
-                        VStack(spacing: 4) {
-                            Text("残り\(remainingStages)ステージ")
-                                .font(.title3.bold())
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.6)
-                        }
-                        .font(.caption)
-                        .padding(8)
-                        .frame(width: geometry.size.width * 0.4)
-                        .background(Color.white.opacity(0.9))
-                        .cornerRadius(10)
-                        .shadow(radius: 4)
-                        .position(x: geometry.size.width * indicatorPosition.x,
-                                  y: geometry.size.height * (isPadLayout ? 0.41 : 0.41))
-                    }
                 }
             }
         }

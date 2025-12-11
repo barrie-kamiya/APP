@@ -8,8 +8,6 @@ struct StageChangeView: View {
     let totalStages: Int
     let lastClearedStage: Int
     let onNext: () -> Void
-    private let remainingTextXRatio: CGFloat = 0.5
-    private let remainingTextYRatio: CGFloat = 0.41
 
     private var backgroundImageName: String {
         switch lastClearedStage {
@@ -21,9 +19,6 @@ struct StageChangeView: View {
         }
     }
     
-    private var remainingStages: Int {
-        max(totalStages - lastClearedStage, 0)
-    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -53,27 +48,10 @@ struct StageChangeView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                remainingStageOverlay(in: proxy.size)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .ignoresSafeArea(edges: .bottom)
-    }
-    
-    private func remainingStageOverlay(in size: CGSize) -> some View {
-        let boxWidth = min(size.width * 0.45, 240)
-        let boxHeight = min(size.height * 0.08, 45)
-        let position = CGPoint(x: size.width * remainingTextXRatio,
-                               y: size.height * remainingTextYRatio)
-
-        return Text("残り\(remainingStages)ステージ")
-            .font(.headline)
-            .foregroundColor(.black)
-            .frame(width: boxWidth, height: boxHeight)
-            .background(Color.white.opacity(0.9))
-            .cornerRadius(16)
-            .shadow(radius: 4)
-            .position(position)
     }
 }
 

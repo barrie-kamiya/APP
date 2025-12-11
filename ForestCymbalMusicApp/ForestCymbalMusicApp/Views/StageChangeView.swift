@@ -11,13 +11,6 @@ struct StageChangeView: View {
                 backgroundLayer(size: proxy.size)
 
                 VStack(spacing: 16) {
-                    Text(remainingStagesText)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Color.black.opacity(0.6))
-                        .cornerRadius(16)
                     Button(action: onNext) {
                         Image("Next")
                             .resizable()
@@ -72,10 +65,6 @@ struct StageChangeView: View {
         }
     }
 
-    private var remainingStagesText: String {
-        let remaining = max(totalStages - stage, 0)
-        return remaining > 0 ? "残り \(remaining) ステージ" : "最終ステージ"
-    }
 }
 
 #if canImport(UIKit)

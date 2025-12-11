@@ -36,6 +36,15 @@ enum CharacterPose: CaseIterable {
 }
 
 final class AppFlowState: ObservableObject {
+    private enum PersistenceKey {
+        static let stage = "CatsStraightAhead.stage"
+        static let cumulative = "CatsStraightAhead.cumulative"
+        static let hasProgress = "CatsStraightAhead.hasProgress"
+    }
+
+    private let persistence = UserDefaults.standard
+    private var cumulativeTapCountAtStageStart: Int = 0
+    private var isRunInProgress = false
     private let useTestingAchievementRewards = false
     private let productionCharacterWeights: [(name: String, weight: Double)] = [
         ("Chara01", 0.75),
@@ -173,6 +182,20 @@ final class AppFlowState: ObservableObject {
     }
 
     var hasClaimableReward: Bool { availableRewardMilestone != nil }
+    
+    private var hasSavedProgress: Bool {
+        persistence.bool(forKey: PersistenceKey.hasProgress)
+    }
+    
+    init() {
+        if hasSavedProgress {
+            restoreSavedProgress()
+        } else {
+            selectNewCharacter()
+            resetCharacterPose()
+            resetCharacterPosition()
+        }
+    }
 
     func claimAchievementReward() -> (imageName: String, milestone: Int)? {
         guard let milestone = availableRewardMilestone,
@@ -189,10 +212,33 @@ final class AppFlowState: ObservableObject {
     func setVibration(enabled: Bool) {
         isVibrationEnabled = enabled
     }
+    
+    func returnToHomeDuringRun() {
+        guard currentScreen == .game else { return }
+        tapCount = 0
+        cumulativeTapCount = cumulativeTapCountAtStageStart
+        persistProgressSnapshot()
+        isRunInProgress = false
+        selectNewCharacter()
+        resetCharacterPose()
+        resetCharacterPosition()
+        currentScreen = .home
+    }
 
     func startGame() {
-        currentStage = 1
         tapCount = 0
+        isRunInProgress = true
+        if hasSavedProgress {
+            currentStage = loadSavedStage()
+            let savedCumulative = loadSavedCumulativeCount()
+            cumulativeTapCountAtStageStart = savedCumulative
+            cumulativeTapCount = savedCumulative
+        } else {
+            currentStage = 1
+            cumulativeTapCount = 0
+            cumulativeTapCountAtStageStart = 0
+            saveProgressIfNeeded()
+        }
         selectNewCharacter()
         resetCharacterPose()
         resetCharacterPosition()
@@ -212,21 +258,21 @@ final class AppFlowState: ObservableObject {
                 tapCount = 0
                 currentScreen = .clear
             } else {
-                selectNewCharacter()
-                resetCharacterPose()
-                resetCharacterPosition()
+                tapCount = 0
+                currentStage += 1
+                cumulativeTapCountAtStageStart = cumulativeTapCount
+                saveProgressIfNeeded()
                 currentScreen = .stageChange
             }
         }
     }
 
     func proceedFromStageChange() {
-        guard currentStage < totalStages else {
+        guard currentStage <= totalStages else {
             tapCount = 0
             currentScreen = .clear
             return
         }
-        currentStage += 1
         tapCount = 0
         selectNewCharacter()
         resetCharacterPose()
@@ -235,8 +281,12 @@ final class AppFlowState: ObservableObject {
     }
 
     func finishGame() {
+        isRunInProgress = false
+        clearSavedProgress()
         currentStage = 1
         tapCount = 0
+        cumulativeTapCount = 0
+        cumulativeTapCountAtStageStart = 0
         selectNewCharacter()
         resetCharacterPose()
         resetCharacterPosition()
@@ -330,6 +380,8 @@ final class AppFlowState: ObservableObject {
         if let forced = milestoneClearMapping[totalClears] {
             forcedClearBackground = forced
         }
+        isRunInProgress = false
+        clearSavedProgress()
     }
 
     private func unlockIllustration(for clearName: String) {
@@ -341,6 +393,46 @@ final class AppFlowState: ObservableObject {
         } else {
             unlockedIllustrations.insert("Ilustrated_none")
         }
+    }
+    
+    private func saveProgressIfNeeded() {
+        guard isRunInProgress else { return }
+        persistProgressSnapshot()
+    }
+    
+    private func persistProgressSnapshot() {
+        persistence.set(currentStage, forKey: PersistenceKey.stage)
+        persistence.set(cumulativeTapCountAtStageStart, forKey: PersistenceKey.cumulative)
+        persistence.set(true, forKey: PersistenceKey.hasProgress)
+    }
+    
+    private func clearSavedProgress() {
+        persistence.removeObject(forKey: PersistenceKey.stage)
+        persistence.removeObject(forKey: PersistenceKey.cumulative)
+        persistence.set(false, forKey: PersistenceKey.hasProgress)
+    }
+    
+    private func restoreSavedProgress() {
+        let savedStage = loadSavedStage()
+        let savedCumulative = loadSavedCumulativeCount()
+        currentStage = savedStage
+        tapCount = 0
+        cumulativeTapCount = savedCumulative
+        cumulativeTapCountAtStageStart = savedCumulative
+        isRunInProgress = true
+        selectNewCharacter()
+        resetCharacterPose()
+        resetCharacterPosition()
+        currentScreen = .game
+    }
+    
+    private func loadSavedStage() -> Int {
+        let value = persistence.integer(forKey: PersistenceKey.stage)
+        return max(value, 1)
+    }
+    
+    private func loadSavedCumulativeCount() -> Int {
+        max(persistence.integer(forKey: PersistenceKey.cumulative), 0)
     }
 }
 
@@ -379,7 +471,8 @@ struct FlowCoordinatorView: View {
                      characterOffsetRatio: state.characterOffsetRatio,
                      isVibrationEnabled: state.isVibrationEnabled,
                      cumulativeTapCount: state.cumulativeTapCount,
-                     onTapAreaPressed: state.registerTap)
+                     onTapAreaPressed: state.registerTap,
+                     onExitToHome: state.returnToHomeDuringRun)
                         case .stageChange:
                             StageChangeView(currentStage: state.currentStage,
                                             totalStages: state.totalStages,
