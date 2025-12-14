@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F215F720299B4CA100753ECA /* DanceDanceGorillaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F70A299B4C7D00753ECA /* DanceDanceGorillaApp.swift */; };
+		F215F721299B4CA100753ECA /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F70B299B4C7D00753ECA /* AppRootView.swift */; };
+		F215F722299B4CA100753ECA /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F70C299B4C7D00753ECA /* SplashView.swift */; };
+		F215F723299B4CA100753ECA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F70D299B4C7D00753ECA /* HomeView.swift */; };
+		F215F724299B4CA100753ECA /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F70E299B4C7D00753ECA /* GameView.swift */; };
+		F215F725299B4CA100753ECA /* StageChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F70F299B4C7D00753ECA /* StageChangeView.swift */; };
+		F215F726299B4CA100753ECA /* GameClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F710299B4C7D00753ECA /* GameClearView.swift */; };
+		F215F727299B4CA100753ECA /* DeviceTraitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F711299B4C7D00753ECA /* DeviceTraitHelper.swift */; };
+		F215F728299B4CA100753ECA /* GameFlowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F712299B4C7D00753ECA /* GameFlowState.swift */; };
+		F215F72C299B4F6500753ECA /* GameProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F718299B4F6500753ECA /* GameProgress.swift */; };
+		F215F72D299B4FD600753ECA /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F719299B4FD600753ECA /* CatalogView.swift */; };
+		F215F72E299B50A500753ECA /* AchievementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F71A299B50A500753ECA /* AchievementView.swift */; };
+		F215F730299B537900753ECA /* AspectFitBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F71C299B537900753ECA /* AspectFitBackground.swift */; };
+		F215F72F299B52F500753ECA /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F71B299B52F500753ECA /* FeatureFlags.swift */; };
+		F215F735299B600000753ECA /* RakutenRewardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F734299B600000753ECA /* RakutenRewardManager.swift */; };
+		F215F736299B600000753ECA /* RakutenRewardSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F215F737299B600000753ECA /* RakutenRewardSDK */; };
+		F215F739299B6A0000753ECA /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F73A299B6A0000753ECA /* AdjustManager.swift */; };
+		F215F73B299B6A0000753ECA /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = F215F73C299B6A0000753ECA /* Adjust */; };
+		F215F73E299B703200753ECA /* TrackingAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F215F73F299B703200753ECA /* TrackingAuthorizationManager.swift */; };
+		F215F729299B4CA100753ECA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F215F713299B4C7D00753ECA /* Assets.xcassets */; };
+		F215F72A299B4CA100753ECA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F215F716299B4C7D00753ECA /* Preview Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F215F6F7299B4B5200753ECA /* DanceDanceGorilla.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DanceDanceGorilla.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F215F70A299B4C7D00753ECA /* DanceDanceGorillaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanceDanceGorillaApp.swift; sourceTree = "<group>"; };
+		F215F70B299B4C7D00753ECA /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
+		F215F70C299B4C7D00753ECA /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		F215F70D299B4C7D00753ECA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		F215F70E299B4C7D00753ECA /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		F215F70F299B4C7D00753ECA /* StageChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageChangeView.swift; sourceTree = "<group>"; };
+		F215F710299B4C7D00753ECA /* GameClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameClearView.swift; sourceTree = "<group>"; };
+		F215F711299B4C7D00753ECA /* DeviceTraitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTraitHelper.swift; sourceTree = "<group>"; };
+		F215F712299B4C7D00753ECA /* GameFlowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFlowState.swift; sourceTree = "<group>"; };
+		F215F718299B4F6500753ECA /* GameProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProgress.swift; sourceTree = "<group>"; };
+		F215F719299B4FD600753ECA /* CatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
+		F215F71A299B50A500753ECA /* AchievementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementView.swift; sourceTree = "<group>"; };
+		F215F71C299B537900753ECA /* AspectFitBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectFitBackground.swift; sourceTree = "<group>"; };
+		F215F71B299B52F500753ECA /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
+		F215F734299B600000753ECA /* RakutenRewardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RakutenRewardManager.swift; sourceTree = "<group>"; };
+		F215F73F299B703200753ECA /* TrackingAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAuthorizationManager.swift; sourceTree = "<group>"; };
+		F215F73A299B6A0000753ECA /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
+		F215F713299B4C7D00753ECA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F215F714299B4C7D00753ECA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F215F716299B4C7D00753ECA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F215F6F9299B4B5200753ECA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F215F73B299B6A0000753ECA /* Adjust in Frameworks */,
+				F215F736299B600000753ECA /* RakutenRewardSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F215F6F1299B4B5200753ECA = {
+			isa = PBXGroup;
+			children = (
+				F215F6F3299B4B5200753ECA /* DanceDanceGorilla */,
+				F215F6F2299B4B5200753ECA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F215F6F2299B4B5200753ECA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F215F6F7299B4B5200753ECA /* DanceDanceGorilla.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F215F6F3299B4B5200753ECA /* DanceDanceGorilla */ = {
+			isa = PBXGroup;
+			children = (
+				F215F70A299B4C7D00753ECA /* DanceDanceGorillaApp.swift */,
+				F215F70B299B4C7D00753ECA /* AppRootView.swift */,
+				F215F6F4299B4B5200753ECA /* Views */,
+				F215F6F5299B4B5200753ECA /* Utilities */,
+				F215F6F6299B4B5200753ECA /* Resources */,
+				F215F6F8299B4B5200753ECA /* Preview Content */,
+			);
+			path = DanceDanceGorilla;
+			sourceTree = "<group>";
+		};
+		F215F6F4299B4B5200753ECA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F215F70C299B4C7D00753ECA /* SplashView.swift */,
+				F215F70D299B4C7D00753ECA /* HomeView.swift */,
+				F215F70E299B4C7D00753ECA /* GameView.swift */,
+				F215F70F299B4C7D00753ECA /* StageChangeView.swift */,
+				F215F710299B4C7D00753ECA /* GameClearView.swift */,
+				F215F719299B4FD600753ECA /* CatalogView.swift */,
+				F215F71A299B50A500753ECA /* AchievementView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F215F6F5299B4B5200753ECA /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F215F711299B4C7D00753ECA /* DeviceTraitHelper.swift */,
+				F215F712299B4C7D00753ECA /* GameFlowState.swift */,
+				F215F718299B4F6500753ECA /* GameProgress.swift */,
+				F215F71B299B52F500753ECA /* FeatureFlags.swift */,
+				F215F71C299B537900753ECA /* AspectFitBackground.swift */,
+				F215F73A299B6A0000753ECA /* AdjustManager.swift */,
+				F215F73F299B703200753ECA /* TrackingAuthorizationManager.swift */,
+				F215F734299B600000753ECA /* RakutenRewardManager.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F215F6F6299B4B5200753ECA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F215F713299B4C7D00753ECA /* Assets.xcassets */,
+				F215F714299B4C7D00753ECA /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F215F6F8299B4B5200753ECA /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F215F716299B4C7D00753ECA /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F215F6FC299B4B5200753ECA /* DanceDanceGorilla */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F215F702299B4B5200753ECA /* Build configuration list for PBXNativeTarget "DanceDanceGorilla" */;
+			buildPhases = (
+				F215F6FA299B4B5200753ECA /* Sources */,
+				F215F6F9299B4B5200753ECA /* Frameworks */,
+				F215F6FB299B4B5200753ECA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			packageProductDependencies = (
+				F215F73C299B6A0000753ECA /* Adjust */,
+				F215F737299B600000753ECA /* RakutenRewardSDK */,
+			);
+			name = DanceDanceGorilla;
+			productName = DanceDanceGorilla;
+			productReference = F215F6F7299B4B5200753ECA /* DanceDanceGorilla.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F215F6F0299B4B5200753ECA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					F215F6FC299B4B5200753ECA = {
+						CreatedOnToolsVersion = 15.3;
+					};
+				};
+			};
+			buildConfigurationList = F215F6FD299B4B5200753ECA /* Build configuration list for PBXProject "DanceDanceGorilla" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				Base,
+			);
+			mainGroup = F215F6F1299B4B5200753ECA;
+			packageReferences = (
+				F215F73D299B6A0000753ECA /* XCRemoteSwiftPackageReference "ios_sdk" */,
+				F215F738299B600000753ECA /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */,
+			);
+			productRefGroup = F215F6F2299B4B5200753ECA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F215F6FC299B4B5200753ECA /* DanceDanceGorilla */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F215F6FB299B4B5200753ECA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F215F729299B4CA100753ECA /* Assets.xcassets in Resources */,
+				F215F72A299B4CA100753ECA /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F215F6FA299B4B5200753ECA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F215F720299B4CA100753ECA /* DanceDanceGorillaApp.swift in Sources */,
+				F215F721299B4CA100753ECA /* AppRootView.swift in Sources */,
+				F215F722299B4CA100753ECA /* SplashView.swift in Sources */,
+				F215F723299B4CA100753ECA /* HomeView.swift in Sources */,
+				F215F724299B4CA100753ECA /* GameView.swift in Sources */,
+				F215F725299B4CA100753ECA /* StageChangeView.swift in Sources */,
+				F215F726299B4CA100753ECA /* GameClearView.swift in Sources */,
+				F215F72D299B4FD600753ECA /* CatalogView.swift in Sources */,
+				F215F72E299B50A500753ECA /* AchievementView.swift in Sources */,
+				F215F72F299B52F500753ECA /* FeatureFlags.swift in Sources */,
+				F215F730299B537900753ECA /* AspectFitBackground.swift in Sources */,
+				F215F727299B4CA100753ECA /* DeviceTraitHelper.swift in Sources */,
+				F215F728299B4CA100753ECA /* GameFlowState.swift in Sources */,
+				F215F72C299B4F6500753ECA /* GameProgress.swift in Sources */,
+				F215F739299B6A0000753ECA /* AdjustManager.swift in Sources */,
+				F215F73E299B703200753ECA /* TrackingAuthorizationManager.swift in Sources */,
+				F215F735299B600000753ECA /* RakutenRewardManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F215F6FE299B4B5200753ECA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F215F6FF299B4B5200753ECA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		F215F700299B4B5200753ECA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DanceDanceGorilla/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DanceDanceGorilla/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "ダンス・ダンス・ゴリラ";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = DaneDanceGorilla.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F215F701299B4B5200753ECA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DanceDanceGorilla/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DanceDanceGorilla/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "ダンス・ダンス・ゴリラ";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = DaneDanceGorilla.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F215F6FD299B4B5200753ECA /* Build configuration list for PBXProject "DanceDanceGorilla" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F215F6FE299B4B5200753ECA /* Debug */,
+				F215F6FF299B4B5200753ECA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F215F702299B4B5200753ECA /* Build configuration list for PBXNativeTarget "DanceDanceGorilla" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F215F700299B4B5200753ECA /* Debug */,
+				F215F701299B4B5200753ECA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F215F73D299B6A0000753ECA /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adjust/ios_sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.38.4;
+			};
+		};
+		F215F738299B600000753ECA /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Rakuten-Reward-SDK/Reward-SDK-iOS-SPM.git";
+			requirement = {
+				kind = exactVersion;
+				version = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F215F73C299B6A0000753ECA /* Adjust */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F215F73D299B6A0000753ECA /* XCRemoteSwiftPackageReference "ios_sdk" */;
+			productName = Adjust;
+		};
+		F215F737299B600000753ECA /* RakutenRewardSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F215F738299B600000753ECA /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */;
+			productName = RakutenRewardSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = F215F6F0299B4B5200753ECA /* Project object */;
+}
