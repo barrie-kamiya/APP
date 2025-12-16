@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7DB96F32071A456A862E8E6D90FF042F /* ResponsiveLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB96F32071A456A862E8E6D90FF042E /* ResponsiveLayout.swift */; };
+		7FF6B1E080114905B0B543CF75529D49 /* GameFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF6B1E080114905B0B543CF75529D48 /* GameFlowViewModel.swift */; };
+		BB65B59C9DB641CF8BC34207A7E5523F /* DeviceTraitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB65B59B9DB641CF8BC34207A7E5523F /* DeviceTraitHelper.swift */; };
+		CC09310B4A1F4CAF8C7290DB307CE479 /* RandomFlyingCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC09310A4A1F4CAF8C7290DB307CE479 /* RandomFlyingCharacter.swift */; };
+		E1C8874C2D77B80E00A99E2D /* RakutenRewardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C8874B2D77B80E00A99E2D /* RakutenRewardManager.swift */; };
+		E1C8874D2D77B87100A99E2D /* RakutenRewardSDK in Frameworks */ = {isa = PBXBuildFile; productRef = E1C8874E2D77B90E00A99E2D /* RakutenRewardSDK */; };
+		E1C887542D77BCD100A99E2D /* AdjustManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C887502D77BCCC00A99E2D /* AdjustManager.swift */; };
+		E1C887552D77BCD100A99E2D /* TrackingAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C887512D77BCCC00A99E2D /* TrackingAuthorizationManager.swift */; };
+		E1C887592D77BD0A00A99E2D /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = E1C887572D77BD0A00A99E2D /* Adjust */; };
+		C3A4A2E229F8A2B100000020 /* DragonflyCatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000010 /* DragonflyCatchApp.swift */; };
+		C3A4A2E229F8A2B100000021 /* FlowCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000011 /* FlowCoordinatorView.swift */; };
+		C3A4A2E229F8A2B100000022 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000012 /* SplashView.swift */; };
+		C3A4A2E229F8A2B100000023 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000013 /* HomeView.swift */; };
+		C3A4A2E229F8A2B100000024 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000014 /* GameView.swift */; };
+		C3A4A2E229F8A2B100000025 /* StageChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000015 /* StageChangeView.swift */; };
+		C3A4A2E229F8A2B100000026 /* GameClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000016 /* GameClearView.swift */; };
+		C3A4A2E229F8A2B100000027 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3A4A2E229F8A2B100000017 /* Assets.xcassets */; };
+		D5C1C2F428A34F0C8BA0E024 /* FittedBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1C2F328A34F0C8BA0E024 /* FittedBackgroundImage.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7DB96F32071A456A862E8E6D90FF042E /* ResponsiveLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveLayout.swift; sourceTree = "<group>"; };
+		BB65B59B9DB641CF8BC34207A7E5523F /* DeviceTraitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTraitHelper.swift; sourceTree = "<group>"; };
+		CC09310A4A1F4CAF8C7290DB307CE479 /* RandomFlyingCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomFlyingCharacter.swift; sourceTree = "<group>"; };
+		E1C8874B2D77B80E00A99E2D /* RakutenRewardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RakutenRewardManager.swift; sourceTree = "<group>"; };
+		E1C887502D77BCCC00A99E2D /* AdjustManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustManager.swift; sourceTree = "<group>"; };
+		E1C887512D77BCCC00A99E2D /* TrackingAuthorizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAuthorizationManager.swift; sourceTree = "<group>"; };
+		7FF6B1E080114905B0B543CF75529D48 /* GameFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFlowViewModel.swift; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000010 /* DragonflyCatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragonflyCatchApp.swift; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000011 /* FlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowCoordinatorView.swift; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000012 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000013 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000014 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000015 /* StageChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageChangeView.swift; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000016 /* GameClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameClearView.swift; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000017 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B100000018 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3A4A2E229F8A2B10000002F /* ト・ト・トンボキャッチ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ト・ト・トンボキャッチ.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5C1C2F328A34F0C8BA0E024 /* FittedBackgroundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FittedBackgroundImage.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C3A4A2E229F8A2B100000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1C8874D2D77B87100A99E2D /* RakutenRewardSDK in Frameworks */,
+				E1C887592D77BD0A00A99E2D /* Adjust in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		21658802729240D4B8476237 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7DB96F32071A456A862E8E6D90FF042E /* ResponsiveLayout.swift */,
+				D5C1C2F328A34F0C8BA0E024 /* FittedBackgroundImage.swift */,
+				BB65B59B9DB641CF8BC34207A7E5523F /* DeviceTraitHelper.swift */,
+				E1C8874B2D77B80E00A99E2D /* RakutenRewardManager.swift */,
+				E1C887502D77BCCC00A99E2D /* AdjustManager.swift */,
+				E1C887512D77BCCC00A99E2D /* TrackingAuthorizationManager.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		C3A4A2E229F8A2B100000001 = {
+			isa = PBXGroup;
+			children = (
+				C3A4A2E229F8A2B10000000D /* DragonflyCatch */,
+				C3A4A2E229F8A2B100000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C3A4A2E229F8A2B100000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C3A4A2E229F8A2B10000002F /* ト・ト・トンボキャッチ.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3A4A2E229F8A2B10000000D /* DragonflyCatch */ = {
+			isa = PBXGroup;
+			children = (
+				C3A4A2E229F8A2B100000010 /* DragonflyCatchApp.swift */,
+				7FF6B1E080114905B0B543CF75529D48 /* GameFlowViewModel.swift */,
+				C3A4A2E229F8A2B10000000E /* Views */,
+				21658802729240D4B8476237 /* Utilities */,
+				C3A4A2E229F8A2B100000017 /* Assets.xcassets */,
+				C3A4A2E229F8A2B100000018 /* Info.plist */,
+			);
+			path = DragonflyCatch;
+			sourceTree = "<group>";
+		};
+		C3A4A2E229F8A2B10000000E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C3A4A2E229F8A2B100000011 /* FlowCoordinatorView.swift */,
+				C3A4A2E229F8A2B100000012 /* SplashView.swift */,
+				C3A4A2E229F8A2B100000013 /* HomeView.swift */,
+				C3A4A2E229F8A2B100000014 /* GameView.swift */,
+				C3A4A2E229F8A2B100000015 /* StageChangeView.swift */,
+				C3A4A2E229F8A2B100000016 /* GameClearView.swift */,
+				CC09310A4A1F4CAF8C7290DB307CE479 /* RandomFlyingCharacter.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C3A4A2E229F8A2B100000002 /* DragonflyCatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3A4A2E229F8A2B100000008 /* Build configuration list for PBXNativeTarget "DragonflyCatch" */;
+			buildPhases = (
+				C3A4A2E229F8A2B100000004 /* Sources */,
+				C3A4A2E229F8A2B100000005 /* Frameworks */,
+				C3A4A2E229F8A2B100000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DragonflyCatch;
+			packageProductDependencies = (
+				E1C8874E2D77B90E00A99E2D /* RakutenRewardSDK */,
+				E1C887572D77BD0A00A99E2D /* Adjust */,
+			);
+			productName = DragonflyCatch;
+			productReference = C3A4A2E229F8A2B10000002F /* ト・ト・トンボキャッチ.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C3A4A2E229F8A2B100000000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					C3A4A2E229F8A2B100000002 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = C3A4A2E229F8A2B100000007 /* Build configuration list for PBXProject "DragonflyCatch" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C3A4A2E229F8A2B100000001;
+			packageReferences = (
+				E1C8874F2D77B90E00A99E2D /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */,
+				E1C887582D77BD0A00A99E2D /* XCRemoteSwiftPackageReference "ios_sdk" */,
+			);
+			productRefGroup = C3A4A2E229F8A2B100000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C3A4A2E229F8A2B100000002 /* DragonflyCatch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C3A4A2E229F8A2B100000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3A4A2E229F8A2B100000027 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C3A4A2E229F8A2B100000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3A4A2E229F8A2B100000020 /* DragonflyCatchApp.swift in Sources */,
+				7FF6B1E080114905B0B543CF75529D49 /* GameFlowViewModel.swift in Sources */,
+				C3A4A2E229F8A2B100000021 /* FlowCoordinatorView.swift in Sources */,
+				7DB96F32071A456A862E8E6D90FF042F /* ResponsiveLayout.swift in Sources */,
+				E1C887542D77BCD100A99E2D /* AdjustManager.swift in Sources */,
+				BB65B59C9DB641CF8BC34207A7E5523F /* DeviceTraitHelper.swift in Sources */,
+				D5C1C2F428A34F0C8BA0E024 /* FittedBackgroundImage.swift in Sources */,
+				CC09310B4A1F4CAF8C7290DB307CE479 /* RandomFlyingCharacter.swift in Sources */,
+				E1C8874C2D77B80E00A99E2D /* RakutenRewardManager.swift in Sources */,
+				E1C887552D77BCD100A99E2D /* TrackingAuthorizationManager.swift in Sources */,
+				C3A4A2E229F8A2B100000022 /* SplashView.swift in Sources */,
+				C3A4A2E229F8A2B100000023 /* HomeView.swift in Sources */,
+				C3A4A2E229F8A2B100000024 /* GameView.swift in Sources */,
+				C3A4A2E229F8A2B100000025 /* StageChangeView.swift in Sources */,
+				C3A4A2E229F8A2B100000026 /* GameClearView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C3A4A2E229F8A2B100000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C3A4A2E229F8A2B10000000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C3A4A2E229F8A2B10000000B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DragonflyCatch/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = DragonflyCatch.app;
+				PRODUCT_NAME = "ト・ト・トンボキャッチ";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C3A4A2E229F8A2B10000000C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DragonflyCatch/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = DragonflyCatch.app;
+				PRODUCT_NAME = "ト・ト・トンボキャッチ";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E1C8874F2D77B90E00A99E2D /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Rakuten-Reward-SDK/Reward-SDK-iOS-SPM.git";
+			requirement = {
+				kind = exactVersion;
+				version = 12.0.0;
+			};
+		};
+		E1C887582D77BD0A00A99E2D /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adjust/ios_sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.38.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E1C8874E2D77B90E00A99E2D /* RakutenRewardSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1C8874F2D77B90E00A99E2D /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */;
+			productName = RakutenRewardSDK;
+		};
+		E1C887572D77BD0A00A99E2D /* Adjust */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1C887582D77BD0A00A99E2D /* XCRemoteSwiftPackageReference "ios_sdk" */;
+			productName = Adjust;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCConfigurationList section */
+		C3A4A2E229F8A2B100000007 /* Build configuration list for PBXProject "DragonflyCatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3A4A2E229F8A2B100000009 /* Debug */,
+				C3A4A2E229F8A2B10000000A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3A4A2E229F8A2B100000008 /* Build configuration list for PBXNativeTarget "DragonflyCatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3A4A2E229F8A2B10000000B /* Debug */,
+				C3A4A2E229F8A2B10000000C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C3A4A2E229F8A2B100000000 /* Project object */;
+}
