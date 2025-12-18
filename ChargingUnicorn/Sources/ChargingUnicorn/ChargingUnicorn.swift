@@ -1,6 +1,18 @@
 import SwiftUI
 import UIKit
 import Combine
+#if canImport(RakutenRewardSDK)
+import RakutenRewardSDK
+#endif
+#if canImport(Adjust)
+import Adjust
+#endif
+#if canImport(AppTrackingTransparency)
+import AppTrackingTransparency
+#endif
+#if canImport(AdSupport)
+import AdSupport
+#endif
 
 // MARK: - App Screen
 
@@ -18,9 +30,27 @@ struct ChargingUnicornApp: App {
     /// trueでテスト設定（周回条件・確率・必要タップ数の緩和）を有効化
     private let useTestingAchievementRewards = false
 
+    @Environment(\.scenePhase) private var scenePhase
+
+    init() {
+        RakutenRewardManager.shared.configureIfAvailable()
+        AdjustManager.shared.configureAdjustIfAvailable()
+        TrackingAuthorizationManager.requestTrackingAuthorizationIfNeeded()
+    }
+
     var body: some Scene {
         WindowGroup {
             AppRootView(useTestingAchievementRewards: useTestingAchievementRewards)
+        }
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .active:
+                AdjustManager.shared.setOfflineMode(false)
+            case .background:
+                AdjustManager.shared.setOfflineMode(true)
+            default:
+                break
+            }
         }
     }
 }
@@ -143,6 +173,7 @@ private struct AppRootView: View {
                         storedUnlockedIllustrations = serializeSet(unlockedIllustrations)
                         clearCount = nextCount
                         storedClearCount = clearCount
+                        AdjustManager.shared.trackGameCycleCompletion(total: clearCount)
                         screen = .clear(clearImage: clearImage)
                     } else {
                         screen = .stageChange(stage: stage)
@@ -428,7 +459,9 @@ private struct HomeView: View {
                     .buttonStyle(.plain)
                     .position(x: specimenPos.x, y: specimenPos.y)
 
-                    Button(action: {}) {
+                    Button(action: {
+                        RakutenRewardManager.shared.openPortal()
+                    }) {
                         Image("Exchange")
                             .resizable()
                             .scaledToFit()
@@ -728,7 +761,7 @@ private struct GameLayout {
             )
         ),
         characterPosition: LayoutPair(
-            iPhone: PercentPosition(x: 0.5, y: 0.34),
+            iPhone: PercentPosition(x: 0.5, y: 0.3),
             iPad: PercentPosition(x: 0.5, y: 0.32)
         ),
         characterSize: SizePair(
@@ -803,9 +836,9 @@ private struct GameView: View {
                 }
 
                 VStack(spacing: 4) {
-                    Text("完了まで")
+                    Text("次の特訓")
                         .font(.footnote.weight(.semibold))
-                    Text("あと")
+                    Text("まで")
                         .font(.footnote.weight(.semibold))
                     Text("\(max(totalTapsRequired - tapCount, 0))")
                         .font(.headline.weight(.bold))
@@ -1200,6 +1233,9 @@ private struct ClearView: View {
                     DebugBadge()
                 }
             }
+            .onAppear {
+                RakutenRewardManager.shared.logClearAction()
+            }
         }
     }
 }
@@ -1393,4 +1429,121 @@ private func serializeArray(_ array: [String]) -> String {
 private func deserializeArray(_ string: String) -> [String] {
     if string.isEmpty { return [] }
     return string.split(separator: ",").map(String.init)
+}
+
+// MARK: - Rakuten Reward
+
+private final class RakutenRewardManager {
+    static let shared = RakutenRewardManager()
+    private init() {}
+
+    private let appCode = "anAuY28ucmFrdXRlbi5yZXdhcmQuaW9zLVRnWkVCaGVCVmo5TmVQTWdHZlJwMTFSVGdZVTB3NnE2"
+    private let clearActionCode = "maWgVUeIBqqlDUa_"
+
+    func configureIfAvailable() {
+        #if canImport(RakutenRewardSDK)
+        RakutenReward.sharedInstance.isDebug = false
+        RakutenReward.sharedInstance.environment = .production
+        RakutenReward.sharedInstance.startSession(appCode: appCode)
+        #endif
+    }
+
+    func openPortal() {
+        #if canImport(RakutenRewardSDK)
+        RakutenReward.sharedInstance.openPortal()
+        #endif
+    }
+
+    func logClearAction() {
+        #if canImport(RakutenRewardSDK)
+        RakutenReward.sharedInstance.logAction(actionCode: clearActionCode)
+        #endif
+    }
+}
+
+// MARK: - Adjust
+
+private final class AdjustManager {
+    static let shared = AdjustManager()
+    private init() {}
+
+    private let appToken = "d0rbgaqwuyo0"
+    private let installDateKey = "adjustInstallDate"
+
+    private enum EventToken: String {
+        case cycle1 = "5mouxf"
+        case cycle50 = "fs8q63"
+        case cycle100 = "qzou2v"
+        case cycle150 = "bjc1v0"
+    }
+
+    func configureAdjustIfAvailable() {
+        #if canImport(Adjust)
+        guard let config = ADJConfig(appToken: appToken, environment: ADJEnvironmentProduction) else { return }
+        registerInstallDateIfNeeded()
+        config.logLevel = ADJLogLevelInfo
+        config.sendInBackground = true
+        Adjust.appDidLaunch(config)
+        #endif
+    }
+
+    func setOfflineMode(_ isOffline: Bool) {
+        #if canImport(Adjust)
+        Adjust.setOfflineMode(isOffline)
+        #endif
+    }
+
+    func trackGameCycleCompletion(total cycles: Int) {
+        #if canImport(Adjust)
+        switch cycles {
+        case 1:
+            track(event: .cycle1)
+        case 50:
+            track(event: .cycle50)
+        case 100:
+            track(event: .cycle100)
+        case 150:
+            if shouldTrackCycle150() {
+                track(event: .cycle150)
+            }
+        default:
+            break
+        }
+        #endif
+    }
+
+    private func track(event: EventToken) {
+        #if canImport(Adjust)
+        guard let adjustEvent = ADJEvent(eventToken: event.rawValue) else { return }
+        Adjust.trackEvent(adjustEvent)
+        #endif
+    }
+
+    private func registerInstallDateIfNeeded() {
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: installDateKey) == nil {
+            defaults.set(Date(), forKey: installDateKey)
+        }
+    }
+
+    private func shouldTrackCycle150() -> Bool {
+        let defaults = UserDefaults.standard
+        guard let storedDate = defaults.object(forKey: installDateKey) as? Date else { return true }
+        let elapsed = Date().timeIntervalSince(storedDate)
+        let threeDays: TimeInterval = 3 * 24 * 60 * 60
+        return elapsed <= threeDays
+    }
+}
+
+// MARK: - ATT
+
+private enum TrackingAuthorizationManager {
+    static func requestTrackingAuthorizationIfNeeded() {
+        #if canImport(AppTrackingTransparency)
+        guard #available(iOS 14.5, *) else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            ATTrackingManager.requestTrackingAuthorization { _ in }
+        }
+        #endif
+    }
 }

@@ -39,5 +39,7 @@
 	</dict>
 	<key>UILaunchScreen</key>
 	<dict/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>トラッキングを許可すると、報酬や広告の最適化に役立ちます。</string>
 </dict>
 </plist>
