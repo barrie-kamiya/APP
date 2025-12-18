@@ -16,7 +16,7 @@ private enum AppScreen: Equatable {
 @main
 struct ChargingUnicornApp: App {
     /// trueでテスト設定（周回条件・確率・必要タップ数の緩和）を有効化
-    private let useTestingAchievementRewards = true
+    private let useTestingAchievementRewards = false
 
     var body: some Scene {
         WindowGroup {
@@ -410,6 +410,11 @@ private struct HomeView: View {
             let startSize = layout.startSize.size(for: device).size(in: proxy.size)
             let statusPos = layout.statusPosition.position(for: device).point(in: proxy.size)
             let statusSize = layout.statusSize.size(for: device).size(in: proxy.size)
+            let milestones = milestoneTargets(useTesting: useTestingAchievementRewards)
+            let allRewardsUnlocked = milestones.allSatisfy { m in
+                let illName = milestoneToIllustration(m)
+                return unlockedIllustrations.contains(illName)
+            }
 
             ZStack {
                 FittedBackground(imageName: "HomeView")
@@ -475,7 +480,11 @@ private struct HomeView: View {
                 let nextMilestone = nextMilestoneRemaining(current: clearCount, useTesting: useTestingAchievementRewards)
                 VStack(spacing: 4) {
                     Text("\(clearCount)週クリア")
-                    Text("次の報酬まであと\(nextMilestone)週")
+                    if allRewardsUnlocked {
+                        Text("次の報酬まであと??")
+                    } else {
+                        Text("次の報酬まであと\(nextMilestone)週")
+                    }
                 }
                 .font(.headline.weight(.semibold))
                 .frame(width: statusSize.width, height: statusSize.height)
@@ -746,11 +755,12 @@ private struct GameView: View {
     @State private var ghostTrail: [GhostVisual] = []
     @State private var bounceOffset: CGFloat = 0
     @State private var stageStartTotal: Int = 0
+    @State private var shakeOffset: CGFloat = 0
 
     private var characterPicker: CharacterPicker {
         CharacterPicker(weights: characterWeights)
     }
-    private let ghostLifespan: TimeInterval = 0.3
+    private let ghostLifespan: TimeInterval = 0.5
     private let ghostCleanupTimer = Timer.publish(every: 0.02, on: .main, in: .common).autoconnect()
 
     var body: some View {
@@ -832,6 +842,10 @@ private struct GameView: View {
                         .padding(6)
                         .background(Color(red: 0.69, green: 0.65, blue: 0.96).opacity(0.7))
                         .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 1.5)
+                        )
                 }
                 .buttonStyle(.plain)
                 .frame(width: homeBox.size.width, height: homeBox.size.height)
@@ -887,6 +901,7 @@ private struct GameView: View {
                     DebugBadge()
                 }
             }
+            .offset(x: shakeOffset)
         }
     }
 
@@ -962,12 +977,14 @@ private struct GameView: View {
                 current.direction = .right
                 current.bounceState = .leftPendingFlip
                 triggerBounce(height: characterHeight)
+                triggerShake(direction: -1)
             case .right:
                 current.variant = .b
                 current.flipped = false
                 current.direction = .left
                 current.bounceState = .rightPendingFlip
                 triggerBounce(height: characterHeight)
+                triggerShake(direction: 1)
             }
         }
 
@@ -986,6 +1003,17 @@ private struct GameView: View {
             withAnimation(.spring(response: 0.30, dampingFraction: 0.62, blendDuration: 0.1)) {
                 bounceOffset = 0
             }
+        }
+    }
+
+    private func triggerShake(direction: CGFloat) {
+        let amp = 6 * direction
+        withAnimation(.easeInOut(duration: 0.04)) { shakeOffset = amp }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
+            withAnimation(.easeInOut(duration: 0.04)) { shakeOffset = -amp }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.16) {
+            withAnimation(.easeInOut(duration: 0.05)) { shakeOffset = 0 }
         }
     }
 }
@@ -1318,6 +1346,20 @@ private func pendingAchievementReward(clearCount: Int, unlocked: Set<String>, pe
         return (reward.clear, reward.ill)
     }
     return nil
+}
+
+private func milestoneToIllustration(_ count: Int) -> String {
+    switch count {
+    case 50: return "Ilustrated_06"
+    case 100: return "Ilustrated_07"
+    case 150: return "Ilustrated_08"
+    case 200: return "Ilustrated_09"
+    case 1: return "Ilustrated_06"
+    case 2: return "Ilustrated_07"
+    case 3: return "Ilustrated_08"
+    case 4: return "Ilustrated_09"
+    default: return ""
+    }
 }
 
 private func unlockIllustration(for clearImage: String, into set: inout Set<String>) {
