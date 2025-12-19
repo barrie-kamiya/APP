@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07DC36D22EF4EB1B00FA3C87 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = 07DC36D12EF4EB1B00FA3C87 /* Adjust */; };
+		07DC38102F00000100FA3C87 /* RakutenRewardSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 07DC38112F00000100FA3C87 /* RakutenRewardSDK */; };
 		6C3E05E72E6D9E0700C1E7AA /* ChargingUnicorn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3E05F02E6D9E0700C1E7AA /* ChargingUnicorn.swift */; };
 		6C3E05E82E6D9E0700C1E7AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C3E05F12E6D9E0700C1E7AA /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -23,17 +25,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07DC38102F00000100FA3C87 /* RakutenRewardSDK in Frameworks */,
+				07DC36D22EF4EB1B00FA3C87 /* Adjust in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07DC36C62EF4E94900FA3C87 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6C3E05D32E6D9E0700C1E7AA = {
 			isa = PBXGroup;
 			children = (
 				6C3E05F22E6D9E0700C1E7AA /* Info.plist */,
 				6C3E05F32E6D9E0700C1E7AA /* Sources/ChargingUnicorn */,
+				07DC36C62EF4E94900FA3C87 /* Frameworks */,
 				6C3E05E62E6D9E0700C1E7AA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,6 +90,10 @@
 			);
 			dependencies = (
 			);
+			packageProductDependencies = (
+				07DC38112F00000100FA3C87 /* RakutenRewardSDK */,
+				07DC36D12EF4EB1B00FA3C87 /* Adjust */,
+			);
 			name = ChargingUnicorn;
 			productName = ChargingUnicorn;
 			productReference = 6C3E05D62E6D9E0700C1E7AA /* ChargingUnicorn.app */;
@@ -106,6 +122,10 @@
 				Base,
 			);
 			mainGroup = 6C3E05D32E6D9E0700C1E7AA;
+			packageReferences = (
+				07DC38202F00000200FA3C87 /* XCRemoteSwiftPackageReference "ios_sdk" */,
+				07DC38122F00000100FA3C87 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */,
+			);
 			productRefGroup = 6C3E05E62E6D9E0700C1E7AA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -423,6 +443,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		07DC38202F00000200FA3C87 /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adjust/ios_sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.38.0;
+			};
+		};
+		07DC38122F00000100FA3C87 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Rakuten-Reward-SDK/Reward-SDK-iOS-SPM.git";
+			requirement = {
+				kind = exactVersion;
+				version = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		07DC36D12EF4EB1B00FA3C87 /* Adjust */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07DC38202F00000200FA3C87 /* XCRemoteSwiftPackageReference "ios_sdk" */;
+			productName = Adjust;
+		};
+		07DC38112F00000100FA3C87 /* RakutenRewardSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07DC38122F00000100FA3C87 /* XCRemoteSwiftPackageReference "Reward-SDK-iOS-SPM" */;
+			productName = RakutenRewardSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6C3E05D42E6D9E0700C1E7AA /* Project object */;
 }

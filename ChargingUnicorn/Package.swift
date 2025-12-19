@@ -8,9 +8,18 @@ let package = Package(
     platforms: [
         .iOS(.v17)
     ],
+    dependencies: [
+        .package(url: "https://github.com/adjust/ios_sdk.git", from: "4.38.0")
+    ],
     targets: [
         .executableTarget(
             name: "ChargingUnicorn",
+            dependencies: [
+                .product(
+                    name: "Adjust",
+                    package: "ios_sdk"
+                )
+            ],
             resources: [
                 .process("Resources")
             ]
